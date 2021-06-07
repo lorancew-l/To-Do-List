@@ -1,0 +1,33 @@
+@import 'vars';
+@import 'fonts';
+
+
+body {
+  color: $text-primary-color;
+  font-size: 16px;
+  background-color: $background-primary-color;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+
+  margin: 0;
+  padding: 0;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.noselect {
+  user-select: none;
+}
+
+.nodrag {
+  -webkit-user-drag: none;
+}
+
+.icon {
+  width: 16px;
+  height: 16px; 
+}
+
+@import './blocks/header';

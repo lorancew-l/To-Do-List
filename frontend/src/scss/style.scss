@@ -1,5 +1,6 @@
 @import 'vars';
 @import 'fonts';
+@import 'animations';
 
 
 body {
@@ -32,3 +33,4 @@ body {
 
 @import './blocks/header';
 @import './blocks/sidebar';
+@import './blocks/main';

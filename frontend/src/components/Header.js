@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { openSideBar, toHomePage, search, quickTask, settings } from '../images/index'
+import { openSideBar, search, quickTask, settings } from '../images/index'
 
 
-export default class Heder extends Component {
+export class Heder extends Component {
   render() {
     return (
       <header className="header">
@@ -31,3 +31,5 @@ export default class Heder extends Component {
     )
   }
 }
+
+export default Heder

@@ -1,9 +1,17 @@
 main {
-  padding-left: $sidebar-width;
+  transition: 0.3s;
+
+  &.sidebar-on {
+    padding-left: $sidebar-width;
+  } 
+
+  &.sidebar-off {
+    padding-left: 0;
+  } 
 
   .container {
     margin: 0 auto;
-    max-width: 50%;
+    max-width: 40%;
     width: 100%;
   }
 

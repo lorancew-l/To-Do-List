@@ -29,7 +29,7 @@ export class SideBar extends Component {
 
   render() {
     return (
-      <aside className='sidebar'>
+      <aside className={this.props.showSidebar? 'sidebar on' : 'sidebar off'}>
         <div className='sidebar-content'>
           <ul>
             {

@@ -15,7 +15,7 @@ export class Main extends Component {
 
   render() {
     return (
-      <main>
+      <main className={this.props.showSidebar? 'sidebar-on': 'sidebar-off'}>
         <div className="container">
           <div className="content">
             <div className="task-list-header">

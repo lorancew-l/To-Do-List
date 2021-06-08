@@ -8,7 +8,7 @@ export class Heder extends Component {
       <header className="header">
         <div className="header-inner">
           <div className="header-left">
-            <button className="">
+            <button className="" onClick={this.props.onSidebarChange}>
               <img className="" alt='open sidebar' src={openSideBar}/>
             </button>
 

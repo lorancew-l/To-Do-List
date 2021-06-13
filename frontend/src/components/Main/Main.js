@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TaskListItem from './TaskListItem'
+import AddTask from './AddTaskForm/AddTaskForm'
 
 export class Main extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ export class Main extends Component {
                 {this.state.taskList.map(element => {
                   return <TaskListItem key={element.id} title={element.title} onClick={this.props.onTaskClick}></TaskListItem>})
                 }
+                <AddTask></AddTask>
             </ul>
           </div>
         </div>

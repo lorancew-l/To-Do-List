@@ -39,57 +39,173 @@ main {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
 
-  li {
+.task-list-item {
+  display: flex;
+  align-items: center;
+  user-select: none;
+
+  padding: 7px;
+  border-radius: 4px;
+  background-color: $background-secondary-color;
+  height: $task-list-item-height;
+
+  &:not(.no-hover):hover {
+      background-color: $selection-color;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.button-with-icon {
+  cursor: pointer;
+  padding: 0;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.task-list-task {
+  @extend .task-list-item;
+
+  &.clicked {
+    animation: task-list-item-click 0.4s;
+  }
+  
+  &:nth-last-child(2) {
+    position: relative;
+    margin-bottom: 32px;
+
+    &::after {
+      content: "";
+      position: absolute;
+  
+      top: 140%;
+      left: 0;
+      z-index: 1;
+    
+      width: 100%;
+      height: 1px;
+  
+      background-color: $background-tertiary-color;
+    }
+  }
+
+  .left-side {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
-    user-select: none;
+    flex: 1;
 
-    padding: 7px;
-    border-radius: 4px;
-    background-color: $background-secondary-color;
-    height: 38px;
+    justify-content: flex-start;
 
-    &:hover {
-        background-color: $selection-color;
-    }
+    button {
+      @extend .button-with-icon;
 
-    &:not(:last-child) {
-      margin-bottom: 10px;
-    }
+      width: $task-list-task-checkbox-size;
+      height: $task-list-task-checkbox-size;
 
-    &.clicked {
-      animation: task-list-item-click 0.4s;
-    }
-
-    .left-side {
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
-      flex: 1;
-
-      justify-content: flex-start;
+      margin-right: $task-list-item-icon-right-margin;
 
       img {
-        width: 24px;
-        height: 24px;
+        width: $task-list-task-checkbox-size;
+        height: $task-list-task-checkbox-size;
+      }
+    }
+  }
+
+  img {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.task-list-add-item {
+  @extend .task-list-item;
+
+  .left-side {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex: 1;
+
+    justify-content: flex-start;
+
+    cursor: text;
+
+    button {
+      @extend .button-with-icon;
+      
+      width: $add-task-icon-size;
+      height: $add-task-icon-size;
+      margin-left: ($task-list-task-checkbox-size - $add-task-icon-size) / 2;
+      margin-right: ($task-list-task-checkbox-size - $add-task-icon-size) / 2 + $task-list-item-icon-right-margin;
+  
+      img {
+        width: $add-task-icon-size;
+        height: $add-task-icon-size;
       }
     }
 
-    button {
-      padding: 0;
-      width: 24px;
-      height: 24px;
-      background-color: transparent;
+    input[type=text] {
       outline: none;
+      background-color: transparent;
       border: none;
 
-      margin-right: 15px;
+      color: $text-primary-color;
+
+      margin-right: 10px;
+      width: 100%;
+    }
+  }
+
+  .right-side {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+
+    padding-right: 5px;
+
+    & *:not(:last-child) {
+      margin-right: 10px;
     }
 
-    img {
+    .button-with-icon {
+      @extend .button-with-icon;
       width: 16px;
       height: 16px;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .cancel {
+      cursor: pointer;
+      color: $text-secondary-color;
+      
+      padding: 0;
+      border: none;
+      background-color: transparent;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .sumbit {
+      cursor: pointer;
+      color: $accent-color;
+
+      padding: 0;
+      border: none;
+      background-color: transparent;
     }
   }
 }

@@ -7,7 +7,7 @@ export class TaskListItem extends Component {
     this.state = {
       checkboxImg: checkboxUnchecked,
       importantImg: importantTaskInactive,
-      style: '', 
+      style: 'task-list-task', 
     }
 
     this.checkboxOnMouseEnterHandler = this.checkboxOnMouseEnterHandler.bind(this)
@@ -37,8 +37,8 @@ export class TaskListItem extends Component {
 
   onClickHandler(){
     console.log('click');
-    this.setState({style: 'clicked'})
-    setTimeout(() => this.setState({style: ''}), 400)
+    this.setState({style: 'task-list-task clicked'})
+    setTimeout(() => this.setState({style: 'task-list-task'}), 400)
     this.props.onClick()
   }
 

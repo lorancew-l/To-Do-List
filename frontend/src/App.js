@@ -3,16 +3,30 @@ import './css/style.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar/SideBar'
 import Main from './components/Main/Main'
+import Overlay from './components/Popups/Overlay'
 
 export class App extends Component {
   constructor(props) {
     super(props)
     this.state = {showModal: false,
-                  showSidebar: true}
+                  showSidebar: true,
+                  popupContent: null,
+                  popupPos: {left: 0, bottom: 0}}
   }
 
   showModal = () => this.setState({showModal: true})
+
   closeModal = () => this.setState({showModal: false})
+
+  showPopup = (popupContent) => {
+    this.setState({popupContent: popupContent})
+  }
+
+  updatePopupPos = (pos) => {
+    this.setState({popupPos: pos})
+  }
+
+  closePopup = () => this.setState({popupContent: null})
   
   handleSidebarChange = () => {
     this.setState(prevState => {
@@ -25,7 +39,8 @@ export class App extends Component {
       <Fragment>
         <Header onSidebarChange={this.handleSidebarChange}></Header>
         <Sidebar showSidebar={this.state.showSidebar}></Sidebar>
-        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar}></Main>
+        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showPopup={this.showPopup} updatePopupPos={this.updatePopupPos}></Main>
+        { this.state.popupContent ? <Overlay popupPos={this.state.popupPos} closePopup={this.closePopup}>{this.state.popupContent}</Overlay> : null}
       </Fragment>
     );
   };

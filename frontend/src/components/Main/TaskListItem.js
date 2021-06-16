@@ -1,66 +1,47 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { checkboxUnchecked , checkboxChecked, importantTaskInactive, importantTaskActive } from '../../images/index'
 
-export class TaskListItem extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      checkboxImg: checkboxUnchecked,
-      importantImg: importantTaskInactive,
-      style: 'task-list-task', 
-    }
+export default function TaskListItem(props) {
+  const [checkboxImg, setCheckboxImg] = useState(checkboxUnchecked)
+  const [importantImg, setImportantImg] = useState(importantTaskInactive)
+  const [style, setStyle] = useState('task-list-task')
 
-    this.checkboxOnMouseEnterHandler = this.checkboxOnMouseEnterHandler.bind(this)
-    this.checkboxOnMouseLeaveHandler = this.checkboxOnMouseLeaveHandler.bind(this)
-    this.importantOnMouseEnterHandler = this.importantOnMouseEnterHandler.bind(this)
-    this.importantOnMouseLeaveHandler = this.importantOnMouseLeaveHandler.bind(this)
-
-    this.onClickHandler = this.onClickHandler.bind(this)
+  function checkboxOnMouseEnterHandler () {
+    setCheckboxImg(checkboxChecked)
   }
 
-  checkboxOnMouseEnterHandler(){
-    this.setState({checkboxImg: checkboxChecked})
+  function checkboxOnMouseLeaveHandler () {
+    setCheckboxImg(checkboxUnchecked)
   }
 
-  checkboxOnMouseLeaveHandler(){
-    this.setState({checkboxImg: checkboxUnchecked})
+  function importantOnMouseEnterHandler () {
+    setImportantImg(importantTaskActive)
   }
 
-  
-  importantOnMouseEnterHandler(){
-    this.setState({importantImg: importantTaskActive})
+  function importantOnMouseLeaveHandler () {
+    setImportantImg(importantTaskInactive)
   }
 
-  importantOnMouseLeaveHandler(){
-    this.setState({importantImg: importantTaskInactive})
-  }
-
-  onClickHandler(){
-    console.log('click');
-    this.setState({style: 'task-list-task clicked'})
-    setTimeout(() => this.setState({style: 'task-list-task'}), 400)
-    this.props.onClick()
-  }
-
-  render() {
-    return (
-      <li className={this.state.style} onClick={this.onClickHandler}>
-        <div className="left-side">
-          <button onClick={event => event.stopPropagation()}> 
-            <img alt="checkbox" src={this.state.checkboxImg}
-              onMouseEnter={this.checkboxOnMouseEnterHandler}
-              onMouseLeave={this.checkboxOnMouseLeaveHandler}/>
-          </button>
-          <span>
-            {this.props.title}
-          </span>
-        </div>
-        <img onClick={event => event.stopPropagation()} alt='to favorite' src={this.state.importantImg}
-          onMouseEnter={this.importantOnMouseEnterHandler}
-          onMouseLeave={this.importantOnMouseLeaveHandler}/>
-      </li>
-    )
-  }
+  function onClickHandler () {
+    setStyle('task-list-task clicked')
+    setTimeout(() => setStyle('task-list-task'), 400)
+    props.onClick()
+  }                           
+  return (
+    <li className={style} onClick={onClickHandler}>
+      <div className="left-side">
+        <button onClick={event => event.stopPropagation()}> 
+          <img alt="checkbox" src={checkboxImg}
+            onMouseEnter={checkboxOnMouseEnterHandler}
+            onMouseLeave={checkboxOnMouseLeaveHandler}/>
+        </button>
+        <span>
+          {props.title}
+        </span>
+      </div>
+      <img onClick={event => event.stopPropagation()} alt='to favorite' src={importantImg}
+        onMouseEnter={importantOnMouseEnterHandler}
+        onMouseLeave={importantOnMouseLeaveHandler}/>
+    </li>
+  )
 }
-
-export default TaskListItem

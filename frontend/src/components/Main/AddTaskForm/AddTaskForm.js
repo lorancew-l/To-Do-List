@@ -9,8 +9,7 @@ export class AddTask extends Component {
   }
 
   addTaskClickHandler = () => this.setState({onFocus: true})
-  cancelClickHandler = (event) => {
-    event.stopPropagation()
+  cancelClickHandler = () => {
     this.setState({onFocus: false})
   }
   submitClickHandler = () => {}
@@ -18,7 +17,8 @@ export class AddTask extends Component {
   render() {
     return (
       <form>
-        {this.state.onFocus? <OnFocusContent onCancelClick={this.cancelClickHandler}></OnFocusContent> :
+        {this.state.onFocus? <OnFocusContent onCancelClick={this.cancelClickHandler} showPopup={this.props.showPopup}
+                                             updatePopupPos={this.props.updatePopupPos}></OnFocusContent> :
                              <NoFocusContent onClick={this.addTaskClickHandler}></NoFocusContent>}
       </form>
     )

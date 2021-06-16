@@ -27,7 +27,7 @@ export class Main extends Component {
                 {this.state.taskList.map(element => {
                   return <TaskListItem key={element.id} title={element.title} onClick={this.props.onTaskClick}></TaskListItem>})
                 }
-                <AddTask></AddTask>
+                <AddTask showPopup={this.props.showPopup} updatePopupPos={this.props.updatePopupPos}></AddTask>
             </ul>
           </div>
         </div>

@@ -1,39 +1,33 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import TaskListItem from './TaskListItem'
 import AddTask from './AddTaskForm/AddTaskForm'
 
-export class Main extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {taskList: []}
-  }
 
-  componentDidMount(){
+export default function Main(props) {
+  const [taskList, setTaskList] = useState([])
+
+  useEffect(() => {
     fetch('http://localhost:8000/api/task-list/')
     .then(response => response.json())
-    .then(taskList => this.setState({taskList: taskList}))
-  }
+    .then(taskList => setTaskList(taskList))
+  })
 
-  render() {
-    return (
-      <main className={this.props.showSidebar? 'sidebar-on': 'sidebar-off'}>
-        <div className="container">
-          <div className="content">
-            <div className="task-list-header">
-              <span>Сегодня</span>
-              <small>Пн 1 марта</small>
-            </div>
-            <ul className="task-list">
-                {this.state.taskList.map(element => {
-                  return <TaskListItem key={element.id} title={element.title} onClick={this.props.onTaskClick}></TaskListItem>})
-                }
-                <AddTask showPopup={this.props.showPopup} updatePopupPos={this.props.updatePopupPos}></AddTask>
-            </ul>
+  return (
+    <main className={props.showSidebar? 'sidebar-on': 'sidebar-off'}>
+      <div className="container">
+        <div className="content">
+          <div className="task-list-header">
+            <span>Сегодня</span>
+            <small>Пн 1 марта</small>
           </div>
+          <ul className="task-list">
+              {taskList.map(element => {
+                return <TaskListItem key={element.id} title={element.title} onClick={props.onTaskClick}></TaskListItem>})
+              }
+              <AddTask showPopup={props.showPopup} updatePopupPos={props.updatePopupPos}></AddTask>
+          </ul>
         </div>
-      </main>
-    )
-  }
+      </div>
+    </main>
+  )
 }
-
-export default Main

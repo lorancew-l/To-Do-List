@@ -9,14 +9,14 @@ export default function SideBar(props) {
                                       {id: 1, title: 'Важно', icon: importantTaskActive, style: 'sidebar-item'},
                                       {id: 2, title: 'Задачи', icon: clipboard, style: 'sidebar-item'}])
 
-  const itemOnClickHandler = (itemId) => {
+  function itemOnClickHandler(itemId) {
     setItems(items.map(element => {
       element.style = (element.id === itemId)? 'sidebar-item selected': 'sidebar-item'
       return element 
     }))
   }
 
-  const addItemOnClickHandler = () => {}
+  function addItemOnClickHandler() {}
 
   return (
     <aside className={props.showSidebar? 'sidebar on' : 'sidebar off'}>

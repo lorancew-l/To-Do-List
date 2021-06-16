@@ -1,25 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-
-export class SidebarItem extends Component {
-  constructor(props) {
-    super(props)
-
-    this.onClickHandler = this.onClickHandler.bind(this)
+export default function SidebarItem(props) {
+  const onClickHandler = () => {
+    props.onClick(Number(props.id))
   }
 
-  onClickHandler() {
-    this.props.onClick(Number(this.props.id))
-  }
-
-  render() {
-    return (
-      <li className={this.props.className} onClick={this.onClickHandler}>
-        <span><img alt={this.props.title} src={this.props.icon}/></span>
-        <span className="sidebar-item-text">{this.props.title}</span>
-      </li>
-    )
-  }
+  return (
+    <li className={props.className} onClick={onClickHandler}>
+      <span><img alt={props.title} src={props.icon}/></span>
+      <span className="sidebar-item-text">{props.title}</span>
+  </li>
+  )
 }
-
-export default SidebarItem

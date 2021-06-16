@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { dailyTasksActive, clipboard, importantTaskActive } from '../../images/index'
 import SidebarAddItemButton from './SidebarAddItemButton'
-import { SidebarItem } from './SidebarItem'
+import SidebarItem from './SidebarItem'
 
 
 export default function SideBar(props) {

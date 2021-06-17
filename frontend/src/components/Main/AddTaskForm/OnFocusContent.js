@@ -4,20 +4,21 @@ import Calendar from '../../Popups/Calendar'
 
 
 export default function OnFocusContent(props) {
-  const calendarButton = useRef()
+  const calendarButtonRef = useRef()
+  const liRef = useRef()
 
   function handleCalendarClick() {
-    const rect = calendarButton.current.getBoundingClientRect()
-
-    props.updatePopupPos({left: rect.left, bottom: rect.bottom})
+    console.log();
+    props.updatePopupPos({left: calendarButtonRef.current.getBoundingClientRect().left,
+                          bottom: liRef.current.getBoundingClientRect().bottom})
     props.showPopup(<Calendar></Calendar>)
   }
 
   useEffect(() => {
     function onWindowResize() {
-      if (calendarButton.current) {
-        const rect = calendarButton.current.getBoundingClientRect()
-        props.updatePopupPos({left: rect.left, bottom: rect.bottom})
+      if (calendarButtonRef.current) {
+        props.updatePopupPos({left: calendarButtonRef.current.getBoundingClientRect().left,
+                              bottom: liRef.current.getBoundingClientRect().bottom})
       }
     }
 
@@ -29,12 +30,12 @@ export default function OnFocusContent(props) {
   })
 
   return (
-    <li className='task-list-add-item no-hover'>
+    <li className='task-list-add-item no-hover' ref={liRef}>
       <div className="left-side">
         <input type="text" autoFocus></input>
       </div>
       <div className="right-side">
-        <button className="button-with-icon" type="button" onClick={handleCalendarClick} ref={calendarButton}>
+        <button className="button-with-icon" type="button" onClick={handleCalendarClick} ref={calendarButtonRef}>
           <img src={calendar} alt="date"></img>
         </button>
         <button className="submit" type="submit">

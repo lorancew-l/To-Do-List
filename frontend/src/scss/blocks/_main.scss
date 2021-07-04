@@ -171,16 +171,19 @@ main {
 
     padding-right: 5px;
 
-    & *:not(:last-child) {
+    & > *:not(:last-child) {
       margin-right: 10px;
     }
 
     .button-with-icon {
-      @extend .button-with-icon;
-      width: 16px;
-      height: 16px;
+      color: $text-primary-color;
+      text-transform: capitalize;
+
+      display: flex;
+      align-items: center;
 
       img {
+        margin-right: 5px;
         width: 16px;
         height: 16px;
       }
@@ -206,6 +209,10 @@ main {
       padding: 0;
       border: none;
       background-color: transparent;
+
+      &.disabled {
+        text-decoration: line-through;
+      }
     }
   }
 }

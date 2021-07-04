@@ -19,18 +19,18 @@ export default function Main(props) {
   return (
     <main className={props.showSidebar? 'sidebar-on': 'sidebar-off'}>
       <div className="container">
-        <div className="content">
-          <div className="task-list-header">
+        <div className="task-list-header">
+          <div className="task-list-header-content">
             <span>Сегодня</span>
             <small>{currentDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}</small>
           </div>
-          <ul className="task-list">
-              {taskList.map(task => {
-                return <TaskListItem key={task.id} taskData={task} onClick={props.onTaskClick}></TaskListItem>})
-              }
-              <AddTask showPopup={props.showPopup} updatePopupPos={props.updatePopupPos} updateTaskList={updateTaskList}></AddTask>
-          </ul>
         </div>
+        <ul className="task-list">
+            {taskList.map(task => {
+              return <TaskListItem key={task.id} taskData={task} onClick={props.onTaskClick}></TaskListItem>})
+            }
+            <AddTask showPopup={props.showPopup} updatePopupPos={props.updatePopupPos} updateTaskList={updateTaskList}></AddTask>
+        </ul>
       </div>
     </main>
   )

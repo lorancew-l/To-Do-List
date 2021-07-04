@@ -10,7 +10,7 @@ export default function OnFocusContent(props) {
   function handleCalendarClick() {
     props.updatePopupPos({left: calendarButtonRef.current.getBoundingClientRect().left,
                           bottom: liRef.current.getBoundingClientRect().bottom})
-    props.showPopup(<Calendar></Calendar>)
+    props.showPopup(<Calendar onDateClick={props.onDateClick}></Calendar>)
   }
 
   useEffect(() => {

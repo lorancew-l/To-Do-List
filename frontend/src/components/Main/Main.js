@@ -5,6 +5,7 @@ import AddTask from './AddTaskForm/AddTaskForm'
 
 export default function Main(props) {
   const [taskList, setTaskList] = useState([])
+  const currentDate = new Date()
 
   useEffect(() => {
     fetch('http://localhost:8000/api/task-list/')
@@ -18,7 +19,7 @@ export default function Main(props) {
         <div className="content">
           <div className="task-list-header">
             <span>Сегодня</span>
-            <small>Пн 1 марта</small>
+            <small>{currentDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}</small>
           </div>
           <ul className="task-list">
               {taskList.map(element => {

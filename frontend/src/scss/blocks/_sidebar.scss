@@ -29,6 +29,7 @@
   max-width: #{$sidebar-width - $sidebar-padding-left - 10};
 
   ul {
+    margin: 0;
     list-style-type: none;
     padding: 0px;
   }

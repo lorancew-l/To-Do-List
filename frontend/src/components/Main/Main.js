@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TaskListItem from './TaskListItem'
 import AddTask from './AddTaskForm/AddTaskForm'
+import { getTaskList } from '../../tools/api'
 
 
 export default function Main(props) {
@@ -8,10 +9,12 @@ export default function Main(props) {
   const currentDate = new Date()
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/task-list/')
-    .then(response => response.json())
-    .then(taskList => setTaskList(taskList))
-  })
+    updateTaskList()
+  }, [])  
+
+  function updateTaskList() {
+    getTaskList().then(data => setTaskList(data))
+  }
 
   return (
     <main className={props.showSidebar? 'sidebar-on': 'sidebar-off'}>
@@ -22,10 +25,10 @@ export default function Main(props) {
             <small>{currentDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}</small>
           </div>
           <ul className="task-list">
-              {taskList.map(element => {
-                return <TaskListItem key={element.id} title={element.title} onClick={props.onTaskClick}></TaskListItem>})
+              {taskList.map(task => {
+                return <TaskListItem key={task.id} taskData={task} onClick={props.onTaskClick}></TaskListItem>})
               }
-              <AddTask showPopup={props.showPopup} updatePopupPos={props.updatePopupPos}></AddTask>
+              <AddTask showPopup={props.showPopup} updatePopupPos={props.updatePopupPos} updateTaskList={updateTaskList}></AddTask>
           </ul>
         </div>
       </div>

@@ -22,7 +22,11 @@ export default function AddTaskForm(props) {
 
   function onSubmitHandler(event) {
     event.preventDefault()
-    console.log(addTask({'title': taskName, 'deadline': deadline}))
+    addTask({'title': taskName, 'deadline': deadline}).then(response => {
+      if (response.ok) {
+        props.updateTaskList()
+      }
+    })
   }
 
   function deadlineChangeHandler(newDate, stringRepresentation) {

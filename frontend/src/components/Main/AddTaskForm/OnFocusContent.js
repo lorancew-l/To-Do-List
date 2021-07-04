@@ -8,7 +8,6 @@ export default function OnFocusContent(props) {
   const liRef = useRef()
 
   function handleCalendarClick() {
-    console.log();
     props.updatePopupPos({left: calendarButtonRef.current.getBoundingClientRect().left,
                           bottom: liRef.current.getBoundingClientRect().bottom})
     props.showPopup(<Calendar></Calendar>)
@@ -32,13 +31,14 @@ export default function OnFocusContent(props) {
   return (
     <li className='task-list-add-item no-hover' ref={liRef}>
       <div className="left-side">
-        <input type="text" autoFocus></input>
+        <input type="text" autoFocus value={props.taskName} onChange={(e) => props.setTaskName(e.target.value)}></input>
       </div>
       <div className="right-side">
         <button className="button-with-icon" type="button" onClick={handleCalendarClick} ref={calendarButtonRef}>
           <img src={calendar} alt="date"></img>
+          <span>{props.deadline}</span>
         </button>
-        <button className="submit" type="submit">
+        <button className={props.taskName ? "submit" : "submit disabled"} type="submit" disabled={!props.taskName}>
           Добавить
         </button>
         <button className="cancel" type="button" onClick={props.onCancelClick}>

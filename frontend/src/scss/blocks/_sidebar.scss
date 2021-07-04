@@ -6,7 +6,7 @@
 
   height: 100vh;
 
-  padding-top: $sidebar-padding-top;
+  padding-top: $sidebar-padding-top + $header-content-height + 2 * $header-inner-padding;;
 
   background-color: $background-secondary-color;
   transition: 0.3s;

@@ -1,5 +1,9 @@
 main {
   transition: 0.3s;
+  height: 100vh;
+  overflow-y: auto;
+
+  padding-top: $header-content-height + 2 * $header-inner-padding;
 
   &.sidebar-on {
     padding-left: $sidebar-width;

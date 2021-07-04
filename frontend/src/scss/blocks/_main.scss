@@ -20,7 +20,7 @@ main {
   }
 
   .content {
-    padding-top: 45px;
+    padding-top: $sidebar-padding-top + $sidebar-item-padding-top;
   }
 }
 

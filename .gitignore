@@ -6,6 +6,7 @@ node_modules
 # testing
 frontend/coverage
 
+
 # production
 frontend/build
 
@@ -23,6 +24,9 @@ frontend/yarn-error.log*
 # env
 .idea
 venv
+todo/__pycache__
+api/__pycache__
+api/migrations
 
 # db
 db.sqlite3

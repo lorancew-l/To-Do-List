@@ -15,7 +15,6 @@ export default function Main(props) {
   function updateTaskList() {
     getTaskList().then(async response => {
       if (response.ok) {
-        console.log(response);
         const data = await response.json()
         setTaskList(data)
       } 

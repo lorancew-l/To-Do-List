@@ -20,7 +20,6 @@ export async function getTaskList() {
 }
 
 export async function completeTask(taskId) {
-  console.log(taskId);
   const response = await fetch(`http://localhost:8000/api/task-detail/${taskId}/`, {
     method: 'PATCH',
     mode: 'cors',

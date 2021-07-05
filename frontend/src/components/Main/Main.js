@@ -13,7 +13,13 @@ export default function Main(props) {
   }, [])  
 
   function updateTaskList() {
-    getTaskList().then(data => setTaskList(data))
+    getTaskList().then(async response => {
+      if (response.ok) {
+        console.log(response);
+        const data = await response.json()
+        setTaskList(data)
+      } 
+    })
   }
 
   return (
@@ -27,7 +33,8 @@ export default function Main(props) {
         </div>
         <ul className="task-list">
             {taskList.map(task => {
-              return <TaskListItem key={task.id} taskData={task} onClick={props.onTaskClick}></TaskListItem>})
+              return <TaskListItem key={task.id} taskData={task} onClick={props.onTaskClick}
+                                   updateTaskList={updateTaskList}></TaskListItem>})
             }
             <AddTask showPopup={props.showPopup} updatePopupPos={props.updatePopupPos} updateTaskList={updateTaskList}></AddTask>
         </ul>

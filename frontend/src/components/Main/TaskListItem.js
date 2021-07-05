@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { checkboxUnchecked , checkboxChecked, importantTaskInactive, importantTaskActive } from '../../images/index'
+import { completeTask } from '../../tools/api'
 
 export default function TaskListItem(props) {
   const [checkboxImg, setCheckboxImg] = useState(checkboxUnchecked)
@@ -26,17 +27,27 @@ export default function TaskListItem(props) {
     setStyle('task-list-task clicked')
     setTimeout(() => setStyle('task-list-task'), 400)
     props.onClick()
-  }                           
+  }
+  
+  function completeTaskClickHandler (event) {
+    event.stopPropagation()
+    completeTask(props.taskData.id).then(response => {
+      if (response.ok) {
+        props.updateTaskList()
+      }
+    })
+  }
+
   return (
     <li className={style} onClick={onClickHandler}>
       <div className="left-side">
-        <button onClick={event => event.stopPropagation()}> 
+        <button onClick={completeTaskClickHandler}> 
           <img alt="checkbox" src={checkboxImg}
             onMouseEnter={checkboxOnMouseEnterHandler}
             onMouseLeave={checkboxOnMouseLeaveHandler}/>
         </button>
         <span>
-          {props.title}
+          {props.taskData.title}
         </span>
       </div>
       <img onClick={event => event.stopPropagation()} alt='to favorite' src={importantImg}

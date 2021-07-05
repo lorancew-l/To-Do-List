@@ -16,9 +16,7 @@ export async function addTask(data) {
 export async function getTaskList() {
   const response = await fetch('http://localhost:8000/api/task-list/')
 
-  if (response.ok) {
-    return await response.json()
-  }
+  return response
 }
 
 export async function completeTask(taskId) {

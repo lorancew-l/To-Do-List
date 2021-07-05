@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { dailyTasksActive  } from '../../../images/index'
+import { dailyTasksActive } from '../../../images/index'
 import { getMonthNames, getWeekdayNames, getCalendarPage } from '../../../tools/dateTools'
 import CalendarRow from './CalendarRow'
 

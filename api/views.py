@@ -7,7 +7,7 @@ from rest_framework.generics import mixins
 
 
 class TaskList(generics.ListAPIView):
-    queryset = TaskModel.objects.all()
+    queryset = TaskModel.objects.filter(completed=False)
     serializer_class = TaskSerializer
 
 

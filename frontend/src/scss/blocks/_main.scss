@@ -81,25 +81,6 @@ main {
   &.clicked {
     animation: task-list-item-click 0.4s;
   }
-  
-  &:nth-last-child(2) {
-    position: relative;
-    margin-bottom: 32px;
-
-    &::after {
-      content: "";
-      position: absolute;
-  
-      top: 140%;
-      left: 0;
-      z-index: 1;
-    
-      width: 100%;
-      height: 1px;
-  
-      background-color: $background-tertiary-color;
-    }
-  }
 
   .left-side {
     display: flex;
@@ -133,6 +114,24 @@ main {
 
 .task-list-add-item {
   @extend .task-list-item;
+
+  position: relative;
+  margin-top: 29px;
+
+  &::before {
+    content: "";
+    position: absolute;
+
+    top: -40%;
+    left: 0;
+    z-index: 1;
+  
+    width: 100%;
+    height: 1px;
+
+    background-color: $background-tertiary-color;
+  }
+  
 
   .left-side {
     display: flex;

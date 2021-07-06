@@ -11,7 +11,7 @@ export class App extends Component {
     this.state = {showModal: false,
                   showSidebar: true,
                   popupContent: null,
-                  popupPos: {left: 0, bottom: 0}}
+                  popupPos: {bottom: null, top: null, left: null, right: null}}
   }
 
   showModal = () => this.setState({showModal: true})
@@ -39,8 +39,14 @@ export class App extends Component {
       <Fragment>
         <Header onSidebarChange={this.handleSidebarChange}></Header>
         <Sidebar showSidebar={this.state.showSidebar}></Sidebar>
-        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showPopup={this.showPopup} updatePopupPos={this.updatePopupPos}></Main>
-        { this.state.popupContent ? <Overlay popupPos={this.state.popupPos} closePopup={this.closePopup}>{this.state.popupContent}</Overlay> : null}
+        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showPopup={this.showPopup}
+              updatePopupPos={this.updatePopupPos}/>
+        { this.state.popupContent ? 
+          <Overlay popupPos={this.state.popupPos} closePopup={this.closePopup}>
+            {this.state.popupContent}
+          </Overlay>
+          : null
+        }
       </Fragment>
     );
   };

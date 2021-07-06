@@ -5,11 +5,16 @@ import Calendar from '../../Popups/Calendar/Calendar'
 
 export default function OnFocusContent(props) {
   const calendarButtonRef = useRef()
-  const liRef = useRef()
+  const liRef= useRef()
 
   function handleCalendarClick() {
-    props.updatePopupPos({left: calendarButtonRef.current.getBoundingClientRect().left,
-                          bottom: liRef.current.getBoundingClientRect().bottom})
+    props.updatePopupPos({
+      bottom: liRef.current.getBoundingClientRect().bottom,
+      top: liRef.current.getBoundingClientRect().top,
+      left: calendarButtonRef.current.getBoundingClientRect().left,
+      right: calendarButtonRef.current.getBoundingClientRect().right
+    })
+
     props.showPopup(<Calendar onDateClick={props.onDateClick}></Calendar>)
   }
 

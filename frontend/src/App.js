@@ -3,30 +3,27 @@ import './css/style.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar/SideBar'
 import Main from './components/Main/Main'
-import Overlay from './components/Popups/Overlay'
+import ModalOverlay from './components/Popups/ModalOverlay';
 
 export class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {showModal: false,
-                  showSidebar: true,
-                  popupContent: null,
-                  popupPos: {bottom: null, top: null, left: null, right: null}}
+    this.state = {showSidebar: true,
+                  modalShadow: false,
+                  modalContent: null,
+                  modalPos: {bottom: null, top: null, left: null, right: null}}
   }
 
-  showModal = () => this.setState({showModal: true})
-
-  closeModal = () => this.setState({showModal: false})
-
-  showPopup = (popupContent) => {
-    this.setState({popupContent: popupContent})
+  showModal = (modalContent, shadow) => {
+    this.setState({modalContent: modalContent, modalShadow: shadow})
   }
 
-  updatePopupPos = (pos) => {
-    this.setState({popupPos: pos})
+  updateModalPos = (pos) => {
+    this.setState({modalPos: pos})
   }
 
-  closePopup = () => this.setState({popupContent: null})
+  closeModal = () => this.setState({modalContent: null,  modalPos: {bottom: null, top: null, left: null, right: null},
+                                    modalShadow: false })
   
   handleSidebarChange = () => {
     this.setState(prevState => {
@@ -39,12 +36,12 @@ export class App extends Component {
       <Fragment>
         <Header onSidebarChange={this.handleSidebarChange}></Header>
         <Sidebar showSidebar={this.state.showSidebar}></Sidebar>
-        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showPopup={this.showPopup}
-              updatePopupPos={this.updatePopupPos}/>
-        { this.state.popupContent ? 
-          <Overlay popupPos={this.state.popupPos} closePopup={this.closePopup}>
-            {this.state.popupContent}
-          </Overlay>
+        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showModal={this.showModal}
+              updateModalPos={this.updateModalPos}/>
+        { this.state.modalContent ? 
+          <ModalOverlay modalPos={this.state.modalPos} closeModal={this.closeModal} shadow={this.state.modalShadow}>
+            {this.state.modalContent}
+          </ModalOverlay>
           : null
         }
       </Fragment>

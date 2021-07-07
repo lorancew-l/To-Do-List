@@ -40,7 +40,7 @@ export default function Calendar(props) {
 
   function submitDate(date, dateStringRepresentation) {
     props.onDateClick(date, dateStringRepresentation)
-    props.closePopup()
+    props.closeModal()
   }
 
   function handleSelectValueChange (newMonthValue) {

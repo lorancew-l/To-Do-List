@@ -8,20 +8,20 @@ export default function OnFocusContent(props) {
   const liRef= useRef()
 
   function handleCalendarClick() {
-    props.updatePopupPos({
+    props.updateModalPos({
       bottom: liRef.current.getBoundingClientRect().bottom,
       top: liRef.current.getBoundingClientRect().top,
       left: calendarButtonRef.current.getBoundingClientRect().left,
       right: calendarButtonRef.current.getBoundingClientRect().right
     })
 
-    props.showPopup(<Calendar onDateClick={props.onDateClick}></Calendar>)
+    props.showModal(<Calendar onDateClick={props.onDateClick}></Calendar>, false)
   }
 
   useEffect(() => {
     function onWindowResize() {
       if (calendarButtonRef.current) {
-        props.updatePopupPos({
+        props.updateModalPos({
           bottom: liRef.current.getBoundingClientRect().bottom,
           top: liRef.current.getBoundingClientRect().top,
           left: calendarButtonRef.current.getBoundingClientRect().left,

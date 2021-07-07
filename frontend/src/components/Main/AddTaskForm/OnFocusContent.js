@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { calendar } from '../../../images/index'
-import Calendar from '../../Popups/Calendar/Calendar'
+import Calendar from '../../Modal/Calendar/Calendar'
 
 
 export default function OnFocusContent(props) {

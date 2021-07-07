@@ -3,7 +3,7 @@ import './css/style.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar/SideBar'
 import Main from './components/Main/Main'
-import ModalOverlay from './components/Popups/ModalOverlay';
+import ModalOverlay from './components/Modal/ModalOverlay';
 
 export class App extends Component {
   constructor(props) {

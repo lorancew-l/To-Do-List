@@ -21,8 +21,12 @@ export default function OnFocusContent(props) {
   useEffect(() => {
     function onWindowResize() {
       if (calendarButtonRef.current) {
-        props.updatePopupPos({left: calendarButtonRef.current.getBoundingClientRect().left,
-                              bottom: liRef.current.getBoundingClientRect().bottom})
+        props.updatePopupPos({
+          bottom: liRef.current.getBoundingClientRect().bottom,
+          top: liRef.current.getBoundingClientRect().top,
+          left: calendarButtonRef.current.getBoundingClientRect().left,
+          right: calendarButtonRef.current.getBoundingClientRect().right
+        })
       }
     }
 

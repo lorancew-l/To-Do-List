@@ -1,6 +1,7 @@
 @import 'vars';
 @import 'fonts';
 @import 'animations';
+@import 'mixins';
 
 
 #root {
@@ -32,13 +33,9 @@ body {
   -webkit-user-drag: none;
 }
 
-.icon {
-  width: 16px;
-  height: 16px; 
-}
-
 @import './blocks/header';
 @import './blocks/sidebar';
 @import './blocks/main';
 @import './blocks/modal';
 @import './blocks/calendarPopup';
+@import './blocks/taskDetail';

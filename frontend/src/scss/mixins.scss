@@ -1,0 +1,15 @@
+@mixin icon($w: 16px, $h: 16px) {
+  width: $w;
+  height: $h; 
+}
+
+@mixin button-with-icon($w: 16px, $h: 16px)  {
+  cursor: pointer;
+  padding: 0;
+  background-color: transparent;
+  outline: none;
+  border: none;
+
+  width: $w;
+  height: $h; 
+}

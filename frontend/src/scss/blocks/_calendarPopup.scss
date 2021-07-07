@@ -69,8 +69,7 @@
   }
   
   .date-option-icon {
-    width: $calendar-date-option-icon-size;
-    height: $calendar-date-option-icon-size;
+    @include icon($calendar-date-option-icon-size, $calendar-date-option-icon-size);
     margin-right: 5px;
   }
 
@@ -80,7 +79,6 @@
 
   .date-option-weekday {
     margin-left: auto;
-
     text-transform: capitalize;
   } 
 }
@@ -109,13 +107,9 @@
   }
 
   .control-button {
-    width: 24px;
-    height: 24px;
+    @include button-with-icon(24px, 24px);
 
     color: $text-primary-color;
-    background-color: transparent;
-    
-    border: none;
     border-radius: 5px;
 
     &:hover {

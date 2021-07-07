@@ -48,11 +48,8 @@
 
   
   img {
-    padding: 0px;
+    @include icon($siebar-item-icon-size, $siebar-item-icon-size);
     margin-right: 10px;
-    
-    width: $siebar-item-icon-size;
-    height: $siebar-item-icon-size;
   }
 
   &:hover {

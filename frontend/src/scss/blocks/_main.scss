@@ -52,6 +52,7 @@ main {
   display: flex;
   align-items: center;
   user-select: none;
+  justify-content: space-between;
 
   padding: 7px;
   border-radius: 4px;
@@ -65,6 +66,11 @@ main {
   &:not(:last-child) {
     margin-bottom: 10px;
   }
+
+  .left-side {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .task-list-task {
@@ -75,25 +81,14 @@ main {
   }
 
   .left-side {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    flex: 1;
-
-    justify-content: flex-start;
-
     button {
-      @include button-with-icon($task-list-task-checkbox-size, $task-list-task-checkbox-size);
-      margin-right: $task-list-item-icon-right-margin;
-
-      img {
-        @include icon($task-list-task-checkbox-size, $task-list-task-checkbox-size);
-      }
+      @include button-with-icon($task-checkbox-size, $task-checkbox-size);
+      margin-right: $task-checkbox-right-margin;
     }
   }
 
-  & > img {
-    @include icon;
+  & > button {
+    @include button-with-icon(16px, 16px);
   }
 }
 
@@ -118,24 +113,14 @@ main {
   }
   
   .left-side {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
     flex: 1;
-
-    justify-content: flex-start;
-
     cursor: text;
 
     button {
       @include button-with-icon($add-task-icon-size, $add-task-icon-size);
 
-      margin-left: ($task-list-task-checkbox-size - $add-task-icon-size) / 2;
-      margin-right: ($task-list-task-checkbox-size - $add-task-icon-size) / 2 + $task-list-item-icon-right-margin;
-      
-      img {
-        @include icon($add-task-icon-size, $add-task-icon-size)
-      }
+      margin-left: ($task-checkbox-size - $add-task-icon-size) / 2;
+      margin-right: ($task-checkbox-size - $add-task-icon-size) / 2 + $task-checkbox-right-margin;
     }
 
     input[type=text] {

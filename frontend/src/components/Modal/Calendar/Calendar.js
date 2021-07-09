@@ -17,6 +17,15 @@ export default function Calendar(props) {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [style, setStyle] = useState({opacity: 0})
 
+
+  useEffect(() => {
+    window.addEventListener('resize', props.onWindowResize)
+ 
+    return () => {
+      window.removeEventListener('resize', props.onWindowResize)
+    }
+  }, [props.onWindowResize])
+
   useEffect(() => {
     setStyle({transform: `translate(${props.pos.x}px, ${props.pos.y}px)`, opacity: 1})
   }, [props.pos])

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { dailyTasksActive } from '../../../images/index'
 import { getMonthNames, getWeekdayNames, getCalendarPage } from '../../../tools/dateTools'
 import CalendarRow from './CalendarRow'
@@ -17,30 +17,13 @@ export default function Calendar(props) {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [style, setStyle] = useState({opacity: 0})
 
-  const calendarRef = useRef(null)
-
   useEffect(() => {
-    const bottomOffset = 70
-    const calendarHeight = calendarRef.current.getBoundingClientRect().height
-    let translateY
-
-    if (calendarHeight + props.pos.bottom < window.innerHeight) {
-      translateY = props.pos.bottom
-    }
-    else if ((calendarHeight + props.pos.top + props.pos.bottom) / 2 + bottomOffset < window.innerHeight) {
-      translateY = (props.pos.top + props.pos.bottom - calendarHeight) / 2
-    }
-    else {
-      translateY = props.pos.top - calendarHeight
-    }
-
-    setStyle({transform: `translate(${props.pos.left - 2}px, ${translateY}px)`, opacity: 1})
-
+    setStyle({transform: `translate(${props.pos.x}px, ${props.pos.y}px)`, opacity: 1})
   }, [props.pos])
 
   function submitDate(date, dateStringRepresentation) {
     props.onDateClick(date, dateStringRepresentation)
-    props.closeModal()
+    props.closePopper()
   }
 
   function handleSelectValueChange (newMonthValue) {
@@ -82,7 +65,7 @@ export default function Calendar(props) {
   }
 
   return (
-    <div className="calendar-popup" style={style} onClick={(event) => event.stopPropagation()} ref={calendarRef}>
+    <div className="calendar-popup" style={style} onClick={(event) => event.stopPropagation()}>
       <div className="current-date">
         {currentDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}
       </div>

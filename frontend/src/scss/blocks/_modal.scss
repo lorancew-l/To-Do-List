@@ -13,3 +13,8 @@
     background-color: rgba(0,0,0,0.4);
   }
 }
+
+.popper-overlay {
+  @extend .modal-overlay;
+  z-index: 200;
+}

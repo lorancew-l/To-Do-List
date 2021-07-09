@@ -4,26 +4,33 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar/SideBar'
 import Main from './components/Main/Main'
 import ModalOverlay from './components/Modal/ModalOverlay';
+import PopperOverlay from './components/Modal/PopperOverlay'
+
 
 export class App extends Component {
   constructor(props) {
     super(props)
     this.state = {showSidebar: true,
-                  modalShadow: false,
                   modalContent: null,
-                  modalPos: {bottom: null, top: null, left: null, right: null}}
+                  popperContent: null,
+                  popperPos: {x: 0, y: 0}}
   }
 
-  showModal = (modalContent, shadow) => {
-    this.setState({modalContent: modalContent, modalShadow: shadow})
+  showModal = (modalContent) => {
+    this.setState({modalContent: modalContent})
   }
 
-  updateModalPos = (pos) => {
-    this.setState({modalPos: pos})
+  closeModal = () => this.setState({modalContent: null})
+
+  showPopper = (popperContent) => {
+    this.setState({popperContent: popperContent})
   }
 
-  closeModal = () => this.setState({modalContent: null,  modalPos: {bottom: null, top: null, left: null, right: null},
-                                    modalShadow: false })
+  updatePopperPos = (pos) => {
+    this.setState({popperPos: pos})
+  }
+
+  closePopper = () => this.setState({popperContent: null})
   
   handleSidebarChange = () => {
     this.setState(prevState => {
@@ -36,12 +43,18 @@ export class App extends Component {
       <Fragment>
         <Header onSidebarChange={this.handleSidebarChange}></Header>
         <Sidebar showSidebar={this.state.showSidebar}></Sidebar>
-        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showModal={this.showModal}
-              updateModalPos={this.updateModalPos}/>
+        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showModal={this.showModal} showPopper={this.showPopper}
+              updatePopperPos={this.updatePopperPos}/>
         { this.state.modalContent ? 
-          <ModalOverlay modalPos={this.state.modalPos} closeModal={this.closeModal} shadow={this.state.modalShadow}>
+          <ModalOverlay closeModal={this.closeModal}>
             {this.state.modalContent}
           </ModalOverlay>
+          : null
+        }
+        { this.state.popperContent ? 
+          <PopperOverlay popperPos={this.state.popperPos} closePopper={this.closePopper}>
+            {this.state.popperContent}
+          </PopperOverlay>
           : null
         }
       </Fragment>

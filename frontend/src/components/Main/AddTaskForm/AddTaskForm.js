@@ -36,8 +36,8 @@ export default function AddTaskForm(props) {
 
   return (
     <form onSubmit={onSubmitHandler}>
-      {onFocus? <OnFocusContent onCancelClick={cancelClickHandler} showModal={props.showModal} taskName={taskName}
-                                updateModalPos={props.updateModalPos} deadline={deadlineStringRepresentation}
+      {onFocus? <OnFocusContent onCancelClick={cancelClickHandler} showPopper={props.showPopper} taskName={taskName}
+                                updatePopperPos={props.updatePopperPos} deadline={deadlineStringRepresentation}
                                 onDateClick={deadlineChangeHandler} setTaskName={setTaskName}></OnFocusContent>
               : <NoFocusContent onClick={addTaskClickHandler}></NoFocusContent>}
     </form>

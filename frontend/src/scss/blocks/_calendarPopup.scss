@@ -163,8 +163,11 @@
     }
   }
 
-  .today {
-    border: none;
+  .selected {
     background-color: $selection-color;
+  }
+
+  .today {
+    color: $accent-color;
   }
 }

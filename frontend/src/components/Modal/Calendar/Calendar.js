@@ -14,7 +14,7 @@ export default function Calendar(props) {
   const monthNamesList = getMonthNames()
   const weekdayNamesList = getWeekdayNames()
   
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(props.selectedDate || new Date())
 
   useEffect(() => {
     window.addEventListener('resize', props.onWindowResize)
@@ -129,7 +129,8 @@ export default function Calendar(props) {
           </thead>
           <tbody>
             {getCalendarPage(42, selectedDate.getFullYear(), selectedDate.getMonth()).map((weekdays, index) => {
-              return <CalendarRow today={currentDate} key={index} rowData={weekdays} onClick={handleCellClick}></CalendarRow>
+              return <CalendarRow selected={props.selectedDate} today={currentDate}
+                                  key={index} rowData={weekdays} onClick={handleCellClick}></CalendarRow>
             })}
           </tbody>
         </table>

@@ -15,20 +15,15 @@ export default function Calendar(props) {
   const weekdayNamesList = getWeekdayNames()
   
   const [selectedDate, setSelectedDate] = useState(new Date())
-  const [style, setStyle] = useState({opacity: 0})
-
 
   useEffect(() => {
     window.addEventListener('resize', props.onWindowResize)
  
     return () => {
+      props.onClose()
       window.removeEventListener('resize', props.onWindowResize)
     }
-  }, [props.onWindowResize])
-
-  useEffect(() => {
-    setStyle({transform: `translate(${props.pos.x}px, ${props.pos.y}px)`, opacity: 1})
-  }, [props.pos])
+  }, [props])
 
   function submitDate(date, dateStringRepresentation) {
     props.onDateClick(date, dateStringRepresentation)
@@ -74,7 +69,7 @@ export default function Calendar(props) {
   }
 
   return (
-    <div className="calendar-popup" style={style} onClick={(event) => event.stopPropagation()}>
+    <div className="calendar-popup" style={{transform: `translate(${props.pos.x}px, ${props.pos.y}px)`}} onClick={(event) => event.stopPropagation()}>
       <div className="current-date">
         {currentDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}
       </div>

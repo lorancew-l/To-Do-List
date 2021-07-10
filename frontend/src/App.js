@@ -44,9 +44,9 @@ export class App extends Component {
         <Header onSidebarChange={this.handleSidebarChange}></Header>
         <Sidebar showSidebar={this.state.showSidebar}></Sidebar>
         <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showModal={this.showModal} showPopper={this.showPopper}
-              updatePopperPos={this.updatePopperPos}/>
+              popperPos={this.state.popperPos} updatePopperPos={this.updatePopperPos}/>
         { this.state.modalContent ? 
-          <ModalOverlay closeModal={this.closeModal}>
+          <ModalOverlay closeModal={this.closeModal} popperPos={this.state.popperPos}>
             {this.state.modalContent}
           </ModalOverlay>
           : null

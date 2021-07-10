@@ -35,7 +35,7 @@ export default function Main(props) {
               return <TaskListItem key={task.id} taskData={task} showModal={props.showModal} showPopper={props.showPopper} 
                                    updatePopperPos={props.updatePopperPos} updateTaskList={updateTaskList}></TaskListItem>})
             }
-            <AddTask showPopper={props.showPopper} updatePopperPos={props.updatePopperPos}
+            <AddTask showPopper={props.showPopper} popperPos={props.popperPos} updatePopperPos={props.updatePopperPos}
                      updateTaskList={updateTaskList}></AddTask>
         </ul>
       </div>

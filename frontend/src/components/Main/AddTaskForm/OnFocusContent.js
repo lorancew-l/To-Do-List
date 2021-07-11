@@ -44,7 +44,7 @@ export default function OnFocusContent(props) {
     if (isCalendarOpen) {
       const currentPos = calculateCalendarPos()
       if (props.popperPos.x === currentPos.x & props.popperPos.y === currentPos.y) {
-        props.showPopper(<Calendar onDateClick={props.onDateClick} onWindowResize={updateCalendarPos} 
+        props.showPopper(<Calendar onDateClick={props.onDateClick} onWindowResize={updateCalendarPos} selectedDate={props.deadline}
                                    onClose={() => setCalendarOpen(false)}></Calendar>)
       }
     }
@@ -58,7 +58,7 @@ export default function OnFocusContent(props) {
       <div className="right-side">
         <button className="button-with-icon" type="button" onClick={handleCalendarClick} ref={calendarButtonRef}>
           <img src={calendar} alt="date"></img>
-          <div>{props.deadline}</div>
+          <div>{props.deadlineStringRepresentation}</div>
         </button>
         <button className={props.taskName ? "submit" : "submit disabled"} type="submit" disabled={!props.taskName}>
           Добавить

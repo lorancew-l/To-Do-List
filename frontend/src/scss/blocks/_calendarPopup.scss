@@ -170,4 +170,9 @@
   .today {
     color: $accent-color;
   }
+
+  .other-month {
+    color: $text-secondary-color;
+    opacity: 0.5;
+  }
 }

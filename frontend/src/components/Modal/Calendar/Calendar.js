@@ -129,7 +129,7 @@ export default function Calendar(props) {
           </thead>
           <tbody>
             {getCalendarPage(42, selectedDate.getFullYear(), selectedDate.getMonth()).map((weekdays, index) => {
-              return <CalendarRow selected={props.selectedDate} today={currentDate}
+              return <CalendarRow selected={props.selectedDate} today={currentDate} month={selectedDate.getMonth()}
                                   key={index} rowData={weekdays} onClick={handleCellClick}></CalendarRow>
             })}
           </tbody>

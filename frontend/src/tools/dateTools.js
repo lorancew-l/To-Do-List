@@ -28,7 +28,8 @@ export function getWeekdayNames () {
 
 export function getCalendarPage(datesPerPage, year, month) {
   const date = new Date(year, month, 1)
-  const leftDate = subDays(date, date.getDay() - 1) 
+
+  const leftDate = (date.getDay() === 0) ? subDays(date, 6) : subDays(date, date.getDay() - 1)
   const rightDate = addDays(date, datesPerPage - date.getDay())
 
   let days = eachDayOfInterval({start: leftDate, end: rightDate})

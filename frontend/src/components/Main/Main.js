@@ -32,11 +32,9 @@ export default function Main(props) {
         </div>
         <ul className="task-list">
             {taskList.map(task => {
-              return <TaskListItem key={task.id} taskData={task} showModal={props.showModal} showPopper={props.showPopper} 
-                                   updatePopperPos={props.updatePopperPos} updateTaskList={updateTaskList}></TaskListItem>})
+              return <TaskListItem key={task.id} taskData={task} updateTaskList={updateTaskList}></TaskListItem>})
             }
-            <AddTask showPopper={props.showPopper} popperPos={props.popperPos} updatePopperPos={props.updatePopperPos}
-                     updateTaskList={updateTaskList}></AddTask>
+            <AddTask updateTaskList={updateTaskList}></AddTask>
         </ul>
       </div>
     </main>

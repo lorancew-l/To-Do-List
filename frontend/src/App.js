@@ -3,17 +3,12 @@ import './css/style.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar/SideBar'
 import Main from './components/Main/Main'
-import ModalOverlay from './components/Modal/ModalOverlay';
-import PopperOverlay from './components/Modal/PopperOverlay'
 
 
 export class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {showSidebar: true,
-                  modalContent: null,
-                  popperContent: null,
-                  popperPos: {x: 0, y: 0}}
+    this.state = {showSidebar: true}
   }
 
   showModal = (modalContent) => {
@@ -43,20 +38,7 @@ export class App extends Component {
       <Fragment>
         <Header onSidebarChange={this.handleSidebarChange}></Header>
         <Sidebar showSidebar={this.state.showSidebar}></Sidebar>
-        <Main onTaskClick={this.showModal} showSidebar={this.state.showSidebar} showModal={this.showModal} showPopper={this.showPopper}
-              popperPos={this.state.popperPos} updatePopperPos={this.updatePopperPos}/>
-        { this.state.modalContent ? 
-          <ModalOverlay closeModal={this.closeModal} popperPos={this.state.popperPos}>
-            {this.state.modalContent}
-          </ModalOverlay>
-          : null
-        }
-        { this.state.popperContent ? 
-          <PopperOverlay popperPos={this.state.popperPos} closePopper={this.closePopper}>
-            {this.state.popperContent}
-          </PopperOverlay>
-          : null
-        }
+        <Main showSidebar={this.state.showSidebar}/>
       </Fragment>
     );
   };

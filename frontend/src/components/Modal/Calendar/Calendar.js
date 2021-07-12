@@ -20,7 +20,6 @@ export default function Calendar(props) {
     window.addEventListener('resize', props.onWindowResize)
  
     return () => {
-      props.onClose()
       window.removeEventListener('resize', props.onWindowResize)
     }
   }, [props])

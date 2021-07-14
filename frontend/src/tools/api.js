@@ -19,7 +19,7 @@ export async function getTaskList() {
   return response
 }
 
-export async function completeTask(taskId) {
+export async function updateTask(taskId, taskData) {
   const response = await fetch(`http://localhost:8000/api/task-detail/${taskId}/`, {
     method: 'PATCH',
     mode: 'cors',
@@ -28,7 +28,7 @@ export async function completeTask(taskId) {
     headers: {'Content-Type': 'application/json'},
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
-    body: JSON.stringify({completed: true})
+    body: JSON.stringify(taskData)
   })
 
   return response

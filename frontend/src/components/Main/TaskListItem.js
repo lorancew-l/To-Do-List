@@ -1,6 +1,7 @@
+  
 import React, { useState } from 'react'
 import { checkboxUnchecked , checkboxChecked, importantTaskInactive, importantTaskActive } from '../../images/index'
-import { completeTask } from '../../tools/api'
+import { updateTask } from '../../tools/api'
 
 export default function TaskListItem(props) {
   const [checkboxIcon, setCheckboxIcon] = useState(checkboxUnchecked)
@@ -15,7 +16,7 @@ export default function TaskListItem(props) {
   
   function completeTaskClickHandler (event) {
     event.stopPropagation()
-    completeTask(props.taskData.id).then(response => {
+    updateTask(props.taskData.id, {completed: true}).then(response => {
       if (response.ok) {
         props.updateTaskList()
       }

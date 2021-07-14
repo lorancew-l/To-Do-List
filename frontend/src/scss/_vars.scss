@@ -29,5 +29,6 @@ $add-task-icon-size: 18px;
 
 // calendarPopup
 $calendar-padding: 10px;
-$calendar-date-option-height: 25px;
+$calendar-date-option-padding: 8px $calendar-padding;
 $calendar-date-option-icon-size: 18px;
+$calendar-date-option-icon-margin-right: 10px;

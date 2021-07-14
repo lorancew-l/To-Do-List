@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
 
-  padding: 5px $calendar-padding;
+  padding: $calendar-date-option-padding;
 
   background-color: transparent;
   border: none;
@@ -60,7 +60,6 @@
   height: 100%;
 
   color: $text-primary-color;
-  line-height: $calendar-date-option-height;
 
   transition: 0.1s;
 
@@ -70,7 +69,7 @@
   
   .date-option-icon {
     @include icon($calendar-date-option-icon-size, $calendar-date-option-icon-size);
-    margin-right: 5px;
+    margin-right: $calendar-date-option-icon-margin-right;
   }
 
   .date-option-label {

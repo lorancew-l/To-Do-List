@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { dailyTasksActive } from '../../../images/index'
+import { calendarToday, calendarTomorrow, calendarNextWeek, calendarNoDeadline } from '../../../images/index'
 import { getMonthNames, getWeekdayNames, getCalendarPage } from '../../../tools/dateTools'
 import CalendarRow from './CalendarRow'
 
@@ -74,14 +74,14 @@ export default function Calendar(props) {
       </div>
       <div className="date-options">
         <button className="date-option" onClick={() => submitDate(currentDate, "Сегодня")}>
-          <img className="date-option-icon" src={ dailyTasksActive } alt=""></img>
+          <img className="date-option-icon" src={ calendarToday } alt=""></img>
           <div className="date-option-label">Сегодня</div>
           <div className="date-option-weekday">
             {currentDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
           </div>
         </button>
         <button className="date-option" onClick={() => submitDate(tommorowDate, "Завтра")}>
-          <img className="date-option-icon" src={ dailyTasksActive } alt=""></img>
+          <img className="date-option-icon" src={ calendarTomorrow} alt=""></img>
           <div className="date-option-label">Завтра</div>
           <div className="date-option-weekday">
             {tommorowDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
@@ -89,14 +89,14 @@ export default function Calendar(props) {
         </button>
         <button className="date-option" onClick={() => submitDate(nextWeekDate,
                                                        nextWeekDate.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric'}))}>
-          <img className="date-option-icon" src={ dailyTasksActive } alt=""></img>
+          <img className="date-option-icon" src={ calendarNextWeek } alt=""></img>
           <div className="date-option-label">Следующая неделя</div>
           <div className="date-option-weekday">
             {nextWeekDate.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric'})}
           </div>
         </button>
         <button className="date-option" onClick={() => submitDate(null, null)}>
-          <img className="date-option-icon" src={ dailyTasksActive } alt=""></img>
+          <img className="date-option-icon" src={ calendarNoDeadline } alt=""></img>
           <div className="date-option-label">Нет срока</div>
         </button>
       </div>

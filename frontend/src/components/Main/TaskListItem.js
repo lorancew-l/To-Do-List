@@ -31,13 +31,12 @@ export default function TaskListItem(props) {
             onMouseEnter={() => setCheckboxIcon(checkboxChecked)}
             onMouseLeave={() => setCheckboxIcon(checkboxUnchecked)}/>
         </button>
-        <span>
-          {props.taskData.title}
-        </span>
+        <div>{props.taskData.title}</div>
       </div>
-      <img onClick={event => event.stopPropagation()} alt='to favorite' src={importantIcon}
-        onMouseEnter={() => setImportantIcon(importantTaskActive)}
-        onMouseLeave={() => setImportantIcon(importantTaskInactive)}/>
+      <button onClick={event => event.stopPropagation()} onMouseEnter={() => setImportantIcon(importantTaskActive)}
+              onMouseLeave={() => setImportantIcon(importantTaskInactive)}>
+        <img alt='to favorite' src={importantIcon}/>
+      </button>
     </li>
   )
 }

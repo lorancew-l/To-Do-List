@@ -10,7 +10,7 @@ export default function OnFocusContent(props) {
 
   const isFirstRun = useRef(true);
 
-  const calendarHeight = 476 
+  const calendarHeight = 472
   const [isCalendarOpen, setCalendarOpen] = useState(false)
   const [calendarPos, setCalendarPos] = useState({x: 0, y: 0})
 

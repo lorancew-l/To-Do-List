@@ -13,3 +13,63 @@
   width: $w;
   height: $h; 
 }
+
+@mixin task-item {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  justify-content: space-between;
+
+  padding: 7px;
+  border-radius: 4px;
+  background-color: $background-secondary-color;
+  height: $task-list-item-height;
+
+  &:not(.no-hover):hover {
+      background-color: $selection-color;
+  }
+
+  .left-side {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@mixin add-edit-item {
+  input[type=text] {
+    outline: none;
+    background-color: transparent;
+    border: none;
+
+    color: $text-primary-color;
+
+    margin-right: 10px;
+    width: 100%;
+  }
+
+  .cancel {
+    cursor: pointer;
+    color: $text-secondary-color;
+    
+    padding: 0;
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .submit {
+    cursor: pointer;
+    color: $accent-color;
+
+    padding: 0;
+    border: none;
+    background-color: transparent;
+
+    &.disabled {
+      text-decoration: line-through;
+    }
+  }
+}

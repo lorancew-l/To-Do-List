@@ -55,7 +55,7 @@ export default function OnFocusContent(props) {
           <input type="text" autoFocus value={props.taskName} onChange={(e) => props.setTaskName(e.target.value)}></input>
         </div>
         <div className="right-side">
-          <button className="button-with-icon" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>
+          <button className="show-calendar" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>
             <img src={calendar} alt="date"></img>
             <div>{props.deadlineStringRepresentation}</div>
           </button>

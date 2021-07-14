@@ -48,36 +48,15 @@ main {
   margin: 0;
 }
 
-%task-list-item {
-  display: flex;
-  align-items: center;
-  user-select: none;
-  justify-content: space-between;
+.task-list-task {
+  @include task-item;
 
-  padding: 7px;
-  border-radius: 4px;
-  background-color: $background-secondary-color;
-  height: $task-list-item-height;
-
-  &:not(.no-hover):hover {
-      background-color: $selection-color;
+  &.clicked {
+    animation: task-list-item-click 0.4s;
   }
 
   &:not(:last-child) {
     margin-bottom: 10px;
-  }
-
-  .left-side {
-    display: flex;
-    align-items: center;
-  }
-}
-
-.task-list-task {
-  @extend %task-list-item;
-
-  &.clicked {
-    animation: task-list-item-click 0.4s;
   }
 
   .left-side {
@@ -93,7 +72,8 @@ main {
 }
 
 .task-list-add-item {
-  @extend %task-list-item;
+  @include task-item;
+  @include add-edit-item;
 
   position: relative;
   margin-top: 29px;
@@ -122,17 +102,6 @@ main {
       margin-left: ($task-checkbox-size - $add-task-icon-size) / 2;
       margin-right: ($task-checkbox-size - $add-task-icon-size) / 2 + $task-checkbox-right-margin;
     }
-
-    input[type=text] {
-      outline: none;
-      background-color: transparent;
-      border: none;
-
-      color: $text-primary-color;
-
-      margin-right: 10px;
-      width: 100%;
-    }
   }
 
   .right-side {
@@ -147,45 +116,20 @@ main {
       margin-right: 10px;
     }
 
-    
+    .show-calendar {
+      color: $text-primary-color;
+    }
+
     button {
       @include button-with-icon(auto, auto);
-
-      color: $text-primary-color;
       text-transform: capitalize;
 
       display: flex;
       align-items: center;
 
       img {
-        @include icon;
+        @include icon(18px, 18px);
         margin-right: 5px;
-      }
-    }
-
-    .cancel {
-      cursor: pointer;
-      color: $text-secondary-color;
-      
-      padding: 0;
-      border: none;
-      background-color: transparent;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    .submit {
-      cursor: pointer;
-      color: $accent-color;
-
-      padding: 0;
-      border: none;
-      background-color: transparent;
-
-      &.disabled {
-        text-decoration: line-through;
       }
     }
   }

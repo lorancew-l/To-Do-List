@@ -8,3 +8,9 @@ class TaskModel(models.Model):
     deadline = models.DateTimeField(null=True, blank=True)
     completed = models.BooleanField(default=False)
 
+class SubtaskModel(models.Model):
+    id = models.AutoField(primary_key=True)
+    task = models.ForeignKey(TaskModel, on_delete=models.CASCADE)
+    title = models.CharField(max_length=64, default='')
+    creation_date = models.DateTimeField(auto_now_add=True)
+    completed = models.BooleanField(default=False)

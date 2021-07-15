@@ -18,6 +18,27 @@ main {
     max-width: 40%;
     width: 100%;
   }
+
+  padding-bottom: 100px;
+
+  &::-webkit-scrollbar {
+    width: 10px; 
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: lighten($color:  $selection-color, $amount: 20%);
+    border-radius: 8px;
+    
+    &:hover {
+      background-color: lighten($color:  $selection-color, $amount: 100%);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-top: $header-content-height + 2 * $header-inner-padding;
+    border-radius: 8px;
+    background-color: $background-secondary-color;
+  }
 }
 
 .task-list-header {

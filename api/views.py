@@ -6,7 +6,7 @@ from rest_framework import generics
 from rest_framework.generics import mixins
 
 
-class TaskList(generics.ListAPIView):
+class TaskList(generics.ListCreateAPIView):
     queryset = TaskModel.objects.filter(completed=False)
     serializer_class = TaskSerializer
 
@@ -22,9 +22,6 @@ class TaskDetail(generics.GenericAPIView,
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)

@@ -1,5 +1,5 @@
 export async function addTask(data) {
-  const response = await fetch('http://localhost:8000/api/task-detail/post/', {
+  const response = await fetch('http://localhost:8000/api/tasks/', {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
@@ -14,13 +14,13 @@ export async function addTask(data) {
 }
 
 export async function getTaskList() {
-  const response = await fetch('http://localhost:8000/api/task-list/')
+  const response = await fetch('http://localhost:8000/api/tasks/')
 
   return response
 }
 
 export async function updateTask(taskId, taskData) {
-  const response = await fetch(`http://localhost:8000/api/task-detail/${taskId}/`, {
+  const response = await fetch(`http://localhost:8000/api/tasks/${taskId}/`, {
     method: 'PATCH',
     mode: 'cors',
     cache: 'no-cache',

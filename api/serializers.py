@@ -5,7 +5,7 @@ from .models import TaskModel, SubtaskModel
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskModel
-        fields = ('id', 'title', 'deadline', 'completed', 'creation_date')
+        fields = ('id', 'title', 'deadline', 'completed', 'note', 'creation_date')
 
 class SubtaskSerializer(serializers.ModelSerializer):
     class Meta:

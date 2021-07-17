@@ -7,6 +7,7 @@ class TaskModel(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField(null=True, blank=True)
     completed = models.BooleanField(default=False)
+    note = models.TextField(null=True, blank=True)
 
 class SubtaskModel(models.Model):
     id = models.AutoField(primary_key=True)

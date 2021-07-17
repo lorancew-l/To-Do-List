@@ -55,7 +55,7 @@ export default function OnFocusContent(props) {
 
   return (
     <Fragment>
-      <form onSubmit={props.onSubmit}>
+      <form className="add-task-form" onSubmit={props.onSubmit}>
         <li className='task-list-add-item no-hover' ref={liRef}>
           <div className="left-side">
             <input ref={inputRef} type="text" value={props.taskName} autoFocus

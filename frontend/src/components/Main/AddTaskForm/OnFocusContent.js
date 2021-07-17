@@ -5,8 +5,9 @@ import PopperOverlay from '../../Modal/PopperOverlay'
 
 
 export default function OnFocusContent(props) {
-  const calendarButtonRef = useRef()
-  const liRef = useRef()
+  const calendarButtonRef = useRef(null)
+  const liRef = useRef(null)
+  const inputRef = useRef(null)
 
   const isFirstRun = useRef(true);
 
@@ -35,24 +36,29 @@ export default function OnFocusContent(props) {
     return {x: pos.left - 2, y: y}
   }
 
-  useEffect (() => {
+  useEffect(() => {
     if (!isFirstRun.current) {
       if (!isCalendarOpen) {
         setCalendarOpen(true)
       }
     }
     else {
-      isFirstRun.current = false;
+      isFirstRun.current = false
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calendarPos])
 
+  useEffect(() => {
+    inputRef.current.focus()
+  }, [props.taskName])
+
   return (
     <Fragment>
       <li className='task-list-add-item no-hover' ref={liRef}>
         <div className="left-side">
-          <input type="text" autoFocus value={props.taskName} onChange={(e) => props.setTaskName(e.target.value)}></input>
+          <input ref={inputRef} type="text" value={props.taskName} autoFocus
+                 onChange={(e) => props.setTaskName(e.target.value)}></input>
         </div>
         <div className="right-side">
           <button className="show-calendar" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>

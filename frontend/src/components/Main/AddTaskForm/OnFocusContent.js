@@ -55,24 +55,26 @@ export default function OnFocusContent(props) {
 
   return (
     <Fragment>
-      <li className='task-list-add-item no-hover' ref={liRef}>
-        <div className="left-side">
-          <input ref={inputRef} type="text" value={props.taskName} autoFocus
-                 onChange={(e) => props.setTaskName(e.target.value)}></input>
-        </div>
-        <div className="right-side">
-          <button className="show-calendar" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>
-            <img src={calendar} alt="date"></img>
-            <div>{props.deadlineStringRepresentation}</div>
-          </button>
-          <button className={props.taskName ? "submit" : "submit disabled"} type="submit" disabled={!props.taskName}>
-            Добавить
-          </button>
-          <button className="cancel" type="button" onClick={props.onCancelClick}>
-            Отменить
-          </button>
-        </div>
-      </li>
+      <form onSubmit={props.onSubmit}>
+        <li className='task-list-add-item no-hover' ref={liRef}>
+          <div className="left-side">
+            <input ref={inputRef} type="text" value={props.taskName} autoFocus
+                  onChange={(e) => props.setTaskName(e.target.value)}></input>
+          </div>
+          <div className="right-side">
+            <button className="show-calendar" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>
+              <img src={calendar} alt="date"></img>
+              <div>{props.deadlineStringRepresentation}</div>
+            </button>
+            <button className={props.taskName ? "submit" : "submit disabled"} type="submit" disabled={!props.taskName}>
+              Добавить
+            </button>
+            <button className="cancel" type="button" onClick={props.onCancelClick}>
+              Отменить
+            </button>
+          </div>
+        </li>
+      </form>
       {isCalendarOpen ? 
       <PopperOverlay closePopper={() => setCalendarOpen(false)}>
         <Calendar onDateClick={props.onDateClick} pos={calendarPos} onWindowResize={() => setCalendarPos(calculateCalendarPos())}

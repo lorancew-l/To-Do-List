@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import NoFocusContent from '../../AddItemForm/NoFocusContent'
 import OnFocusContent from './OnFocusContent'
 import { quickTask } from '../../../images/index'
@@ -22,6 +22,7 @@ export default function AddTaskForm(props) {
     event.preventDefault()
     addTask({'title': taskName, 'deadline': deadline}).then(response => {
       if (response.ok) {
+        setTaskName('')
         props.updateTaskList()
       }
     })
@@ -33,12 +34,12 @@ export default function AddTaskForm(props) {
   }
 
   return (
-    <form onSubmit={submitHandler}>
-      {onFocus? <OnFocusContent onCancelClick={cancelClickHandler} taskName={taskName} deadline={deadline}
+    <Fragment>
+      {onFocus? <OnFocusContent onSubmit={submitHandler} onCancelClick={cancelClickHandler} taskName={taskName} deadline={deadline}
                                 deadlineStringRepresentation={deadlineStringRepresentation}
                                 onDateClick={deadlineChangeHandler} setTaskName={setTaskName}></OnFocusContent>
               : <NoFocusContent className="task-list-add-item" text="Добавить задачу" icon={quickTask} iconAlt="add task"
                                 onClick={() => setOnFocus(true)}></NoFocusContent>}
-    </form>
+    </Fragment>
   )
 }

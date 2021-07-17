@@ -33,6 +33,14 @@
     display: flex;
     align-items: center;
   }
+
+  .title {
+    cursor: text;
+  }
+
+  &.completed {
+    text-decoration: line-through;
+  }
 }
 
 @mixin add-edit-item {

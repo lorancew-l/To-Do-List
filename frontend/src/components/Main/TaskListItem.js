@@ -1,17 +1,19 @@
-  
-import React, { useState } from 'react'
-import { checkboxUnchecked , checkboxChecked, importantTaskInactive, importantTaskActive } from '../../images/index'
+import React, { Fragment, useState } from 'react'
+import { checkboxUnchecked , checkboxHover, importantTaskInactive, importantTaskActive } from '../../images/index'
 import { updateTask } from '../../tools/api'
+import TaskDetail from '../Modal/TaskDetail/TaskDetail'
+import ModalOverlay from '../Modal/ModalOverlay'
 
 export default function TaskListItem(props) {
   const [checkboxIcon, setCheckboxIcon] = useState(checkboxUnchecked)
   const [importantIcon, setImportantIcon] = useState(importantTaskInactive)
   const [style, setStyle] = useState('task-list-task')
+  const [showModal, setShowModal] = useState(false)
 
   function onClickHandler () {
     setStyle('task-list-task clicked')
     setTimeout(() => setStyle('task-list-task'), 400)
-    props.onClick()
+    setShowModal(true)
   }
   
   function completeTaskClickHandler (event) {
@@ -24,19 +26,27 @@ export default function TaskListItem(props) {
   }
 
   return (
-    <li className={style} onClick={onClickHandler}>
-      <div className="left-side">
-        <button onClick={completeTaskClickHandler}> 
-          <img alt="checkbox" src={checkboxIcon}
-            onMouseEnter={() => setCheckboxIcon(checkboxChecked)}
-            onMouseLeave={() => setCheckboxIcon(checkboxUnchecked)}/>
+    <Fragment>
+      <li className={style} onClick={onClickHandler}>
+        <div className="left-side">
+          <button onClick={completeTaskClickHandler}> 
+            <img alt="checkbox" src={checkboxIcon}
+              onMouseEnter={() => setCheckboxIcon(checkboxHover)}
+              onMouseLeave={() => setCheckboxIcon(checkboxUnchecked)}/>
+          </button>
+          <div>{props.taskData.title}</div>
+        </div>
+        <button onClick={event => event.stopPropagation()} onMouseEnter={() => setImportantIcon(importantTaskActive)}
+                onMouseLeave={() => setImportantIcon(importantTaskInactive)}>
+          <img alt='to favorite' src={importantIcon}/>
         </button>
-        <div>{props.taskData.title}</div>
-      </div>
-      <button onClick={event => event.stopPropagation()} onMouseEnter={() => setImportantIcon(importantTaskActive)}
-              onMouseLeave={() => setImportantIcon(importantTaskInactive)}>
-        <img alt='to favorite' src={importantIcon}/>
-      </button>
-    </li>
+      </li>
+      {showModal?
+        <ModalOverlay closeModal={() => setShowModal(false)}>
+          <TaskDetail closeModal={() => setShowModal(false)} taskData={props.taskData} showPopper={props.showPopper} updateTaskList={props.updateTaskList}
+                      updatePopperPos={props.updatePopperPos} popperPos={props.popperPos}/>
+      </ModalOverlay>
+      : null}
+    </Fragment>
   )
 }

@@ -5,7 +5,8 @@ $background-tertiary-color: #323232;
 $text-primary-color: #e2e2e2;
 $text-secondary-color: #b8b8b8;
 
-$accent-color: #00bef9;
+
+$accent-color: #5865f2;
 $selection-color: rgba(#888888, 0.2);
 
 // header
@@ -32,3 +33,7 @@ $calendar-padding: 10px;
 $calendar-date-option-padding: 8px $calendar-padding;
 $calendar-date-option-icon-size: 18px;
 $calendar-date-option-icon-margin-right: 10px;
+
+// task-detail
+$subtask-checkbox-size: 18px;
+$note-textarea-scrollbar-width: 6px;

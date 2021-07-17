@@ -1,0 +1,233 @@
+.task-detail {
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+  background-color: $background-primary-color;
+
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -20%);
+
+  width: 350px;
+  min-height: 500px;
+
+  color: $text-secondary-color;
+}
+
+.heading {  
+  margin-bottom: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .left-side {
+    display: flex;
+    align-items: center;
+    
+    text-transform: capitalize;
+
+    img {
+      @include icon(20px, 20px);
+      margin-right: 5px;
+    }
+
+    .creation-date {
+      font-size: 16px;
+    }
+  }
+  
+  & > button {
+    @include button-with-icon;
+  }
+}
+
+.detail-holder {
+  position: relative;
+  background-color: $background-secondary-color;
+  border-radius: 6px;
+  padding: 7px;
+  margin-bottom: 15px;
+
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &.hover:hover {
+    cursor: pointer;
+    background-color: $selection-color;
+  }
+  
+  &::-webkit-scrollbar {
+    width: $note-textarea-scrollbar-width;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $selection-color;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: lighten($color:  $selection-color, $amount: 100%);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: $note-textarea-scrollbar-width;
+    background-color: $background-secondary-color;
+  }
+}
+
+.subtask-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task {
+  @include task-item;
+  @include add-edit-item;
+
+  .left-side {
+    button {
+      @include button-with-icon($task-checkbox-size, $task-checkbox-size);
+      margin-right: $task-checkbox-right-margin;
+    }
+  }
+
+  & > button {
+    @include button-with-icon;
+  }
+
+  &.edit {
+    background-color: $selection-color;
+    
+    .left-side {
+      flex: 1;
+    }
+    .right-side > *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
+.subtask {
+  @include task-item;
+  @include add-edit-item;
+
+  .left-side {
+    button {
+      @include button-with-icon($subtask-checkbox-size, $subtask-checkbox-size);
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: ($task-checkbox-size - $subtask-checkbox-size) / 2;
+      margin-right: $task-checkbox-right-margin + ($task-checkbox-size - $subtask-checkbox-size) / 2 ;
+    }
+  }
+
+  & > button {
+    @include button-with-icon;
+  }
+
+  &.edit {
+    background-color: $selection-color;
+    
+    .left-side {
+      flex: 1;
+    }
+    .right-side > *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
+
+.add-subtask {
+  @include task-item;
+  @include add-edit-item;
+
+  .left-side {
+    flex: 1;
+
+    button {
+      @include button-with-icon($subtask-checkbox-size - 1, $subtask-checkbox-size - 1);
+
+      margin-left: ($task-checkbox-size - $add-task-icon-size) / 2;
+      margin-right: ($task-checkbox-size - $add-task-icon-size) / 2 + $task-checkbox-right-margin;
+    }
+  }
+
+  &.edit {
+    background-color: $selection-color;
+
+    .right-side > *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
+
+.deadline {
+  height: $task-list-item-height;
+  display: flex;
+  align-items: center;
+  padding: 7px;
+
+  img {
+    margin-right: 10px;
+    @include icon(20px, 20px);
+  }
+}
+
+
+.add-note {
+  .note-textarea {
+    width: calc(100% - #{$note-textarea-scrollbar-width});
+    height: 100%;
+
+    min-height: 90px;
+    max-height: 180px;
+
+    resize: none;
+    overflow-x: disabled;
+    overflow-y: auto;
+  
+    background-color: transparent;
+    border: none;
+    outline: none;
+  
+    color: $text-secondary-color;
+    font-size: 14px;
+    font-family: 'Roboto';
+    padding: 0 $note-textarea-scrollbar-width;
+
+    &::-webkit-scrollbar {
+      width: $note-textarea-scrollbar-width;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $selection-color;
+      border-radius: 6px;
+
+      &:hover {
+        background-color: lighten($color:  $selection-color, $amount: 100%);
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: $note-textarea-scrollbar-width;
+      background-color: $background-secondary-color;
+    }
+  }
+  
+  .save-note {
+    background-color: $accent-color;
+    color: $text-primary-color;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    border-radius: 7px;
+
+    padding: 10px;
+    float: right;
+
+    cursor: pointer;
+  }
+}

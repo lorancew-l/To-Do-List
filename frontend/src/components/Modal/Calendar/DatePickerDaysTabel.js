@@ -1,8 +1,11 @@
-import React from 'react'
-import {  getCalendarPage } from '../../../tools/dateTools'
+import React, { useEffect, useState } from 'react'
+import { getCalendarPage } from '../../../tools/dateTools'
 import CalendarRow from './DatePickerDaysTabelRow'
 
 export default function DatePickerDaysTabel(props) {
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
+ 
   function handleScoll(event) {
     if (event.deltaY > 0) {
       props.onNextMonthScroll()
@@ -12,8 +15,20 @@ export default function DatePickerDaysTabel(props) {
     }
   }
 
+  useEffect(() => {
+    if (touchEnd > touchStart) {
+      props.onPrevMonthScroll()
+    }
+    else {
+      props.onNextMonthScroll()
+    }
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [touchEnd])
+
   return (
-    <table className="calendar-table" onWheel={(event) => handleScoll(event)}>
+    <table className="calendar-table" onWheel={(event) => handleScoll(event)} onTouchStart={(event) => setTouchStart(event.changedTouches[0].screenY)}
+           onTouchEnd={(event) => setTouchEnd(event.changedTouches[0].screenY)}>
       <thead>
         <tr>
           {props.weekdayNamesList.map(weekday => {

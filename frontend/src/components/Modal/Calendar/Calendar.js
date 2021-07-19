@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { calendarToday, calendarTomorrow, calendarNextWeek, calendarNoDeadline } from '../../../images/index'
-import { getMonthNames, getWeekdayNames, getCalendarPage } from '../../../tools/dateTools'
-import CalendarRow from './CalendarRow'
+import { getMonthNames, getWeekdayNames } from '../../../tools/dateTools'
+import DateOption from './DateOption'
+import DatePickerHeader from './DatePickerHeader'
+import DatePickerDaysTabel from './DatePickerDaysTabel'
 
 
 export default function Calendar(props) {
@@ -46,8 +48,13 @@ export default function Calendar(props) {
     setSelectedDate(new Date(selectedDate.getFullYear(), newMonthValue, selectedDate.getDate()))
   }
 
-  function handleCellClick(date) {
+  function handleDayClick(date) {
     date.setHours(0, 0, 0, 0)
+
+    if (date.getTime() < currentDate.getTime()) {
+      return
+    }
+
     let dateStringRepresentation
 
     if (date.getTime() === currentDate.getTime()) {
@@ -73,66 +80,25 @@ export default function Calendar(props) {
         {currentDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}
       </div>
       <div className="date-options">
-        <button className="date-option" onClick={() => submitDate(currentDate, "Сегодня")}>
-          <img className="date-option-icon" src={ calendarToday } alt=""></img>
-          <div className="date-option-label">Сегодня</div>
-          <div className="date-option-weekday">
-            {currentDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
-          </div>
-        </button>
-        <button className="date-option" onClick={() => submitDate(tommorowDate, "Завтра")}>
-          <img className="date-option-icon" src={ calendarTomorrow} alt=""></img>
-          <div className="date-option-label">Завтра</div>
-          <div className="date-option-weekday">
-            {tommorowDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
-          </div>
-        </button>
-        <button className="date-option" onClick={() => submitDate(nextWeekDate,
-                                                       nextWeekDate.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric'}))}>
-          <img className="date-option-icon" src={ calendarNextWeek } alt=""></img>
-          <div className="date-option-label">Следующая неделя</div>
-          <div className="date-option-weekday">
-            {nextWeekDate.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric'})}
-          </div>
-        </button>
-        <button className="date-option" onClick={() => submitDate(null, null)}>
-          <img className="date-option-icon" src={ calendarNoDeadline } alt=""></img>
-          <div className="date-option-label">Нет срока</div>
-        </button>
+        <DateOption icon={calendarToday} label="Сегодня" weekdayLabel={currentDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
+                    onClick={() => submitDate(currentDate, "Сегодня")}/>
+        <DateOption icon={calendarTomorrow} label="Завтра" weekdayLabel={tommorowDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
+                    onClick={() => submitDate(tommorowDate, "Завтра")}/>
+
+        <DateOption icon={calendarNextWeek} label="Следующая неделя"
+                    weekdayLabel={nextWeekDate.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric'})}
+                    onClick={() => submitDate(nextWeekDate, nextWeekDate.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric'}))}/>
+
+        <DateOption icon={calendarNoDeadline} label="Нет срока" weekdayLabel=""
+                    onClick={() => submitDate(null, 'Срок')}/>
       </div>
       <div className="date-picker">
-        <div className="date-picker-header">
-          <div>
-            <span className="date-picker-year">{selectedDate.getFullYear()}</span>
-            <select value={selectedDate.getMonth()} onChange={(event) => handleSelectValueChange(event.target.value)}>
-              {monthNamesList.map((monthName, index) => {
-                return <option key={monthName} value={index}>{monthName}</option>
-              })}
-            </select>
-          </div>
-          <div>
-            <button className="control-button" onClick={() => {handleControlButtonClick(selectedDate.getMonth() - 1)}}>{'<'}</button>
-            <button className="control-button" onClick={resetSelectedDate}>
-              <div className="to-today-button"></div>
-              </button>
-            <button className="control-button" onClick={() => {handleControlButtonClick(selectedDate.getMonth() + 1)}}>{'>'}</button>
-          </div>
-        </div>
-        <table className="calendar-table">
-          <thead>
-            <tr>
-              {weekdayNamesList.map(weekday => {
-                return <td key={weekday}>{weekday}</td>
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {getCalendarPage(42, selectedDate.getFullYear(), selectedDate.getMonth()).map((weekdays, index) => {
-              return <CalendarRow selected={props.selectedDate} today={currentDate} month={selectedDate.getMonth()}
-                                  key={index} rowData={weekdays} onClick={handleCellClick}></CalendarRow>
-            })}
-          </tbody>
-        </table>
+        <DatePickerHeader date={selectedDate} handleSelectValueChange={handleSelectValueChange}
+                          monthNamesList={monthNamesList} onPrevMonthClick={() => {handleControlButtonClick(selectedDate.getMonth() - 1)}}
+                          onResetClick={resetSelectedDate} onNextMonthClick={() => handleControlButtonClick(selectedDate.getMonth() + 1)}/>
+        <DatePickerDaysTabel date={selectedDate} today={currentDate} weekdayNamesList={weekdayNamesList} handleDayClick={handleDayClick}
+                             onPrevMonthScroll={() => {handleControlButtonClick(selectedDate.getMonth() - 1)}}
+                             onNextMonthScroll={() => handleControlButtonClick(selectedDate.getMonth() + 1)}/>
       </div>
     </div>
   )

@@ -3,8 +3,17 @@ import {  getCalendarPage } from '../../../tools/dateTools'
 import CalendarRow from './DatePickerDaysTabelRow'
 
 export default function DatePickerDaysTabel(props) {
+  function handleScoll(event) {
+    if (event.deltaY > 0) {
+      props.onNextMonthScroll()
+    }
+    else {
+      props.onPrevMonthScroll()
+    }
+  }
+
   return (
-    <table className="calendar-table">
+    <table className="calendar-table" onWheel={(event) => handleScoll(event)}>
       <thead>
         <tr>
           {props.weekdayNamesList.map(weekday => {

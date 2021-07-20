@@ -30,7 +30,9 @@ export default function TaskDetail(props) {
   }
   
   useEffect(() => {
-    updateSubtaskList()
+    if (isFirstRun) {
+      updateSubtaskList()
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) 
 

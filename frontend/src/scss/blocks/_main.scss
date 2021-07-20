@@ -130,12 +130,12 @@ main {
         content: "";
         position: absolute;
     
-        top: -($add-task-top-margin + 1) / 2;
+        top: -($add-task-top-margin + 2) / 2;
         left: 0;
         z-index: 1;
       
         width: 100%;
-        height: 1px;
+        height: 2px;
     
         background-color: $background-tertiary-color;
       }
@@ -145,6 +145,8 @@ main {
 
 .task-list-task {
   @include task-item;
+
+  padding: 7px 15px;
 
   &.clicked {
     animation: task-list-item-click 0.4s;
@@ -159,6 +161,11 @@ main {
       @include button-with-icon($task-checkbox-size, $task-checkbox-size);
       margin-right: $task-checkbox-right-margin;
     }
+
+    .subtask-progress {
+      color: rgba($text-secondary-color, 0.7);
+      font-size: 0.8em
+    }
   }
 
   & > button {
@@ -170,19 +177,21 @@ main {
   @include task-item;
   @include add-edit-item;
 
+  padding: 7px 15px;
+
   position: relative;
   &:not(:only-child) {
-    margin-top: 29px;
+    margin-top: $add-task-top-margin;
     &::before {
       content: "";
       position: absolute;
   
-      top: -40%;
+      top: -($add-task-top-margin + 2) / 2;
       left: 0;
       z-index: 1;
     
       width: 100%;
-      height: 1px;
+      height: 2px;
   
       background-color: $background-tertiary-color;
     }

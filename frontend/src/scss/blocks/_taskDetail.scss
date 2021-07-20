@@ -115,6 +115,8 @@
   @include task-item;
   @include add-edit-item;
 
+  padding: 7px;
+
   .left-side {
     button {
       @include button-with-icon($task-checkbox-size, $task-checkbox-size);
@@ -129,6 +131,8 @@
 .subtask {
   @include task-item;
   @include add-edit-item;
+
+  padding: 7px;
 
   .left-side {
     button {
@@ -148,6 +152,8 @@
 .add-subtask {
   @include task-item;
   @include add-edit-item;
+
+  padding: 7px;
 
   .left-side {
     flex: 1;

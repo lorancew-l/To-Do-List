@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { checkboxUnchecked , checkboxHover, importantTaskInactive, importantTaskActive } from '../../images/index'
-import { updateTask } from '../../tools/api'
+import { updateTask, getSubtaskList } from '../../tools/api'
 import TaskDetail from '../Modal/TaskDetail/TaskDetail'
 import ModalOverlay from '../Modal/ModalOverlay'
 
@@ -9,6 +9,16 @@ export default function TaskListItem(props) {
   const [importantIcon, setImportantIcon] = useState(importantTaskInactive)
   const [style, setStyle] = useState('task-list-task')
   const [showModal, setShowModal] = useState(false)
+  const [subtaskList, setSubtaskList] = useState([])
+
+  useEffect(() => {
+    getSubtaskList(props.taskData.id).then(async response => {
+      if (response.ok) {
+        const data = await response.json()
+        setSubtaskList(data)
+      } 
+    })
+  }, [props])  
 
   function onClickHandler () {
     setStyle('task-list-task clicked')
@@ -34,7 +44,14 @@ export default function TaskListItem(props) {
               onMouseEnter={() => setCheckboxIcon(checkboxHover)}
               onMouseLeave={() => setCheckboxIcon(checkboxUnchecked)}/>
           </button>
-          <div>{props.taskData.title}</div>
+          <div>
+            <div>{props.taskData.title}</div>
+            <div className="subtask-progress">
+              {subtaskList.length ?
+                  subtaskList.filter(subtask => subtask.completed === true).length + " из " + subtaskList.length
+              : null}
+            </div>
+          </div>
         </div>
         <button onClick={event => event.stopPropagation()} onMouseEnter={() => setImportantIcon(importantTaskActive)}
                 onMouseLeave={() => setImportantIcon(importantTaskInactive)}>

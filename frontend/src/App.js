@@ -8,7 +8,7 @@ import Main from './components/Main/Main'
 export class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {showSidebar: true}
+    this.state = {showSidebar: window.innerWidth >= 992 ? true : false}
   }
 
   showModal = (modalContent) => {

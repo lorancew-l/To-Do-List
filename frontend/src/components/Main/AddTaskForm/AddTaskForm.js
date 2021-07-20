@@ -9,13 +9,13 @@ export default function AddTaskForm(props) {
   const [onFocus, setOnFocus] = useState(false)
   const [taskName, setTaskName] = useState('')
   const [deadline, setDeadline] = useState(null)
-  const [deadlineStringRepresentation, setDeadlineStringRepresentation] = useState(null)
+  const [deadlineStringRepresentation, setDeadlineStringRepresentation] = useState('Срок')
 
   function cancelClickHandler() {
     setOnFocus(false)
     setTaskName('')
     setDeadline(null)
-    setDeadlineStringRepresentation(null)
+    setDeadlineStringRepresentation('Срок')
   }
 
   function submitHandler(event) {

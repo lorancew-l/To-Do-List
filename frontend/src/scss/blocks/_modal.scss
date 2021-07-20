@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: $modal-z-index;
 
   margin: 0;
 
@@ -16,5 +16,5 @@
 
 .popper-overlay {
   @extend .modal-overlay;
-  z-index: 200;
+  z-index: $popper-z-index;
 }

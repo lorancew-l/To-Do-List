@@ -6,34 +6,51 @@ import PopperOverlay from '../../Modal/PopperOverlay'
 
 export default function OnFocusContent(props) {
   const calendarButtonRef = useRef(null)
-  const liRef = useRef(null)
+  const addTaskRef = useRef(null)
   const inputRef = useRef(null)
 
   const isFirstRun = useRef(true);
 
   const calendarHeight = 472
+  const calendarWidth = 265
+
   const [isCalendarOpen, setCalendarOpen] = useState(false)
   const [calendarPos, setCalendarPos] = useState({x: 0, y: 0})
 
   function calculateCalendarPos() {
-    const pos = {bottom: liRef.current.getBoundingClientRect().bottom,
-                 top: liRef.current.getBoundingClientRect().top,
-                 left: calendarButtonRef.current.getBoundingClientRect().left}
+    const windowHeight = window.innerHeight
+    const windowWidth = window.innerWidth
 
-    const bottomOffset = 30
-    let y
+    const calendarButtonRect = calendarButtonRef.current.getBoundingClientRect()
+    const addTaskRect = addTaskRef.current.getBoundingClientRect()
 
-    if (calendarHeight + pos.bottom < window.innerHeight) {
-      y = pos.bottom
+    const bottomOffset = 50
+    const topOffset = 50
+
+    const isScreenSmall = windowWidth < 768 ? true : false
+    const smallDeviceTopOffset = 8
+
+    let [x, y] = [calendarButtonRect.left, 0]
+
+    if (calendarHeight + addTaskRect.bottom < windowHeight) {
+      y = addTaskRect.bottom
     }
-    else if ((calendarHeight + pos.top + pos.bottom) / 2 + bottomOffset < window.innerHeight) {
-      y = (pos.top + pos.bottom - calendarHeight) / 2
+    else if (((calendarHeight + addTaskRect.top + addTaskRect.bottom) / 2 + bottomOffset < windowHeight) &
+             ((addTaskRect.top + addTaskRect.bottom - calendarHeight) / 2) > topOffset) {
+      x = isScreenSmall ? (windowWidth - calendarWidth) / 2 : calendarButtonRect.left - calendarWidth
+      y = (addTaskRect.top + addTaskRect.bottom - calendarHeight) / 2
     }
     else {
-      y = pos.top - calendarHeight
+      if (addTaskRect.top - smallDeviceTopOffset - calendarHeight > topOffset) {
+        y = isScreenSmall ? calendarButtonRect.top - calendarHeight - smallDeviceTopOffset: addTaskRect.top - calendarHeight
+      }
+      else {
+        x = isScreenSmall ? (windowWidth - calendarWidth) / 2 : calendarButtonRect.left
+        y = (windowHeight - calendarHeight) / 2
+      }
     }
     
-    return {x: pos.left - 2, y: y}
+    return {x: x, y: y}
   }
 
   useEffect(() => {
@@ -56,7 +73,7 @@ export default function OnFocusContent(props) {
   return (
     <Fragment>
       <form className="add-task-form" onSubmit={props.onSubmit}>
-        <li className='task-list-add-item no-hover' ref={liRef}>
+        <li className='task-list-add-item no-hover' ref={addTaskRef}>
           <div className="left-side">
             <input ref={inputRef} type="text" value={props.taskName} autoFocus
                   onChange={(e) => props.setTaskName(e.target.value)}></input>
@@ -64,7 +81,7 @@ export default function OnFocusContent(props) {
           <div className="right-side">
             <button className="show-calendar" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>
               <img src={calendar} alt="date"></img>
-              <div>{props.deadlineStringRepresentation}</div>
+              <div className="date-string">{props.deadlineStringRepresentation}</div>
             </button>
             <button className={props.taskName ? "submit" : "submit disabled"} type="submit" disabled={!props.taskName}>
               Добавить

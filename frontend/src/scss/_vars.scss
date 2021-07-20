@@ -1,3 +1,4 @@
+// colors
 $background-primary-color: #202020;
 $background-secondary-color: #282828;
 $background-tertiary-color: #323232;
@@ -5,14 +6,27 @@ $background-tertiary-color: #323232;
 $text-primary-color: #e2e2e2;
 $text-secondary-color: #b8b8b8;
 
-
 $accent-color: #5865f2;
 $selection-color: rgba(#888888, 0.2);
 
+// screen 
+$extra-small: 320px;
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+$extra-large: 1200px;
+
+// z-index 
+$sidebar-z-index: 100;
+$header-z-index: 200;
+$modal-z-index: 300;
+$popper-z-index: 400;
+
 // header
 $header-content-height: 28px;
-$header-inner-padding: 8px;
+$header-inner-padding: 8px, 35px;
 $header-button-image-size: 20px;
+$header-height: $header-content-height + nth($header-inner-padding, 1) * 2;
 
 // sidebar
 $sidebar-width: 340px;
@@ -25,8 +39,8 @@ $sidebar-item-padding-top: 5px;
 $task-list-item-height: 38px;
 $task-checkbox-right-margin: 15px;
 $task-checkbox-size: 24px;
+$add-task-top-margin: 29px;
 $add-task-icon-size: 18px;
-
 
 // calendarPopup
 $calendar-padding: 10px;
@@ -37,3 +51,4 @@ $calendar-date-option-icon-margin-right: 10px;
 // task-detail
 $subtask-checkbox-size: 18px;
 $note-textarea-scrollbar-width: 6px;
+$top-offset-mobile: 40px;

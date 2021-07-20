@@ -2,19 +2,22 @@
   color: $text-primary-color;
   background-color: $background-tertiary-color;
   
-  z-index: 100;
+  z-index: $header-z-index;
   position: absolute;
   top: 0;
   left: 0;
+
   width: 100%;
+  padding: nth($header-inner-padding, 1) nth($header-inner-padding, 2);
+
+  @media (max-width: $small) {
+    padding: nth($header-inner-padding, 1) nth($header-inner-padding, 2) / 2;
+  }
 
   box-shadow: 0 -1px 3px 0 rgba(0, 0, 0 ,35%);
 }
 
 .header-inner {
-  margin: 0 40px;
-  padding: $header-inner-padding;
-
   display: flex;
   justify-content: space-between;
 

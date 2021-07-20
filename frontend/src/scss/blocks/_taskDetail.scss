@@ -1,18 +1,29 @@
 .task-detail {
   border-radius: 6px;
-  padding: 10px;
+  padding: 15px 10px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
   background-color: $background-primary-color;
 
   position: absolute;
   left: 50%;
-  top: 20%;
-  transform: translate(-50%, -20%);
+  top: 25%;
+  transform: translate(-50%, -25%);
 
-  width: 350px;
-  min-height: 500px;
-
+  width: 380px;
+  height: auto;
+  
   color: $text-secondary-color;
+  
+  @media (max-width: $small) {
+    width: 100vw;
+    height: calc(100vh - #{$sidebar-padding-top + $sidebar-item-padding-top + $header-height + $top-offset-mobile});
+    position: relative;
+    top:  $sidebar-padding-top + $sidebar-item-padding-top + $header-height + $top-offset-mobile;
+    transform: translate(-50%, 0%);
+
+    border-radius: 10px;
+    padding: 20px 25px;
+  }
 }
 
 .heading {  
@@ -50,7 +61,23 @@
   padding: 7px;
   margin-bottom: 15px;
 
+  height: auto;
   max-height: 250px;
+
+  @media (max-width: $extra-small) {
+    padding: 3px;
+    max-height: 28%;
+  }
+
+  @media (max-width: $small) {
+    max-height: 32%;
+  }
+
+  @media (orientation: landscape) and (max-height: $medium) {
+    height: auto;
+    max-height: 190px;
+  }
+
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -98,17 +125,6 @@
   & > button {
     @include button-with-icon;
   }
-
-  &.edit {
-    background-color: $selection-color;
-    
-    .left-side {
-      flex: 1;
-    }
-    .right-side > *:not(:last-child) {
-      margin-right: 10px;
-    }
-  }
 }
 .subtask {
   @include task-item;
@@ -127,17 +143,6 @@
   & > button {
     @include button-with-icon;
   }
-
-  &.edit {
-    background-color: $selection-color;
-    
-    .left-side {
-      flex: 1;
-    }
-    .right-side > *:not(:last-child) {
-      margin-right: 10px;
-    }
-  }
 }
 
 .add-subtask {
@@ -147,19 +152,19 @@
   .left-side {
     flex: 1;
 
+    @media (max-width: $medium) {
+      flex-basis: 100%;
+      
+      &:not(:only-child) {
+        margin-bottom: 10px;
+      }
+    }
+
     button {
       @include button-with-icon($subtask-checkbox-size - 1, $subtask-checkbox-size - 1);
 
       margin-left: ($task-checkbox-size - $add-task-icon-size) / 2;
       margin-right: ($task-checkbox-size - $add-task-icon-size) / 2 + $task-checkbox-right-margin;
-    }
-  }
-
-  &.edit {
-    background-color: $selection-color;
-
-    .right-side > *:not(:last-child) {
-      margin-right: 10px;
     }
   }
 }
@@ -178,17 +183,17 @@
 
 
 .add-note {
+  height: 100%;
+  
   .note-textarea {
     width: calc(100% - #{$note-textarea-scrollbar-width});
-    height: 100%;
 
-    min-height: 90px;
-    max-height: 180px;
-
+    min-height: 120px;
+    max-height: none;
     resize: none;
-    overflow-x: disabled;
-    overflow-y: auto;
-  
+    overflow-y: hidden;
+    overflow-x: hidden;
+
     background-color: transparent;
     border: none;
     outline: none;

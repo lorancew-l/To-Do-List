@@ -1,12 +1,50 @@
 main {
-  transition: 0.3s;
+  transition: 0.25s;
   height: 100vh;
   overflow-y: auto;
 
-  padding-top: $header-content-height + 2 * $header-inner-padding;
+  padding-top: $header-height;
+
+  .sidebar-overlay {
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 50;
+
+    background-color: rgba(0,0,0,0.4);
+    transition: 0.25s;
+
+    &.off {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    &.on {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: $small) {
+      padding-left: 0;
+    }
+
+    @media (min-width: $medium) {
+      display: none;
+    }
+  }
 
   &.sidebar-on {
-    padding-left: $sidebar-width;
+    @media (max-width: $small) {
+      padding-left: 0;
+    }
+
+    @media (min-width: $medium) {
+      padding-left: $sidebar-width;
+    }
   } 
 
   &.sidebar-off {
@@ -15,8 +53,23 @@ main {
 
   & > .container {
     margin: 0 auto;
-    max-width: 40%;
-    width: 100%;
+    padding: 0 30px;
+
+    @media (max-width: $small) {
+      max-width: 100%;
+    }
+
+    @media (min-width: $medium) {
+      max-width: 80%;
+    }
+
+    @media (min-width: $large) {
+      max-width: 70%;
+    }
+
+    @media (min-width: $extra-large) {
+      max-width: 45%;
+    }
   }
 
   padding-bottom: 100px;
@@ -35,7 +88,7 @@ main {
   }
 
   &::-webkit-scrollbar-track {
-    margin-top: $header-content-height + 2 * $header-inner-padding;
+    margin-top: $header-height;
     border-radius: 8px;
     background-color: $background-secondary-color;
   }
@@ -72,12 +125,12 @@ main {
     position: relative;
 
     &:not(:only-child) {
-      margin-top: 29px;
+      margin-top: $add-task-top-margin;
       &::before {
         content: "";
         position: absolute;
     
-        top: -40%;
+        top: -($add-task-top-margin + 1) / 2;
         left: 0;
         z-index: 1;
       
@@ -138,6 +191,14 @@ main {
   .left-side {
     flex: 1;
     cursor: text;
+    
+    @media (max-width: $small) {
+      flex-basis: 100%;
+      
+      &:not(:only-child) {
+        margin-bottom: 10px;
+      }
+    }
 
     button {
       @include button-with-icon($add-task-icon-size, $add-task-icon-size);
@@ -154,6 +215,10 @@ main {
     justify-content: flex-end;
 
     padding-right: 5px;
+
+    @media (max-width: $small) {
+      flex-basis: 100%;
+    }
 
     & > *:not(:last-child) {
       margin-right: 10px;
@@ -172,7 +237,10 @@ main {
 
       img {
         @include icon(18px, 18px);
-        margin-right: 5px;
+      }
+
+      .date-string {
+        margin-left: 5px;
       }
     }
   }

@@ -22,7 +22,8 @@ export default function Main(props) {
   }
 
   return (
-    <main className={props.showSidebar? 'sidebar-on': 'sidebar-off'}>
+    <main className={props.showSidebar? "sidebar-on" : "sidebar-off"}>
+      <div className={props.showSidebar? "sidebar-overlay on" : "sidebar-overlay off"}></div>
       <div className="container">
         <div className="task-list-header">
           <div className="task-list-header-content">

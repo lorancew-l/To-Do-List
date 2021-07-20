@@ -2,11 +2,11 @@
   overflow-x: hidden;
   position: fixed;
   left: 0;
-  z-index: 1;
+  z-index: $sidebar-z-index;
 
   height: 100vh;
 
-  padding-top: $sidebar-padding-top + $header-content-height + 2 * $header-inner-padding;;
+  padding-top: $sidebar-padding-top + $header-height;
 
   background-color: $background-secondary-color;
   transition: 0.3s;
@@ -15,6 +15,10 @@
     visibility: visible;
     width: $sidebar-width;
     padding-left: $sidebar-padding-left;
+
+    @media (max-width: $small) {
+      width: 85%;
+    }
   }
 
   &.off {
@@ -25,8 +29,7 @@
 }
 
 .sidebar-content {
-  width: 100%;
-  max-width: #{$sidebar-width - $sidebar-padding-left - 10};
+  width: 98%;
 
   ul {
     margin: 0;

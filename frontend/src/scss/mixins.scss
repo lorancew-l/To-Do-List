@@ -19,11 +19,14 @@
   align-items: center;
   user-select: none;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   padding: 7px;
   border-radius: 4px;
   background-color: $background-secondary-color;
-  height: $task-list-item-height;
+
+  min-height: $task-list-item-height;
+  height: auto;
 
   &:not(.no-hover):hover {
       background-color: $selection-color;
@@ -41,43 +44,93 @@
   &.completed {
     text-decoration: line-through;
   }
+
+  &.edit {
+    background-color: $selection-color;
+  
+    .left-side {
+      flex: 1;
+      
+      @media (max-width: $small) {
+        flex-basis: 100%;
+        
+        &:not(:only-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+    .right-side > *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
 }
 
 @mixin add-edit-item {
-  input[type=text] {
-    outline: none;
-    background-color: transparent;
-    border: none;
-
-    color: $text-primary-color;
-
-    margin-right: 10px;
-    width: 100%;
-  }
-
-  .cancel {
-    cursor: pointer;
-    color: $text-secondary-color;
-    
-    padding: 0;
-    border: none;
-    background-color: transparent;
-
-    &:hover {
-      text-decoration: underline;
+  .left-side{
+    input[type=text] {
+      outline: none;
+      background-color: transparent;
+      border: none;
+  
+      color: $text-primary-color;
+  
+      margin-right: 10px;
+      width: 100%;
     }
   }
 
-  .submit {
-    cursor: pointer;
-    color: $accent-color;
+  .right-side {
+    .cancel {
+      cursor: pointer;
+      color: $text-secondary-color;
+      
+      padding: 0;
+      border: none;
+      background-color: transparent;
 
-    padding: 0;
-    border: none;
-    background-color: transparent;
+      &:hover {
+        text-decoration: underline;
+      }
 
-    &.disabled {
-      text-decoration: line-through;
+      @media (max-width: $small) {
+        color: $text-primary-color;
+        padding: 8px;
+        border-radius: 5px;
+        background-color: $selection-color;
+      }
+
+      @media (max-width: $extra-small) {
+        padding: 6px;
+      }
+    }
+
+    .submit {
+      cursor: pointer;
+      color: $accent-color;
+
+      padding: 0;
+      border: none;
+      background-color: transparent;
+
+      @media (max-width: $small) {
+        color: $text-primary-color;
+        padding: 8px;
+        border-radius: 5px;
+        background-color: $accent-color ;
+      }
+
+      @media (max-width: $extra-small) {
+        padding: 6px;
+      }
+
+      &.disabled {
+        text-decoration: line-through;
+        opacity: 0.4;
+
+        @media (max-width: $small) {
+          text-decoration: none;
+        }
+      }
     }
   }
 }

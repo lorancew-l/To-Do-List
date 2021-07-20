@@ -10,4 +10,4 @@ class TaskSerializer(serializers.ModelSerializer):
 class SubtaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubtaskModel
-        fields = ('id', 'title', 'completed', 'creation_date')
+        fields = ('id', 'title', 'completed', 'creation_date', 'task')

@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from rest_framework import serializers
-from rest_framework.serializers import Serializer
+from rest_framework.response import Response
+from rest_framework import status
 from .models import TaskModel, SubtaskModel
 from .serializers import TaskSerializer, SubtaskSerializer
 
@@ -34,10 +33,16 @@ class SubtaskList(generics.ListCreateAPIView):
     serializer_class = SubtaskSerializer
 
     def get_queryset(self):
-        return SubtaskModel.objects.filter(task__pk = self.kwargs.get('taskId'))
+        return SubtaskModel.objects.filter(task__pk = self.kwargs.get('task_id'))
 
-    def perform_create(self, serializer):
-        serializer.save(task=TaskModel.objects.get(pk=int(self.kwargs.get('taskId'))))
+    def create(self, request, **kwargs):
+        data = request.data.copy()
+        data.update({'task': kwargs['task_id']})
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class SubtaskDetail(generics.GenericAPIView,
                     mixins.UpdateModelMixin,

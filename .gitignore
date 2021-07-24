@@ -24,9 +24,8 @@ frontend/yarn-error.log*
 # env
 .idea
 venv
-todo/__pycache__
-api/__pycache__
-api/migrations
+__pycache__
+migrations
 
 # db
 db.sqlite3

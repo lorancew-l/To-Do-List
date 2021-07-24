@@ -1,0 +1,17 @@
+.standalone-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+
+  background-color: $accent-color;
+  background-image: linear-gradient(45deg, $accent-color 0%, #4457c2 46%, rgb(5, 179, 231) 100%);
+}
+
+.standalone-page-content {
+  border-radius: 8px;
+  padding: 30px 20px;
+  
+  color: black;
+  background-color: white;
+}

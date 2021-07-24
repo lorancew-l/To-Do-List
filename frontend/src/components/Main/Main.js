@@ -17,7 +17,7 @@ export default function Main(props) {
       if (response.ok) {
         const data = await response.json()
         setTaskList(data)
-      } 
+      }
     })
   }
 

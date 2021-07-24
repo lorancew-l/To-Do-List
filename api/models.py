@@ -1,5 +1,5 @@
 from django.db import models
-
+from account.models import User
 
 class TaskModel(models.Model):
     id = models.AutoField(primary_key=True)
@@ -8,6 +8,7 @@ class TaskModel(models.Model):
     deadline = models.DateTimeField(null=True, blank=True)
     completed = models.BooleanField(default=False)
     note = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class SubtaskModel(models.Model):
     id = models.AutoField(primary_key=True)

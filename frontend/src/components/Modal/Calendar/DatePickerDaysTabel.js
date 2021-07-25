@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { getCalendarPage } from '../../../tools/dateTools'
 import CalendarRow from './DatePickerDaysTabelRow'
 
 export default function DatePickerDaysTabel(props) {
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
+
+  const isFirstRun = useRef(true)
  
   function handleScoll(event) {
     if (event.deltaY > 0) {
@@ -16,13 +18,18 @@ export default function DatePickerDaysTabel(props) {
   }
 
   useEffect(() => {
-    if (touchEnd > touchStart) {
-      props.onPrevMonthScroll()
+    if (!isFirstRun.current) {
+      if (touchEnd > touchStart) {
+        props.onPrevMonthScroll()
+      }
+      else {
+        props.onNextMonthScroll()
+      }
     }
     else {
-      props.onNextMonthScroll()
+      isFirstRun.current = false
     }
-    
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [touchEnd])
 

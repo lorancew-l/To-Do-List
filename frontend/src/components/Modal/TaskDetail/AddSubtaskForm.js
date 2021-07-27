@@ -3,21 +3,22 @@ import NoFocusContent from '../../AddItemForm/NoFocusContent'
 import OnFocusContent from '../../AddItemForm/OnFocusContent'
 import { addSubtask } from '../../../tools/api'
 import { quickTask } from '../../../images/index'
+import useInput from '../../../hooks/useInput'
 
 export default function AddSubtaskForm(props) {
   const [onFocus, setOnFocus] = useState(false)
-  const [subtaskTitle, setSubtaskTitle] = useState('')
+  const subtaskTitle = useInput('')
 
   function cancelClickHandler() {
     setOnFocus(false)
-    setSubtaskTitle('')
+    subtaskTitle.clear()
   }
 
   function onSubmitHandler(event) {
     event.preventDefault()
-    addSubtask(props.taskId, {'title': subtaskTitle}).then(response => {
+    addSubtask(props.taskId, {'title': subtaskTitle.value}).then(response => {
       if (response.ok) {
-        setSubtaskTitle('')
+        subtaskTitle.clear()
         props.updateSubtaskList()
       }
     })
@@ -26,7 +27,7 @@ export default function AddSubtaskForm(props) {
   return (
     <Fragment>
       {onFocus? <OnFocusContent className="add-subtask edit no-hover" onCancelClick={cancelClickHandler} onSubmit={onSubmitHandler}
-                                inputValue={subtaskTitle} setInputValue={setSubtaskTitle} isSubmitDisabled={!subtaskTitle} scrollIntoView={true}/>
+                                input={subtaskTitle} isSubmitDisabled={subtaskTitle.requiredEmpty} scrollIntoView={true}/>
               : <NoFocusContent className="add-subtask" text="Добавить подзадачу" icon={quickTask} iconAlt={'add subtask'}
                                 onClick={() => setOnFocus(true)}/>
       }

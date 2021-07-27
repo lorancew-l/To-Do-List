@@ -1,25 +1,25 @@
-import React, { useEffect, useState, useRef, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import NoFocusContent from './NoFocusContent'
 import OnFocusContent from '../../../AddItemForm/OnFocusContent'
 import { updateTask } from '../../../../tools/api'
+import useInput from '../../../../hooks/useInput'
 
 export default function Task(props) {
   const [onFocus, setOnFocus] = useState(false)
-  const [taskNewTitle, setTaskNewTitle] = useState(props.title)
-
-  const isFirstRun = useRef(true);
+  const taskNewTitle = useInput(props.title)
   
   function cancelClickHandler() {
     setOnFocus(false)
-    setTaskNewTitle(props.title)
+    taskNewTitle.set(props.title)
   }
 
   function submitHandler(event) {
     event.preventDefault()
-    updateTask(props.id, {title: taskNewTitle}).then(response => {
+    updateTask(props.id, {title: taskNewTitle.value}).then(response => {
       if (response.ok) {
         response.json().then(responseData => {
           props.setTitle(responseData.title)
+          setOnFocus(false)
         })
       }
     })
@@ -44,21 +44,11 @@ export default function Task(props) {
       }
     })
   }
-
-  useEffect(() => {
-    if (!isFirstRun.current) {
-      setOnFocus(false)
-      setTaskNewTitle(props.title)
-    }
-    else {
-      isFirstRun.current = false;
-    }
-  }, [props.title])
   
   return (
     <Fragment>
-      {onFocus? <OnFocusContent className="task edit no-hover" inputValue={taskNewTitle} setInputValue={setTaskNewTitle} onCancelClick={cancelClickHandler}
-                                isSubmitDisabled={!taskNewTitle | taskNewTitle === props.title} onSubmit={submitHandler}/>
+      {onFocus? <OnFocusContent className="task edit no-hover" input={taskNewTitle} onCancelClick={cancelClickHandler}
+                                isSubmitDisabled={!taskNewTitle.value | taskNewTitle.value === props.title} onSubmit={submitHandler}/>
               : <NoFocusContent completed={props.completed} title={props.title} onClick={() => setOnFocus(true)} isImportant={props.isImportant}
                                 onComplete={event => completeHandler(event)} onImportantClick={toImportantTaskClickHandler}/>}
     </Fragment>

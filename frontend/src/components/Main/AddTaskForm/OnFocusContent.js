@@ -5,6 +5,8 @@ import PopperOverlay from '../../Modal/PopperOverlay'
 
 
 export default function OnFocusContent(props) {
+  const taskName = props.taskName
+
   const calendarButtonRef = useRef(null)
   const addTaskRef = useRef(null)
   const inputRef = useRef(null)
@@ -68,22 +70,21 @@ export default function OnFocusContent(props) {
 
   useEffect(() => {
     inputRef.current.focus()
-  }, [props.taskName])
+  }, [taskName.value])
 
   return (
     <Fragment>
       <form className="add-task-form" onSubmit={props.onSubmit}>
         <li className='task-list-add-item no-hover' ref={addTaskRef}>
           <div className="left-side">
-            <input ref={inputRef} type="text" value={props.taskName} autoFocus
-                  onChange={(e) => props.setTaskName(e.target.value)}></input>
+            <input ref={inputRef} type="text" autoFocus value={taskName.value} {...taskName.bind}></input>
           </div>
           <div className="right-side">
             <button className="show-calendar" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>
               <img src={calendar} alt="date"></img>
               <div className="date-string">{props.deadlineStringRepresentation}</div>
             </button>
-            <button className={props.taskName ? "submit" : "submit disabled"} type="submit" disabled={!props.taskName}>
+            <button className={taskName.requiredEmpty ? "submit disabled" : "submit"} type="submit" disabled={taskName.requiredEmpty}>
               Добавить
             </button>
             <button className="cancel" type="button" onClick={props.onCancelClick}>

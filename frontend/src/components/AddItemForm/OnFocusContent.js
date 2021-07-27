@@ -2,16 +2,18 @@ import React, { useRef, useEffect } from 'react'
 
 export default function OnFocusContent(props) {
   const inputRef = useRef(null)
+  
+  const input = props.input
 
   useEffect(() => {
     inputRef.current.focus()
-  }, [props.inputValue])
+  }, [input.value])
 
   return (
     <form onSubmit={props.onSubmit}>
       <li className={props.className}>
         <div className="left-side">
-          <input type="text" autoFocus ref={inputRef} value={props.inputValue} onChange={(e) => props.setInputValue(e.target.value)}></input>
+          <input type="text" autoFocus ref={inputRef} value={input.value} {...input.bind}></input>
         </div>
         <div className="right-side">
           <button type="submit" className={(props.isSubmitDisabled) ?  "submit disabled" : "submit"} 

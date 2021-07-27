@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { signup } from '../../tools/account'
 import AccountForm from './AccountForm'
 import StandalonePage from '../StandalonePage/StandalonePage'
 import { useHistory } from 'react-router-dom' 
+import useInput from '../../hooks/useInput'
 
 
 export default function SignupForm() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const email = useInput('')
+  const password= useInput('')
   const history = useHistory()
 
   function handleSubmit(event) {
@@ -19,7 +20,7 @@ export default function SignupForm() {
 
   return (
     <StandalonePage>
-      <AccountForm onSubmit={handleSubmit} email={email} password={password} setEmail={setEmail} setPassword={setPassword} title="Регистрация"
+      <AccountForm onSubmit={handleSubmit} email={email} password={password} title="Регистрация"
                    submitButtonLabel="Зарегистрироваться"/>
     </StandalonePage>
   )

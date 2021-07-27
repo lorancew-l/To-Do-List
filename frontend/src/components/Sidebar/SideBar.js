@@ -1,36 +1,24 @@
-import React, { useState } from 'react'
-import { dailyTasksActive, clipboard, importantTaskActive } from '../../images/index'
-import SidebarAddItemButton from './SidebarAddItemButton'
+import React from 'react'
+import { dailyTasksActive, clipboard, importantTaskActive, addTask } from '../../images/index'
 import SidebarItem from './SidebarItem'
 
 
 export default function SideBar(props) {
-  const [items, setItems] = useState([{id: 0, title: 'Сегодня', icon: dailyTasksActive, style: 'sidebar-item item_selected'},
-                                      {id: 1, title: 'Важно', icon: importantTaskActive, style: 'sidebar-item'},
-                                      {id: 2, title: 'Задачи', icon: clipboard, style: 'sidebar-item'}])
-
-  function itemOnClickHandler(itemId) {
-    setItems(items.map(element => {
-      element.style = (element.id === itemId)? 'sidebar-item selected': 'sidebar-item'
-      return element 
-    }))
-  }
+  const icons = {today: dailyTasksActive, important: importantTaskActive, all: clipboard, custom: clipboard}
 
   function addItemOnClickHandler() {}
 
   return (
     <aside className={props.showSidebar? 'sidebar on' : 'sidebar off'}>
-    <div className='sidebar-content'>
       <ul>
         {
-          items.map(item => {
-            return <SidebarItem key={item.id} id={item.id} title={item.title} icon={item.icon} className={item.style}
-                                onClick={itemOnClickHandler}></SidebarItem>
+          props.taskSectionList.map(item => {
+            return <SidebarItem className={item.id === props.taskSectionId ? 'sidebar-item selected' : 'sidebar-item'} taskCount={item.count}
+                                icon={icons[item.type]} key={item.id} title={item.title} onClick={() => props.setTaskSectionId(item.id)}></SidebarItem>
           })
         }
-        <SidebarAddItemButton onClick={addItemOnClickHandler}></SidebarAddItemButton>
+        <SidebarItem title="Создать список" icon={addTask} className="sidebar-item" onClick={addItemOnClickHandler}></SidebarItem>
       </ul>
-    </div>
-  </aside>
+    </aside>
   )
 }

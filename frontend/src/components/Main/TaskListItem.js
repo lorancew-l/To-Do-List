@@ -1,32 +1,27 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { checkboxUnchecked , checkboxHover, importantTaskInactive, importantTaskActive } from '../../images/index'
-import { updateTask, getSubtaskList } from '../../tools/api'
+import { updateTask } from '../../tools/api'
 import TaskDetail from '../Modal/TaskDetail/TaskDetail'
 import ModalOverlay from '../Modal/ModalOverlay'
 
 export default function TaskListItem(props) {
   const [checkboxIcon, setCheckboxIcon] = useState(checkboxUnchecked)
-  const [importantIcon, setImportantIcon] = useState(importantTaskInactive)
+  const [importantIcon, setImportantIcon] = useState(props.taskData.is_important ? importantTaskActive : importantTaskInactive)
   const [style, setStyle] = useState('task-list-task')
   const [showModal, setShowModal] = useState(false)
-  const [subtaskList, setSubtaskList] = useState([])
+
 
   useEffect(() => {
-    getSubtaskList(props.taskData.id).then(async response => {
-      if (response.ok) {
-        const data = await response.json()
-        setSubtaskList(data)
-      } 
-    })
-  }, [props])  
+    setImportantIcon(props.taskData.is_important ? importantTaskActive : importantTaskInactive)
+  }, [props.taskData.is_important])
 
-  function onClickHandler () {
+  function onClickHandler() {
     setStyle('task-list-task clicked')
     setTimeout(() => setStyle('task-list-task'), 400)
     setShowModal(true)
   }
   
-  function completeTaskClickHandler (event) {
+  function completeTaskClickHandler(event) {
     event.stopPropagation()
     updateTask(props.taskData.id, {completed: true}).then(response => {
       if (response.ok) {
@@ -34,7 +29,15 @@ export default function TaskListItem(props) {
       }
     })
   }
-
+  function toImportantTaskClickHandler(event) {
+    event.stopPropagation()
+    updateTask(props.taskData.id, {is_important: !props.taskData.is_important}).then(response => {
+      if (response.ok) {
+        props.updateTaskList()
+      }
+    })
+  }
+  
   return (
     <Fragment>
       <li className={style} onClick={onClickHandler}>
@@ -47,15 +50,16 @@ export default function TaskListItem(props) {
           <div>
             <div>{props.taskData.title}</div>
             <div className="subtask-progress">
-              {subtaskList.length ?
-                  subtaskList.filter(subtask => subtask.completed === true).length + " из " + subtaskList.length
+              {props.taskData.subtask_list.length ?
+                  props.taskData.subtask_list.filter(subtask => subtask.completed === true).length + " из " + props.taskData.subtask_list.length
               : null}
             </div>
           </div>
         </div>
-        <button onClick={event => event.stopPropagation()} onMouseEnter={() => setImportantIcon(importantTaskActive)}
-                onMouseLeave={() => setImportantIcon(importantTaskInactive)}>
-          <img alt='to favorite' src={importantIcon}/>
+        <button onClick={event => toImportantTaskClickHandler(event)} 
+                onMouseEnter={() => {if (!props.taskData.is_important) setImportantIcon(importantTaskActive)}}
+                onMouseLeave={() => {if (!props.taskData.is_important) setImportantIcon(importantTaskInactive)}}>
+          <img alt='to important' src={importantIcon}/>
         </button>
       </li>
       {showModal?

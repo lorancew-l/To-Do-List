@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { checkboxHover, checkboxUnchecked, checkboxChecked, importantTaskInactive, importantTaskActive } from '../../../../images/index'
 
 export default function OnFocusContent(props) {
   const [checkboxIcon, setCheckboxIcon] = useState(checkboxUnchecked) 
-  const [toImportantIcon, setToImportantIcon] = useState(importantTaskInactive)
+  const [importantIcon, setImportantIcon] = useState(null)
+
+  useEffect(() => {
+    setImportantIcon(props.isImportant ? importantTaskActive : importantTaskInactive)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.isImportant])
 
   return (
     <li className={props.completed ? "task completed no-hover" : "task no-hover"}>
@@ -15,9 +20,10 @@ export default function OnFocusContent(props) {
         </button>
         <div className="title" onClick={props.onClick}>{props.title}</div>
       </div>
-      <button className="noselect nodrag"  onMouseEnter={() => setToImportantIcon(importantTaskActive)}
-              onMouseLeave={() => setToImportantIcon(importantTaskInactive)}>
-        <img alt="to favorite" src={toImportantIcon}/>
+      <button className="noselect nodrag" onClick={props.onImportantClick}
+              onMouseEnter={() => {if (!props.isImportant) setImportantIcon(importantTaskActive)}}
+              onMouseLeave={() => {if (!props.isImportant) setImportantIcon(importantTaskInactive)}}>
+        <img alt="to favorite" src={importantIcon}/>
       </button>
     </li>
   )

@@ -14,6 +14,7 @@ export default function TaskDetail(props) {
   const [title, setTitle] = useState(props.taskData.title)
   const [note, setNote] = useState(props.taskData.note)
   const [completed, setCompleted] = useState(props.taskData.completed)
+  const [isImportant, setImportant] = useState(props.taskData.is_important)
 
   const [subtaskList, setSubtaskList] = useState([])
   const [isLoaded, setLoaded] = useState(false)
@@ -59,7 +60,8 @@ export default function TaskDetail(props) {
           <Heading onClose={props.closeModal} creationDate={props.taskData.creation_date}/>
           <div className="detail-holder">
             <ul className="subtask-list">
-              <Task title={title} setTitle={setTitle} id={props.taskData.id} completed={completed} setCompleted={setCompleted}/>
+              <Task title={title} setTitle={setTitle} id={props.taskData.id} completed={completed} setCompleted={setCompleted}
+                    isImportant={isImportant} setImportant={setImportant}/>
               {subtaskList.map(subtask => {
                   return <Subtask key={subtask.id} id={subtask.id} taskId={props.taskData.id} title={subtask.title}
                                   completed={subtask.completed} updateSubtaskList={updateSubtaskList}/>})

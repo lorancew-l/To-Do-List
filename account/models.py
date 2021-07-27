@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+import api.models
 
 
 class Manager(BaseUserManager):
@@ -27,3 +28,12 @@ class User(AbstractBaseUser, PermissionsMixin):
   USERNAME_FIELD = 'email'
 
   objects = Manager()
+
+  def save(self, *args, **kwargs):
+      created = not self.pk
+      super().save(self, *args, **kwargs)
+
+      if created:
+         api.models.TaskSectionModel.objects.bulk_create([api.models.TaskSectionModel(title='Сегодня', user=self, type='today'),
+                                                          api.models.TaskSectionModel(title='Важно', user=self, type='important'),
+                                                          api.models.TaskSectionModel(title='Все задачи', user=self, type='all')])

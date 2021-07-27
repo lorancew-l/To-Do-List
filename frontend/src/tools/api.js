@@ -21,11 +21,11 @@ export async function addTask(data) {
   return response
 }
 
-export async function getTaskList() {
+export async function getTaskList(taskSectionId) {
   const response =  getToken().then(async (token) => {
     const fetchData =  {headers: {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}}
     
-    return await fetch(`${baseURL}tasks/`, fetchData)
+    return await fetch(`${baseURL}tasks/?task-section=${taskSectionId}`, fetchData)
   })
 
   return response
@@ -103,6 +103,16 @@ export async function deleteSubtask(taskId, subtaskId) {
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
     })
+  })
+
+  return response
+}
+
+export async function getTaskSectionList() {
+  const response =  getToken().then(async (token) => {
+    const fetchData =  {headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token}}
+    
+    return await fetch(`${baseURL}task-sections/`, fetchData)
   })
 
   return response

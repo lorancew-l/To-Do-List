@@ -36,6 +36,15 @@ export default function Task(props) {
     })
   }
 
+  function toImportantTaskClickHandler(event) {
+    event.stopPropagation()
+    updateTask(props.id, {is_important: !props.isImportant}).then(response => {
+      if (response.ok) {
+        props.setImportant(!props.isImportant)
+      }
+    })
+  }
+
   useEffect(() => {
     if (!isFirstRun.current) {
       setOnFocus(false)
@@ -50,8 +59,8 @@ export default function Task(props) {
     <Fragment>
       {onFocus? <OnFocusContent className="task edit no-hover" inputValue={taskNewTitle} setInputValue={setTaskNewTitle} onCancelClick={cancelClickHandler}
                                 isSubmitDisabled={!taskNewTitle | taskNewTitle === props.title} onSubmit={submitHandler}/>
-              : <NoFocusContent completed={props.completed} title={props.title} onClick={() => setOnFocus(true)} 
-                                onComplete={event => completeHandler(event)} />}
+              : <NoFocusContent completed={props.completed} title={props.title} onClick={() => setOnFocus(true)} isImportant={props.isImportant}
+                                onComplete={event => completeHandler(event)} onImportantClick={toImportantTaskClickHandler}/>}
     </Fragment>
   )
 }

@@ -69,7 +69,6 @@ export function isRefreshTokenExpired() {
     return false
   }
   else {
-    console.log(isTokenExpired(refreshToken));
     return isTokenExpired(refreshToken)
   }
 

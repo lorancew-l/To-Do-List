@@ -1,25 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import TaskListItem from './TaskListItem'
 import AddTask from './AddTaskForm/AddTaskForm'
-import { getTaskList } from '../../tools/api'
 
 
 export default function Main(props) {
-  const [taskList, setTaskList] = useState([])
   const currentDate = new Date()
-
-  useEffect(() => {
-    updateTaskList()
-  }, [])  
-
-  function updateTaskList() {
-    getTaskList().then(async response => {
-      if (response.ok) {
-        const data = await response.json()
-        setTaskList(data)
-      }
-    })
-  }
 
   return (
     <main className={props.showSidebar? "sidebar-on" : "sidebar-off"}>
@@ -32,10 +17,10 @@ export default function Main(props) {
           </div>
         </div>
         <ul className="task-list">
-            {taskList.map(task => {
-              return <TaskListItem key={task.id} taskData={task} updateTaskList={updateTaskList}></TaskListItem>})
+            {props.taskList.map(task => {
+              return <TaskListItem key={task.id} taskData={task} updateTaskList={props.updateTaskList}></TaskListItem>})
             }
-            <AddTask updateTaskList={updateTaskList}></AddTask>
+            <AddTask updateTaskList={props.updateTaskList}></AddTask>
         </ul>
       </div>
     </main>

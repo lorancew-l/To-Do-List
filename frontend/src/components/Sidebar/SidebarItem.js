@@ -7,8 +7,17 @@ export default function SidebarItem(props) {
 
   return (
     <li className={props.className} onClick={onClickHandler}>
-      <span><img alt={props.title} src={props.icon}/></span>
-      <span className="sidebar-item-text">{props.title}</span>
-  </li>
+      <div className="left-side">
+        <img alt="" src={props.icon}/>
+        <div>{props.title}</div>
+      </div>
+      {props.taskCount ?
+        <div className="right-side">
+          <small>{props.taskCount}</small>
+        </div>
+        : null
+      }
+    </li>
   )
 }
+

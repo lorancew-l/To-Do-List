@@ -64,9 +64,9 @@ export async function getToken() {
 
 export function isRefreshTokenExpired() {
   const refreshToken = JSON.parse(localStorage.getItem('refreshToken'))
-
+  
   if (refreshToken === null) {
-    return false
+    return true
   }
   else {
     return isTokenExpired(refreshToken)

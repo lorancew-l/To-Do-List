@@ -3,7 +3,7 @@ import { dailyTasksActive, clipboard, importantTaskActive, addTask } from '../..
 import SidebarItem from './SidebarItem'
 
 
-export default function SideBar(props) {
+export default function Sidebar(props) {
   const icons = {today: dailyTasksActive, important: importantTaskActive, all: clipboard, custom: clipboard}
 
   function addItemOnClickHandler() {}

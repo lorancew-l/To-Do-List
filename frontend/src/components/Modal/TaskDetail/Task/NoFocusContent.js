@@ -3,7 +3,7 @@ import { checkboxHover, checkboxUnchecked, checkboxChecked, importantTaskInactiv
 
 export default function OnFocusContent(props) {
   const [checkboxIcon, setCheckboxIcon] = useState(checkboxUnchecked) 
-  const [importantIcon, setImportantIcon] = useState(null)
+  const [importantIcon, setImportantIcon] = useState(props.isImportant ? importantTaskActive : importantTaskInactive)
 
   useEffect(() => {
     setImportantIcon(props.isImportant ? importantTaskActive : importantTaskInactive)

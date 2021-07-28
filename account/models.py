@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import api.models
 
 
@@ -29,11 +31,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
   objects = Manager()
 
-  def save(self, *args, **kwargs):
-      created = not self.pk
-      super().save(self, *args, **kwargs)
+  
+@receiver(post_save, sender=User)
+def create_default_task_sections(instance, created, **kwargs):
 
-      if created:
-         api.models.TaskSectionModel.objects.bulk_create([api.models.TaskSectionModel(title='Сегодня', user=self, type='today'),
-                                                          api.models.TaskSectionModel(title='Важно', user=self, type='important'),
-                                                          api.models.TaskSectionModel(title='Все задачи', user=self, type='all')])
+  if created:
+      api.models.TaskSectionModel.objects.bulk_create([api.models.TaskSectionModel(title='Сегодня', user=instance, type='today'),
+                                                        api.models.TaskSectionModel(title='Важно', user=instance, type='important'),
+                                                        api.models.TaskSectionModel(title='Все задачи', user=instance, type='all')])

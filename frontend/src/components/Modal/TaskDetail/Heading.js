@@ -9,7 +9,7 @@ export default function Heading(props) {
   return (
     <div className="heading">
       <div className="left-side">
-        <div><img className="noselect nodrag" alt="section" src={clipboard}/></div>
+        <img className="noselect nodrag" alt="section" src={clipboard}/>
         <div className="creation-date">Создано {creationDate}</div>
       </div>
       <button onClick={props.onClose} onMouseEnter={() => setCloseIcon(closeIconActive)}

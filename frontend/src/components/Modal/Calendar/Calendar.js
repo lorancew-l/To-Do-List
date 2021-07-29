@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { calendarToday, calendarTomorrow, calendarNextWeek, calendarNoDeadline } from '../../../images/index'
-import { getMonthNames, getWeekdayNames } from '../../../tools/dateTools'
+import { compareCalendarDates, getMonthNames, getWeekdayNames } from '../../../tools/dateTools'
 import DateOption from './DateOption'
 import DatePickerHeader from './DatePickerHeader'
 import DatePickerDaysTabel from './DatePickerDaysTabel'
+import { addDays, isToday, isTomorrow, set } from 'date-fns'
 
 
 export default function Calendar(props) {
-  const currentDate = new Date()
-  currentDate.setHours(0, 0, 0, 0)
-
-  const tommorowDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1)
-  const nextWeekDate =  new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7)
+  const todayDate = new Date()
+  const tommorowDate = addDays(todayDate, 1)
+  const nextWeekDate = addDays(todayDate, 7)
 
   const monthNamesList = getMonthNames()
   const weekdayNamesList = getWeekdayNames()
   
-  const [selectedDate, setSelectedDate] = useState(props.selectedDate || new Date())
+  const [currentDate, setCurrentDate] = useState(props.selectedDate || new Date(todayDate))
 
   useEffect(() => {
     window.addEventListener('resize', props.onWindowResize)
@@ -24,64 +23,67 @@ export default function Calendar(props) {
     return () => {
       window.removeEventListener('resize', props.onWindowResize)
     }
-  }, [props])
+  }, [props.onWindowResize])
 
   function submitDate(date, dateStringRepresentation) {
     props.onDateClick(date, dateStringRepresentation)
     props.closePopper()
   }
 
-  function handleSelectValueChange (newMonthValue) {
-    if (newMonthValue < currentDate.getMonth() & selectedDate.getFullYear() === currentDate.getFullYear()) {
-      setSelectedDate(new Date(currentDate.getFullYear() + 1, newMonthValue, selectedDate.getDate()))
+  function handleMonthValueChange (newMonthValue) {
+    let newDate = new Date(currentDate)
+
+    if (newMonthValue < todayDate.getMonth() && currentDate.getFullYear() === todayDate.getFullYear()) {
+      newDate = set(newDate, {year: todayDate.getFullYear() + 1, month: newMonthValue})
     }
     else {
-      setSelectedDate(new Date(selectedDate.getFullYear(), newMonthValue, selectedDate.getDate()))
+      newDate = set(newDate, {month: newMonthValue})
     }
+
+    setCurrentDate(newDate)
   }
 
   function handleControlButtonClick (newMonthValue) {
-    if (selectedDate.getFullYear() <= currentDate.getFullYear()) {
-      if (newMonthValue < currentDate.getMonth()) return
-    }
-
-    setSelectedDate(new Date(selectedDate.getFullYear(), newMonthValue, selectedDate.getDate()))
-  }
-
-  function handleDayClick(date) {
-    date.setHours(0, 0, 0, 0)
-
-    if (date.getTime() < currentDate.getTime()) {
+    if (currentDate.getFullYear() <= todayDate.getFullYear() && newMonthValue < todayDate.getMonth()) {
       return
     }
 
-    let dateStringRepresentation
+    setCurrentDate(set(currentDate, {month: newMonthValue}))
+  }
 
-    if (date.getTime() === currentDate.getTime()) {
+  function handleDayClick(date) {
+    if (compareCalendarDates(date, todayDate) < 0) {
+      return
+    } 
+    
+    let dateStringRepresentation
+    
+    if (isToday(date)) {
       dateStringRepresentation = 'Сегодня'
     }
-    else if (date.getTime() === tommorowDate.getTime()) {
+    else if (isTomorrow(date)) {
       dateStringRepresentation = 'Завтра'
     }
     else {
       dateStringRepresentation = date.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric'})
     }
-
+    
+    date.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getMilliseconds())
     submitDate(date, dateStringRepresentation)
   }
 
-  function resetSelectedDate() {
-    setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()))
+  function resetCurrentDate() {
+    setCurrentDate(todayDate)
   }
 
   return (
     <div className="calendar-popup" style={{transform: `translate(${props.pos.x}px, ${props.pos.y}px)`}} onClick={(event) => event.stopPropagation()}>
       <div className="current-date">
-        {currentDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}
+        {todayDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}
       </div>
       <div className="date-options">
-        <DateOption icon={calendarToday} label="Сегодня" weekdayLabel={currentDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
-                    onClick={() => submitDate(currentDate, "Сегодня")}/>
+        <DateOption icon={calendarToday} label="Сегодня" weekdayLabel={todayDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
+                    onClick={() => submitDate(todayDate, "Сегодня")}/>
         <DateOption icon={calendarTomorrow} label="Завтра" weekdayLabel={tommorowDate.toLocaleDateString('ru-RU', { weekday: 'short' })}
                     onClick={() => submitDate(tommorowDate, "Завтра")}/>
 
@@ -93,12 +95,13 @@ export default function Calendar(props) {
                     onClick={() => submitDate(null, 'Срок')}/>
       </div>
       <div className="date-picker">
-        <DatePickerHeader date={selectedDate} handleSelectValueChange={handleSelectValueChange}
-                          monthNamesList={monthNamesList} onPrevMonthClick={() => {handleControlButtonClick(selectedDate.getMonth() - 1)}}
-                          onResetClick={resetSelectedDate} onNextMonthClick={() => handleControlButtonClick(selectedDate.getMonth() + 1)}/>
-        <DatePickerDaysTabel date={selectedDate} today={currentDate} weekdayNamesList={weekdayNamesList} handleDayClick={handleDayClick}
-                             onPrevMonthScroll={() => {handleControlButtonClick(selectedDate.getMonth() - 1)}}
-                             onNextMonthScroll={() => handleControlButtonClick(selectedDate.getMonth() + 1)}/>
+        <DatePickerHeader date={currentDate} handleMonthValueChange={handleMonthValueChange}
+                          monthNamesList={monthNamesList} onPrevMonthClick={() => {handleControlButtonClick(currentDate.getMonth() - 1)}}
+                          onResetClick={resetCurrentDate} onNextMonthClick={() => handleControlButtonClick(currentDate.getMonth() + 1)}/>
+        <DatePickerDaysTabel currentDate={currentDate} selectedDate={props.selectedDate} 
+                             weekdayNamesList={weekdayNamesList} handleDayClick={handleDayClick}
+                             onPrevMonthScroll={() => {handleControlButtonClick(currentDate.getMonth() - 1)}}
+                             onNextMonthScroll={() => handleControlButtonClick(currentDate.getMonth() + 1)}/>
       </div>
     </div>
   )

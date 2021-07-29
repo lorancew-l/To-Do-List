@@ -1,4 +1,4 @@
-import { eachMonthOfInterval, eachDayOfInterval, addDays, subDays } from 'date-fns'
+import { eachMonthOfInterval, eachDayOfInterval, addDays, subDays, compareAsc } from 'date-fns'
 
 export function getMonthNames () {
   const date = new Date()
@@ -26,8 +26,8 @@ export function getWeekdayNames () {
   return weekdayNames
 }
 
-export function getCalendarPage(datesPerPage, year, month) {
-  const date = new Date(year, month, 1)
+export function getCalendarPage(date, datesPerPage) {
+  date = new Date(date.getFullYear(), date.getMonth(), 1)
 
   const leftDate = (date.getDay() === 0) ? subDays(date, 6) : subDays(date, date.getDay() - 1)
   const rightDate = addDays(date, datesPerPage - date.getDay())
@@ -41,4 +41,11 @@ export function getCalendarPage(datesPerPage, year, month) {
   }
 
   return dayList
+}
+
+export function compareCalendarDates(dateLeft, dateRight) {
+  dateLeft = new Date(dateLeft.getFullYear(), dateLeft.getMonth(), dateLeft.getDate())
+  dateRight= new Date(dateRight.getFullYear(), dateRight.getMonth(), dateRight.getDate())
+
+  return compareAsc(dateLeft, dateRight)
 }

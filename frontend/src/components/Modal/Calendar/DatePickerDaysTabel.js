@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getCalendarPage } from '../../../tools/dateTools'
-import CalendarRow from './DatePickerDaysTabelRow'
+import TabelRow from './DatePickerDaysTabelRow'
 
 export default function DatePickerDaysTabel(props) {
   const [touchStart, setTouchStart] = useState(null)
@@ -44,9 +44,9 @@ export default function DatePickerDaysTabel(props) {
         </tr>
       </thead>
       <tbody>
-        {getCalendarPage(42, props.date.getFullYear(), props.date.getMonth()).map((weekdays, index) => {
-          return <CalendarRow selected={props.selectedDate} today={props.today} month={props.date.getMonth()}
-                              key={index} rowData={weekdays} onClick={props.handleDayClick}></CalendarRow>
+        {getCalendarPage(props.currentDate, 42).map((weekdays, index) => {
+          return <TabelRow key={index} selectedDate={props.selectedDate} currentMonth={props.currentDate.getMonth()}
+                           rowData={weekdays} onClick={props.handleDayClick}></TabelRow>
         })}
       </tbody>
     </table>

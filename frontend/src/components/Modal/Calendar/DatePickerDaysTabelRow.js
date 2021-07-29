@@ -1,26 +1,26 @@
+import { isToday } from 'date-fns';
 import React from 'react'
+import { compareCalendarDates } from '../../../tools/dateTools';
 
-export default function CalendarRow(props) {
-  const rowData = props.rowData.map((cellData, index) => {
+export default function TabelRow(props) {
+  const rowData = props.rowData.map((cellDate, index) => {
     let className
-    
-    if (cellData.getDate() === props.today.getDate() & cellData.getMonth() === props.today.getMonth()) {
+
+    if (isToday(cellDate)) {
       className = "today"
     }
-    else if(cellData.getMonth() !== props.month) {
+    else if(cellDate.getMonth() !== props.currentMonth) {
       className = "other-month"
     }
     else {
       className = null
     }
 
-    if(props.selected) {
-      if (cellData.getDate() === props.selected.getDate() & cellData.getMonth() === props.selected.getMonth()) {
-        className = "selected"
-      }
-    }
+    if (props.selectedDate && compareCalendarDates(cellDate, props.selectedDate) === 0){
+      className = "selected"
+    } 
 
-    return <td className={className} key={index} onClick={() => props.onClick(cellData)}>{cellData.getDate()}</td>
+    return <td className={className} key={index} onClick={() => props.onClick(cellDate)}>{cellDate.getDate()}</td>
   })
   return (
     <tr>

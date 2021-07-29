@@ -16,7 +16,7 @@ export async function signup(email, password) {
   return response
 }
 
-export async function login(email, password) {
+export async function login(email, password, callback) {
   const fetchData = {
     method: 'POST',
     mode: 'cors',
@@ -33,6 +33,7 @@ export async function login(email, password) {
      response.json().then(token => {
        localStorage.setItem('accessToken', JSON.stringify(token.access))
        localStorage.setItem('refreshToken', JSON.stringify(token.refresh))
+       callback()
      })
     }
   })

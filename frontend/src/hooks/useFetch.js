@@ -5,7 +5,7 @@ export default function useFetch(fetchFunction, args) {
   const [isLoaded, setLoaded] = useState(false)
   const [responseData, setResponseData] = useState(null)
   const [error, setError] = useState(null)
-
+  
   function fetchData(){
     fetchFunction(args)
       .then(response => {
@@ -32,6 +32,8 @@ export default function useFetch(fetchFunction, args) {
     }
 
     return () => isMounted = false
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {value: responseData, isLoaded, error, update: fetchData}

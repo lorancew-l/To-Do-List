@@ -13,7 +13,7 @@ export default function SignupForm() {
 
   function handleSubmit(event) {
     event.preventDefault()
-    signup(email, password).then(() => {
+    signup(email.value, password.value).then(() => {
       history.push('/login/')
     })
   }

@@ -6,7 +6,7 @@ import useFetch from '../hooks/useFetch'
 import { getTaskList, getTaskSectionList } from './../tools/api'
 
 
-export default function Homepage() {
+export default function Homepage(props) {
   const [isSidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 992 ? true : false)
   const [taskSectionId, setTaskSectionId] = useState(null)
 
@@ -39,7 +39,7 @@ export default function Homepage() {
 
   return (
     <Fragment>
-      <Header onSidebarChange={() => setSidebarOpen(!isSidebarOpen)}></Header>
+      <Header isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} onSidebarChange={() => setSidebarOpen(!isSidebarOpen)}></Header>
       <Sidebar showSidebar={isSidebarOpen} taskSectionList={taskSectionList.value}
                taskSectionId={taskSectionId}  setTaskSectionId={setTaskSectionId} ></Sidebar>
       <Main showSidebar={isSidebarOpen} taskList={taskList.value} updateTaskList={updateTaskList}/>

@@ -14,7 +14,7 @@ export default function App() {
     <Switch>
       <Route exact path="/">
         {isLoggedIn ? 
-          <Homepage />
+          <Homepage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>
           :<Redirect to="/login/"/>
         }
       </Route>

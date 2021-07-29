@@ -39,6 +39,23 @@ export async function login(email, password, callback) {
   })
 }
 
+export async function logout(callback) {
+  const refreshToken = JSON.parse(localStorage.getItem('refreshToken'))
+
+  await fetch(`${accountURL}logout/`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({refresh_token: refreshToken})
+}).then(response => {
+    if (response.ok) {
+      localStorage.removeItem('accessToken')
+      // localStorage.removeItem('refreshToken')
+      callback()
+     }
+  })
+}
+
 export async function getToken() {
   const token = JSON.parse(localStorage.getItem('accessToken'))
 

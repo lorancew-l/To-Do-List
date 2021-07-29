@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'account.apps.AccountConfig',
     'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -65,8 +66,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'todo.wsgi.application'
 
 
-# Auth
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -80,7 +79,7 @@ REST_FRAMEWORK = {
     )
 }
 
-
+# AUTH
 
 AUTH_USER_MODEL = 'account.User'
 

@@ -31,7 +31,6 @@ class TaskList(generics.ListCreateAPIView):
     
         return TaskModel.objects.filter(completed=False, user=self.request.user, **task_section_filter[task_section.type])
 
-    
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         for item in response.data:
@@ -41,9 +40,9 @@ class TaskList(generics.ListCreateAPIView):
 
     def create(self, request):
         data = request.data.copy()
-        data.update({'user': request.user.pk})
+        data['user'] = request.user.pk
         serializer = self.get_serializer(data=data)
-        serializer.is_valid()
+        serializer.is_valid(raise_exception=True)
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -6,7 +6,6 @@ node_modules
 # testing
 frontend/coverage
 
-
 # production
 frontend/build
 
@@ -29,12 +28,6 @@ migrations
 
 # db
 db.sqlite3
-
-# images
-frontend/src/images
-
-# fonts
-frontend/src/fonts
 
 # css
 frontend/src/css

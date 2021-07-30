@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#888888;}
+	.st1{fill:none;stroke:#888888;stroke-width:40;stroke-miterlimit:10;}
+</style>
+<g id="Слой_2">
+	<rect x="236" y="220" class="st0" width="40" height="40"/>
+	<rect x="316" y="220" class="st0" width="40" height="40"/>
+	<rect x="396" y="220" class="st0" width="40" height="40"/>
+	<rect x="156" y="220" class="st0" width="40" height="40"/>
+	<rect x="76" y="220" class="st0" width="40" height="40"/>
+	<rect x="236" y="300" class="st0" width="40" height="40"/>
+	<rect x="316" y="300" class="st0" width="40" height="40"/>
+	<rect x="396" y="300" class="st0" width="40" height="40"/>
+	<rect x="156" y="300" class="st0" width="40" height="40"/>
+	<rect x="76" y="300" class="st0" width="40" height="40"/>
+	<rect x="236" y="370" class="st0" width="40" height="40"/>
+	<rect x="316" y="370" class="st0" width="40" height="40"/>
+	<rect x="156" y="370" class="st0" width="40" height="40"/>
+	<rect x="76" y="370" class="st0" width="40" height="40"/>
+</g>
+<g id="Слой_1">
+	<path class="st1" d="M451.6,493H60.4C37.1,493,18,473.9,18,450.6V87.4C18,64.1,37.1,45,60.4,45h391.1c23.3,0,42.4,19.1,42.4,42.4
+		v363.1C494,473.9,474.9,493,451.6,493z"/>
+	<rect x="32" y="126" class="st0" width="456" height="40"/>
+	<rect x="117" class="st0" width="40" height="94"/>
+	<rect x="355" class="st0" width="40" height="94"/>
+</g>
+</svg>

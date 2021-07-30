@@ -1,4 +1,4 @@
-const accountURL = 'http://localhost:8000/api/account/'
+const accountURL = 'http://localhost:8000/account/'
 
 
 export async function signup(email, password) {

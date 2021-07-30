@@ -47,12 +47,12 @@ export async function logout(callback) {
     mode: 'cors',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({refresh_token: refreshToken})
-}).then(response => {
+  }).then(response => {
     if (response.ok) {
       localStorage.removeItem('accessToken')
-      // localStorage.removeItem('refreshToken')
+      localStorage.removeItem('refreshToken')
       callback()
-     }
+    }
   })
 }
 
@@ -70,8 +70,9 @@ export async function getToken() {
       method: 'POST',
       body: JSON.stringify({refresh: refreshToken})
     }).then(response => response.json())
-    
+
     localStorage.setItem('accessToken', JSON.stringify(updatedToken.access))
+    localStorage.setItem('refreshToken', JSON.stringify(updatedToken.refresh))
 
     return updatedToken.access
   }

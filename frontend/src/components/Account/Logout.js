@@ -19,6 +19,8 @@ export default function Logout(props) {
   }
 
   return (
-    <img alt='log out' src={logoutIcon} onClick={handleLogout}/>
+    <button onClick={handleLogout}>
+      <img alt='log out' src={logoutIcon}/>
+    </button>
   )
 }

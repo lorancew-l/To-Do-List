@@ -16,9 +16,7 @@ export default function Header(props) {
         </div>
       </div>
       <div className="header-right">
-        <button>
-          <Logout isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} />
-        </button>
+        <Logout isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} />
         <button>
           <img alt='settings' src={settings}/>
         </button>

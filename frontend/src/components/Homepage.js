@@ -10,7 +10,7 @@ export default function Homepage(props) {
   const [isSidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 992 ? true : false)
   const [taskSectionId, setTaskSectionId] = useState(null)
 
-  const taskList = useFetch(getTaskList, taskSectionId)
+  const taskList = useFetch(getTaskList, [taskSectionId], true)
   const taskSectionList = useFetch(getTaskSectionList)
   const isLoaded = taskList.isLoaded && taskSectionList.isLoaded
 
@@ -27,8 +27,7 @@ export default function Homepage(props) {
   }, [taskSectionList.value])
 
   useEffect(() => {
-    if (!isLoaded || taskSectionId === null) return
-
+    if (!taskSectionList.isLoaded || taskSectionId === null) return
     updateTaskList()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskSectionId])  

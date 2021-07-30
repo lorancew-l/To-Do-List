@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 
 
-export default function useFetch(fetchFunction, args) {
+export default function useFetch(fetchFunction, args=[], skipInitial=false) {
   const [isLoaded, setLoaded] = useState(false)
   const [responseData, setResponseData] = useState(null)
   const [error, setError] = useState(null)
   
   function fetchData(){
-    fetchFunction(args)
+    fetchFunction(...args)
       .then(response => {
         if (response.ok) {
           return response.json()
@@ -27,7 +27,7 @@ export default function useFetch(fetchFunction, args) {
   useEffect(() => {
     let isMounted = true
 
-    if (isMounted) {
+    if (isMounted && !skipInitial) {
       fetchData()
     }
 

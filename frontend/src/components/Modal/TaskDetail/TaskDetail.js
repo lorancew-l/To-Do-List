@@ -16,7 +16,7 @@ export default function TaskDetail(props) {
   const [completed, setCompleted] = useState(props.taskData.completed)
   const [isImportant, setImportant] = useState(props.taskData.is_important)
 
-  const subtaskList = useFetch(getSubtaskList, props.taskData.id)
+  const subtaskList = useFetch(getSubtaskList, [props.taskData.id])
 
   useEffect(() => {
     return () => props.updateTaskList()

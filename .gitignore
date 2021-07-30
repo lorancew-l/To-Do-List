@@ -36,9 +36,5 @@ frontend/src/images
 # fonts
 frontend/src/fonts
 
-# gulp
-frontend/gulpfile.js
-frontend/tasks
-
 # css
 frontend/src/css

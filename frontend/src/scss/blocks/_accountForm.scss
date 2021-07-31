@@ -1,6 +1,11 @@
 .account-form {
   min-width: 350px;
 
+  @media (max-width: $small) {
+    width: 100%;
+    min-width: 0;
+  }
+
   h1 {
     margin-top: 0;
   }

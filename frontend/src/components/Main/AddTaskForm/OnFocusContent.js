@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState, Fragment } from 'react'
 import { calendar } from '../../../images/index'
 import Calendar from '../../Modal/Calendar/Calendar'
 import PopperOverlay from '../../Modal/PopperOverlay'
+import { motion } from 'framer-motion'
+import { taskItemAnimation } from '../../../animations/animations'
 
 
 export default function OnFocusContent(props) {
@@ -74,7 +76,7 @@ export default function OnFocusContent(props) {
 
   return (
     <Fragment>
-      <form className="add-task-form" onSubmit={props.onSubmit}>
+      <motion.form layout className="add-task-form" onSubmit={props.onSubmit} transition={taskItemAnimation.transition}>
         <li className='task-list-add-item no-hover' ref={addTaskRef}>
           <div className="left-side">
             <input ref={inputRef} type="text" autoFocus value={taskName.value} {...taskName.bind}></input>
@@ -92,7 +94,7 @@ export default function OnFocusContent(props) {
             </button>
           </div>
         </li>
-      </form>
+      </motion.form>
       {isCalendarOpen ? 
       <PopperOverlay closePopper={() => setCalendarOpen(false)}>
         <Calendar onDateClick={props.onDateClick} pos={calendarPos} onWindowResize={() => setCalendarPos(calculateCalendarPos())}

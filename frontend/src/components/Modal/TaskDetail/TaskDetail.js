@@ -7,6 +7,8 @@ import Deadline from './Deadline'
 import Note from './Note'
 import { getSubtaskList } from '../../../tools/api'
 import useFetch from '../../../hooks/useFetch'
+import { getTaskDetailAnimation } from '../../../animations/animations'
+import { motion } from 'framer-motion'
 
 
 export default function TaskDetail(props) {
@@ -28,7 +30,7 @@ export default function TaskDetail(props) {
   }
 
   return (
-    <div className="task-detail" onClick={event => event.stopPropagation()}>
+    <motion.div className="task-detail" onClick={event => event.stopPropagation()} {...getTaskDetailAnimation(window.innerWidth)}>
       <Heading onClose={props.closeModal} creationDate={props.taskData.creation_date}/>
       <div className="detail-holder">
         <ul className="subtask-list">
@@ -44,6 +46,6 @@ export default function TaskDetail(props) {
       <Deadline deadline={deadline} taskId={props.taskData.id} showPopper={props.showPopper} updatePopperPos={props.updatePopperPos}
                 popperPos={props.popperPos} setDeadline={setDeadline}/>
       <Note note={note} setNote={setNote} taskId={props.taskData.id}/>
-    </div>
+    </motion.div>
   )
 }

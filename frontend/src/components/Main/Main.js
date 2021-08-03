@@ -1,7 +1,7 @@
 import React from 'react'
 import TaskListItem from './TaskListItem'
 import AddTask from './AddTaskForm/AddTaskForm'
-
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 
 export default function Main(props) {
   const currentDate = new Date()
@@ -17,10 +17,14 @@ export default function Main(props) {
           </div>
         </div>
         <ul className="task-list">
-          {props.taskList.map(task => {
-            return <TaskListItem key={task.id} taskData={task} updateTaskList={props.updateTaskList}></TaskListItem>})
-          }
-          <AddTask updateTaskList={props.updateTaskList}></AddTask>
+          <AnimateSharedLayout>
+            <AnimatePresence initial={false}>
+              {props.taskList.map((task, i) => {
+                return <TaskListItem key={task.id} taskData={task} updateTaskList={props.updateTaskList} custom={i}></TaskListItem>})
+              }
+              <AddTask updateTaskList={props.updateTaskList}></AddTask>
+            </AnimatePresence>
+          </AnimateSharedLayout>
         </ul>
       </div>
     </main>

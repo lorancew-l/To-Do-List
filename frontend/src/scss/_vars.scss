@@ -25,6 +25,7 @@ $sidebar-z-index: 100;
 $header-z-index: 200;
 $modal-z-index: 300;
 $popper-z-index: 400;
+$loading-screen-z-index: 500;
 
 // header
 $header-content-height: 28px;
@@ -57,3 +58,6 @@ $calendar-date-option-icon-margin-right: 10px;
 $subtask-checkbox-size: 18px;
 $note-textarea-scrollbar-width: 6px;
 $top-offset-mobile: 40px;
+
+// loadingScreen 
+$loader-size: 60px;

@@ -1,8 +1,7 @@
-const accountURL = 'http://localhost:8000/account/'
-
+const baseURL = 'http://localhost:8000/account/'
 
 export async function signup(email, password) {
-  const response = await fetch(`${accountURL}signup/`, {
+  const response = await fetch(`${baseURL}signup/`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
@@ -28,7 +27,7 @@ export async function login(email, password, callback) {
     body: JSON.stringify({email: email, password: password})
   }
 
-  await fetch(`${accountURL}token/`, fetchData).then(response => {
+  await fetch(`${baseURL}token/`, fetchData).then(response => {
     if (response.ok) {
      response.json().then(token => {
        localStorage.setItem('accessToken', JSON.stringify(token.access))
@@ -42,7 +41,7 @@ export async function login(email, password, callback) {
 export async function logout(callback) {
   const refreshToken = JSON.parse(localStorage.getItem('refreshToken'))
 
-  await fetch(`${accountURL}logout/`, {
+  await fetch(`${baseURL}logout/`, {
     method: 'POST',
     mode: 'cors',
     headers: {'Content-Type': 'application/json'},
@@ -56,28 +55,50 @@ export async function logout(callback) {
   })
 }
 
-export async function getToken() {
-  const token = JSON.parse(localStorage.getItem('accessToken'))
-
-  if (!token) {
-    return null
+export class TokenProvider {
+  constructor() {
+    if (!TokenProvider._instance) {
+      TokenProvider._instance = this
+      
+      this.token = null
+      this.lastRefreshToken = null
+    }
+    return TokenProvider._instance
   }
 
-  if (isTokenExpired(token)) {
+  getToken() {
+    const token = JSON.parse(localStorage.getItem('accessToken'))
     const refreshToken = JSON.parse(localStorage.getItem('refreshToken'))
-    const updatedToken = await fetch (`${accountURL}token/refresh/`, {
-      headers: {'Content-Type': 'application/json'},
-      method: 'POST',
-      body: JSON.stringify({refresh: refreshToken})
-    }).then(response => response.json())
 
-    localStorage.setItem('accessToken', JSON.stringify(updatedToken.access))
-    localStorage.setItem('refreshToken', JSON.stringify(updatedToken.refresh))
+    if (!token) {
+      return null
+    }
 
-    return updatedToken.access
+    if (!isTokenExpired(token)) {
+      return token
+    }
+    else if (!(refreshToken === this.lastRefreshToken)) {
+      this.refreshToken(refreshToken)
+    }
+
+    return this.token
   }
-  else {
-    return token
+
+  refreshToken(refreshToken) {
+    this.lastRefreshToken = refreshToken
+
+    this.token = new Promise(async (resolve, reject) => {
+      const updatedToken = await fetch (`${baseURL}token/refresh/`, {
+        headers: {'Content-Type': 'application/json'},
+        method: 'POST',
+        body: JSON.stringify({refresh: refreshToken})
+      }).then(response => response.json())
+      
+      localStorage.setItem('accessToken', JSON.stringify(updatedToken.access))
+      localStorage.setItem('refreshToken', JSON.stringify(updatedToken.refresh))
+
+      resolve(updatedToken.access)
+    })
   }
 }
 
@@ -90,7 +111,6 @@ export function isRefreshTokenExpired() {
   else {
     return isTokenExpired(refreshToken)
   }
-
 }
 
 export function isTokenExpired(token) {

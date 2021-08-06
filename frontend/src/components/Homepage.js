@@ -44,7 +44,7 @@ export default function Homepage(props) {
   return (      
     <AnimatePresence>
       {(showHomePage) ?
-        <motion.div key="app" initial={{opacity: 0}} animate={{opacity: 1}}> 
+        <motion.div className="app" key="app" initial={{opacity: 0}} animate={{opacity: 1}}> 
           <Header isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} onSidebarChange={() => setSidebarOpen(!isSidebarOpen)}></Header>
           <Sidebar showSidebar={isSidebarOpen} taskSectionList={taskSectionList.value}
                   taskSectionId={taskSectionId}  setTaskSectionId={setTaskSectionId} ></Sidebar>

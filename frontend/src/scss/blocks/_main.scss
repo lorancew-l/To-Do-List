@@ -150,6 +150,8 @@
 .task-list-task {
   @include task-item;
 
+  cursor: pointer;
+
   padding: 7px 15px;
 
   &.clicked {
@@ -164,6 +166,15 @@
     button {
       @include button-with-icon($task-checkbox-size, $task-checkbox-size);
       margin-right: $task-checkbox-right-margin;
+    }
+
+    .task-info {
+      max-width: 80%;
+    }
+
+    .title {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .subtask-progress {

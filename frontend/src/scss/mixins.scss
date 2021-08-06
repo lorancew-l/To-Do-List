@@ -32,12 +32,11 @@
   }
 
   .left-side {
+    max-width: 90%;
     display: flex;
     align-items: center;
-  }
 
-  .title {
-    cursor: text;
+    flex-grow: 1;
   }
 
   &.completed {
@@ -47,9 +46,7 @@
   &.edit {
     background-color: $selection-color;
   
-    .left-side {
-      flex: 1;
-      
+    .left-side {     
       @media (max-width: $small) {
         flex-basis: 100%;
         

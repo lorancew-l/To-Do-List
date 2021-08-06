@@ -49,8 +49,8 @@ export default function TaskListItem(props) {
               onMouseEnter={() => setCheckboxIcon(checkboxHover)}
               onMouseLeave={() => setCheckboxIcon(checkboxUnchecked)}/>
           </button>
-          <div>
-            <div>{props.taskData.title}</div>
+          <div className="task-info">
+            <div className="title">{props.taskData.title}</div>
             <div className="subtask-progress">
               {props.taskData.subtask_list.length ?
                   props.taskData.subtask_list.filter(subtask => subtask.completed === true).length + " из " + props.taskData.subtask_list.length

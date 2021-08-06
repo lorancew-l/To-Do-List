@@ -122,6 +122,13 @@
       @include button-with-icon($task-checkbox-size, $task-checkbox-size);
       margin-right: $task-checkbox-right-margin;
     }
+
+    .title {
+      max-width: 80%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: text;
+    }
   }
 
   & > button {
@@ -141,6 +148,13 @@
       margin-bottom: 0;
       margin-left: ($task-checkbox-size - $subtask-checkbox-size) / 2;
       margin-right: $task-checkbox-right-margin + ($task-checkbox-size - $subtask-checkbox-size) / 2 ;
+    }
+
+    .title {
+      max-width: 80%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: text;
     }
   }
 

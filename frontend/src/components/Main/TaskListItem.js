@@ -1,8 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react'
+import { motion, AnimatePresence } from "framer-motion"
 import { checkboxUnchecked , checkboxHover, importantTaskInactive, importantTaskActive } from '../../images/index'
 import { updateTask } from '../../tools/api'
 import TaskDetail from '../Modal/TaskDetail/TaskDetail'
 import ModalOverlay from '../Modal/ModalOverlay'
+import { taskItemAnimation } from '../../animations/animations'
 
 export default function TaskListItem(props) {
   const [checkboxIcon, setCheckboxIcon] = useState(checkboxUnchecked)
@@ -40,7 +42,7 @@ export default function TaskListItem(props) {
   
   return (
     <Fragment>
-      <li className={style} onClick={onClickHandler}>
+      <motion.li layout className={style} onClick={onClickHandler} custom={props.custom} {...taskItemAnimation}>
         <div className="left-side">
           <button onClick={completeTaskClickHandler}> 
             <img alt="checkbox" src={checkboxIcon}
@@ -61,13 +63,16 @@ export default function TaskListItem(props) {
                 onMouseLeave={() => {if (!props.taskData.is_important) setImportantIcon(importantTaskInactive)}}>
           <img alt='to important' src={importantIcon}/>
         </button>
-      </li>
-      {showModal?
-        <ModalOverlay closeModal={() => setShowModal(false)}>
-          <TaskDetail closeModal={() => setShowModal(false)} taskData={props.taskData} showPopper={props.showPopper} updateTaskList={props.updateTaskList}
-                      updatePopperPos={props.updatePopperPos} popperPos={props.popperPos}/>
-      </ModalOverlay>
-      : null}
+      </motion.li>
+      <AnimatePresence>
+        {showModal?
+          <ModalOverlay closeModal={() => setShowModal(false)}>
+            <TaskDetail closeModal={() => setShowModal(false)} taskData={props.taskData} showPopper={props.showPopper} updateTaskList={props.updateTaskList}
+                        updatePopperPos={props.updatePopperPos} popperPos={props.popperPos}/>
+          </ModalOverlay>
+          : null
+        }
+      </AnimatePresence>
     </Fragment>
   )
 }

@@ -1,8 +1,10 @@
 import React from 'react'
+import { motion } from 'framer-motion'
+
 
 export default function NoFocusContent(props) {
   return (
-    <li className={props.className} onClick={props.onClick}>
+    <motion.li layout className={props.className} onClick={props.onClick} {...props.animation}>
       <div className="left-side">
         <button> 
           <img alt={props.iconAlt} src={props.icon}/>
@@ -11,6 +13,6 @@ export default function NoFocusContent(props) {
           {props.text}
         </div>
       </div>
-    </li>
+    </motion.li>
   )
 }

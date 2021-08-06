@@ -4,6 +4,7 @@ import OnFocusContent from './OnFocusContent'
 import { quickTask } from '../../../images/index'
 import { addTask } from '../../../tools/api'
 import useInput from '../../../hooks/useInput'
+import { taskItemAnimation } from '../../../animations/animations'
 
 
 export default function AddTaskForm(props) {
@@ -39,7 +40,8 @@ export default function AddTaskForm(props) {
       {onFocus? <OnFocusContent onSubmit={submitHandler} onCancelClick={cancelClickHandler} taskName={taskName} deadline={deadline}
                                 deadlineStringRepresentation={deadlineStringRepresentation}
                                 onDateClick={deadlineChangeHandler}></OnFocusContent>
-              : <NoFocusContent className="task-list-add-item" text="Добавить задачу" icon={quickTask} iconAlt="add task"
+              : <NoFocusContent className="task-list-add-item" text="Добавить задачу" icon={quickTask} iconAlt="add task" 
+                                animation={{transition: taskItemAnimation.transition}}
                                 onClick={() => setOnFocus(true)}></NoFocusContent>}
     </Fragment>
   )

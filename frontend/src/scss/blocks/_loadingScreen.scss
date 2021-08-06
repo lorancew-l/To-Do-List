@@ -1,0 +1,24 @@
+.loading-screen {
+  width: 100vw;
+  height: 100vh;
+
+  z-index: $loading-screen-z-index;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center ;
+
+}
+
+.loader {
+  width: $loader-size;
+  height: $loader-size;
+
+  border: $loader-size / 15 solid $selection-color;
+  border-top: $loader-size / 15 solid $accent-color;
+  border-radius: 50%;
+}

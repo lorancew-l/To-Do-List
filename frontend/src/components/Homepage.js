@@ -1,14 +1,17 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar/Sidebar'
 import Main from './Main/Main'
+import LoadingScreen from './LoadingScreen'
 import useFetch from '../hooks/useFetch'
 import { getTaskList, getTaskSectionList } from './../tools/api'
+import { AnimatePresence, motion } from 'framer-motion'
 
 
 export default function Homepage(props) {
   const [isSidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 992 ? true : false)
   const [taskSectionId, setTaskSectionId] = useState(null)
+  const [showHomePage, setShowHomePage] = useState(false)
 
   const taskList = useFetch(getTaskList, [taskSectionId], true)
   const taskSectionList = useFetch(getTaskSectionList)
@@ -32,16 +35,24 @@ export default function Homepage(props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskSectionId])  
 
-  if (!isLoaded) {
-    return <div>Loading</div>
-  }
+  useEffect(() => {
+    if (isLoaded){
+      setTimeout(() => setShowHomePage(true), 1000)
+    }
+  }, [isLoaded])
 
-  return (
-    <Fragment>
-      <Header isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} onSidebarChange={() => setSidebarOpen(!isSidebarOpen)}></Header>
-      <Sidebar showSidebar={isSidebarOpen} taskSectionList={taskSectionList.value}
-               taskSectionId={taskSectionId}  setTaskSectionId={setTaskSectionId} ></Sidebar>
-      <Main showSidebar={isSidebarOpen} taskList={taskList.value} updateTaskList={updateTaskList}/>
-    </Fragment>
+  return (      
+    <AnimatePresence>
+      {(showHomePage) ?
+        <motion.div className="app" key="app" initial={{opacity: 0}} animate={{opacity: 1}}> 
+          <Header isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} onSidebarChange={() => setSidebarOpen(!isSidebarOpen)}></Header>
+          <Sidebar showSidebar={isSidebarOpen} taskSectionList={taskSectionList.value}
+                  taskSectionId={taskSectionId}  setTaskSectionId={setTaskSectionId} ></Sidebar>
+          <Main showSidebar={isSidebarOpen} taskList={taskList.value} updateTaskList={updateTaskList}/>
+        </motion.div>
+        : <LoadingScreen key={'loading'}/>
+      }
+    </AnimatePresence>
   )
 }
+

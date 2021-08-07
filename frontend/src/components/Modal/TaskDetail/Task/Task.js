@@ -6,7 +6,7 @@ import useInput from '../../../../hooks/useInput'
 
 export default function Task(props) {
   const [onFocus, setOnFocus] = useState(false)
-  const taskNewTitle = useInput(props.title)
+  const taskNewTitle = useInput(props.title, 64)
   
   function cancelClickHandler() {
     setOnFocus(false)

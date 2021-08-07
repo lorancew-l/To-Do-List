@@ -13,7 +13,7 @@ export default function OnFocusContent(props) {
     <form onSubmit={props.onSubmit}>
       <li className={props.className}>
         <div className="left-side">
-          <input type="text" autoFocus ref={inputRef} value={input.value} {...input.bind}></input>
+          <input type="text" autoFocus ref={inputRef} value={input.value} maxLength={input.maxLength} {...input.bind}></input>
         </div>
         <div className="right-side">
           <button type="submit" className={(props.isSubmitDisabled) ?  "submit disabled" : "submit"} 

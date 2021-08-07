@@ -6,7 +6,7 @@ import useInput from '../../../../hooks/useInput'
 
 export default function Subtask(props) {
   const [onFocus, setOnFocus] = useState(false)
-  const subtaskNewTitle = useInput(props.title)
+  const subtaskNewTitle = useInput(props.title, 64)
   
   function cancelClickHandler() {
     setOnFocus(false)

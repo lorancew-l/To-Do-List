@@ -79,7 +79,7 @@ export default function OnFocusContent(props) {
       <motion.form layout className="add-task-form" onSubmit={props.onSubmit} transition={taskItemAnimation.transition}>
         <li className='task-list-add-item no-hover' ref={addTaskRef}>
           <div className="left-side">
-            <input ref={inputRef} type="text" autoFocus value={taskName.value} {...taskName.bind}></input>
+            <input ref={inputRef} type="text" autoFocus value={taskName.value} maxLength={taskName.maxLength} {...taskName.bind}></input>
           </div>
           <div className="right-side">
             <button className="show-calendar" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>

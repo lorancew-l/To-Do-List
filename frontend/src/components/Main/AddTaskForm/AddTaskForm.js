@@ -9,7 +9,7 @@ import { taskItemAnimation } from '../../../animations/animations'
 
 export default function AddTaskForm(props) {
   const [onFocus, setOnFocus] = useState(false)
-  const taskName = useInput('')
+  const taskName = useInput('', 64)
   const [deadline, setDeadline] = useState(null)
   const [deadlineStringRepresentation, setDeadlineStringRepresentation] = useState('Срок')
 

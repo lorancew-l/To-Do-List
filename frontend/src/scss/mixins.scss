@@ -48,6 +48,7 @@
   
     .left-side {     
       @media (max-width: $small) {
+        max-width: 100%;
         flex-basis: 100%;
         
         &:not(:only-child) {
@@ -62,7 +63,10 @@
 }
 
 @mixin add-edit-item {
-  .left-side{
+  .left-side {
+    flex-grow: 1;
+    cursor: text;
+
     input[type=text] {
       outline: none;
       background-color: transparent;
@@ -72,10 +76,21 @@
   
       margin-right: 10px;
       width: 100%;
+
+      @media (max-width: $small) {
+        margin-right: 0;
+      }
     }
   }
 
   .right-side {
+    display: flex;
+    justify-content: flex-end;
+
+    @media (max-width: $small) {
+      flex-basis: 100%;
+    }
+
     .cancel {
       cursor: pointer;
       color: $text-secondary-color;

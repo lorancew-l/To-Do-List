@@ -212,11 +212,9 @@
     }
   }
   
-  .left-side {
-    flex: 1;
-    cursor: text;
-    
+  .left-side {    
     @media (max-width: $small) {
+      max-width: 100%;
       flex-basis: 100%;
       
       &:not(:only-child) {
@@ -236,9 +234,6 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: flex-end;
-
-    padding-right: 5px;
 
     @media (max-width: $small) {
       flex-basis: 100%;

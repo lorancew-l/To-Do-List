@@ -110,3 +110,7 @@
     color: $text-secondary-color;
   }
 }
+
+.sidebar-add-item {
+  @include add-edit-item;
+}

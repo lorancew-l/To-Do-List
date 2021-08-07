@@ -9,7 +9,7 @@
   top: 25%;
   transform: translate(-50%, -25%);
 
-  width: 380px;
+  width: 400px;
   height: auto;
   
   color: $text-secondary-color;
@@ -135,6 +135,7 @@
     @include button-with-icon;
   }
 }
+
 .subtask {
   @include task-item;
   @include add-edit-item;
@@ -170,10 +171,9 @@
   padding: 7px;
 
   .left-side {
-    flex: 1;
-
-    @media (max-width: $medium) {
+    @media (max-width: $small) {
       flex-basis: 100%;
+      max-width: 100%;
       
       &:not(:only-child) {
         margin-bottom: 10px;
@@ -201,14 +201,13 @@
   }
 }
 
-
 .add-note {
   height: 100%;
   
   .note-textarea {
     width: calc(100% - #{$note-textarea-scrollbar-width});
 
-    min-height: 120px;
+    min-height: 130px;
     max-height: none;
     resize: none;
     overflow-y: hidden;

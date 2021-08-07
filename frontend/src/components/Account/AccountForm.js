@@ -10,11 +10,11 @@ export default function AccountForm(props) {
       <form onSubmit={props.onSubmit}>
         <div className="account-form-field">
           <label htmlFor="email">Email</label>
-          <input name="email" type="email" value={email.value} {...email.bind}></input>
+          <input id="email" type="email" value={email.value} {...email.bind}></input>
         </div>
         <div className="account-form-field">
           <label htmlFor="password">Пароль</label>
-          <input name="password" type="password" value={password.value} {...password.bind}></input>
+          <input id="password" type="password" value={password.value} {...password.bind}></input>
         </div>
         <button disabled={disabled} className={disabled ? "account-form-submit disabled" : "account-form-submit"}
                 type="submit">{props.submitButtonLabel}</button>

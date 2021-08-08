@@ -5,6 +5,7 @@ import { updateTask } from '../../../tools/api'
 export default function Note(props) {
   const [noteText, setNoteText] = useState(props.note || '')
   const textareaRef = useRef(null)
+  const submitDisabled = noteText === (props.note || '')
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -31,9 +32,9 @@ export default function Note(props) {
       <div className="detail-holder">
         <textarea className="note-textarea" placeholder="Введите текст заметки" value={noteText} ref={textareaRef}
                   onChange={event => setNoteText(event.target.value)}></textarea>
-      </div>
-      {(noteText !== (props.note || '')) ? <button className="save-note">Добавить заметку</button> : null}
-
+      </div> 
+      <button type="submit" disabled={submitDisabled} className="save-note"
+              style={{opacity: submitDisabled ? 0.4 : 1}}>Добавить заметку</button>
     </form>
   )
 }

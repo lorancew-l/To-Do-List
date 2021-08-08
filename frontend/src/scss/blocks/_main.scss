@@ -193,8 +193,13 @@
   @include add-edit-item;
 
   padding: 7px 15px;
-
   position: relative;
+  flex-wrap: nowrap;
+
+  @media (max-width: $small) {
+    flex-wrap: wrap;
+  }
+
   &:not(:only-child) {
     margin-top: $add-task-top-margin;
     &::before {

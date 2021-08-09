@@ -12,9 +12,9 @@ export default function Sidebar(props) {
     <aside className={props.showSidebar? 'sidebar on' : 'sidebar off'}>
       <ul>
         {
-          props.taskSectionList.map(item => {
-            return <SidebarItem className={item.id === props.taskSectionId ? 'sidebar-item selected' : 'sidebar-item'} taskCount={item.count}
-                                icon={icons[item.type]} key={item.id} title={item.title} onClick={() => props.setTaskSectionId(item.id)}></SidebarItem>
+          props.taskFilterList.map(item => {
+            return <SidebarItem className={item.id === props.taskFilterId ? 'sidebar-item selected' : 'sidebar-item'} taskCount={item.count}
+                                icon={icons[item.type]} key={item.id} title={item.title} onClick={() => props.setTaskFilterId(item.id)}></SidebarItem>
           })
         }
         <SidebarItem title="Создать список" icon={addTask} className="sidebar-item" onClick={addItemOnClickHandler}></SidebarItem>

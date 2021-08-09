@@ -19,11 +19,11 @@ export async function addTask(data) {
   return response
 }
 
-export async function getTaskList(taskSectionId) {
+export async function getTaskList(taskFilterId) {
   const token = await tokenProvider.getToken()
 
-  const response = await fetch(`${baseURL}tasks/?task-section=${taskSectionId}`, {headers: {'Content-Type': 'application/json',
-                                                                                            'Authorization': 'Bearer ' + token}})
+  const response = await fetch(`${baseURL}tasks/?task-filter=${taskFilterId}`, {headers: {'Content-Type': 'application/json',
+                                                                                          'Authorization': 'Bearer ' + token}})
   return response
 }
 
@@ -98,10 +98,10 @@ export async function deleteSubtask(taskId, subtaskId) {
   return response
 }
 
-export async function getTaskSectionList() {
+export async function getTaskFilterList() {
   const token = await tokenProvider.getToken()
 
-  const response =  await fetch(`${baseURL}task-sections/`, {headers: {'Content-Type': 'application/json',
+  const response =  await fetch(`${baseURL}task-filters/`, {headers: {'Content-Type': 'application/json',
                                                                        'Authorization': 'Bearer ' + token}})
   return response
 }

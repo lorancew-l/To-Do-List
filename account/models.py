@@ -33,9 +33,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
   
 @receiver(post_save, sender=User)
-def create_default_task_sections(instance, created, **kwargs):
+def create_default_task_filters(instance, created, **kwargs):
 
   if created:
-      api.models.TaskSectionModel.objects.bulk_create([api.models.TaskSectionModel(title='Сегодня', user=instance, type='today'),
-                                                        api.models.TaskSectionModel(title='Важно', user=instance, type='important'),
-                                                        api.models.TaskSectionModel(title='Все задачи', user=instance, type='all')])
+      api.models.TaskFilterModel.objects.bulk_create([api.models.TaskFilterModel(title='Сегодня', user=instance, type='today'),
+                                                      api.models.TaskFilterModel(title='Важно', user=instance, type='important'),
+                                                      api.models.TaskFilterModel(title='Все задачи', user=instance, type='all')])

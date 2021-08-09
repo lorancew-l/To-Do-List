@@ -4,36 +4,36 @@ import Sidebar from './Sidebar/Sidebar'
 import Main from './Main/Main'
 import LoadingScreen from './LoadingScreen'
 import useFetch from '../hooks/useFetch'
-import { getTaskList, getTaskSectionList } from './../tools/api'
+import { getTaskList, getTaskFilterList } from './../tools/api'
 import { AnimatePresence, motion } from 'framer-motion'
 
 
 export default function Homepage(props) {
   const [isSidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 992 ? true : false)
-  const [taskSectionId, setTaskSectionId] = useState(null)
+  const [taskFilterId, setTaskFilterId] = useState(null)
   const [showHomePage, setShowHomePage] = useState(false)
 
-  const taskList = useFetch(getTaskList, [taskSectionId], true)
-  const taskSectionList = useFetch(getTaskSectionList)
-  const isLoaded = taskList.isLoaded && taskSectionList.isLoaded
+  const taskList = useFetch(getTaskList, [taskFilterId], true)
+  const taskFilterList = useFetch(getTaskFilterList)
+  const isLoaded = taskList.isLoaded && taskFilterList.isLoaded
 
   function updateTaskList() {
     taskList.update()
-    taskSectionList.update()
+    taskFilterList.update()
   }
 
   useEffect(() => {
-    if(!taskSectionId && taskSectionList.value) {
-      setTaskSectionId(taskSectionList.value[0].id)
+    if(!taskFilterId && taskFilterList.value) {
+      setTaskFilterId(taskFilterList.value[0].id)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [taskSectionList.value])
+  }, [taskFilterList.value])
 
   useEffect(() => {
-    if (!taskSectionList.isLoaded || taskSectionId === null) return
+    if (!taskFilterList.isLoaded || taskFilterId === null) return
     updateTaskList()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [taskSectionId])  
+  }, [taskFilterId])  
 
   useEffect(() => {
     if (isLoaded){
@@ -46,8 +46,8 @@ export default function Homepage(props) {
       {(showHomePage) ?
         <motion.div className="app" key="app" initial={{opacity: 0}} animate={{opacity: 1}}> 
           <Header isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} onSidebarChange={() => setSidebarOpen(!isSidebarOpen)}></Header>
-          <Sidebar showSidebar={isSidebarOpen} taskSectionList={taskSectionList.value}
-                  taskSectionId={taskSectionId}  setTaskSectionId={setTaskSectionId} ></Sidebar>
+          <Sidebar showSidebar={isSidebarOpen} taskFilterList={taskFilterList.value}
+                  taskFilterId={taskFilterId}  setTaskFilterId={setTaskFilterId} ></Sidebar>
           <Main showSidebar={isSidebarOpen} taskList={taskList.value} updateTaskList={updateTaskList}/>
         </motion.div>
         : <LoadingScreen key={'loading'}/>

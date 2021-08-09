@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TaskModel, SubtaskModel, TaskSectionModel
+from .models import TaskModel, SubtaskModel, TaskFilterModel
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -12,8 +12,8 @@ class SubtaskSerializer(serializers.ModelSerializer):
         model = SubtaskModel
         fields = ('id', 'title', 'completed', 'creation_date', 'task')
 
-class TaskSectionSerializer(serializers.ModelSerializer):
+class TaskFilterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TaskSectionModel
+        model = TaskFilterModel
         fields = '__all__'
         read_only_fields = ('type', )

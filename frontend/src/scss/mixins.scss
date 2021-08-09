@@ -63,6 +63,8 @@
 }
 
 @mixin add-edit-item {
+  display: flex;
+
   .left-side {
     flex-grow: 1;
     cursor: text;
@@ -127,7 +129,7 @@
         color: $text-primary-color;
         padding: 8px;
         border-radius: 5px;
-        background-color: $accent-color ;
+        background-color: $accent-color;
       }
 
       @media (max-width: $extra-small) {
@@ -144,4 +146,46 @@
       }
     }
   }
+}
+
+@mixin form-field ($field-margin: 1em, $label-margin: 0.5em) {
+  margin-bottom: $field-margin;
+
+  label {
+    margin-bottom: $label-margin;
+    display: inline-block;
+  }
+
+  &.inline {
+    label {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+}
+
+@mixin sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-radius: 6px;
+  padding: $sidebar-item-padding-top 10px $sidebar-item-padding-top 7px;
+
+  font-size: 15px;
+  white-space: nowrap;
+  user-select: none;
+
+  height: auto;
+  min-height: $sidebar-item-height;
+}
+
+@mixin modal-content {
+  border-radius: 6px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -25%);
 }

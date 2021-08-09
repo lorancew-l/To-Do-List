@@ -1,18 +1,12 @@
 .task-detail {
-  border-radius: 6px;
-  padding: 15px 10px;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
-  background-color: $background-primary-color;
-
-  position: absolute;
-  left: 50%;
-  top: 25%;
-  transform: translate(-50%, -25%);
+  @include modal-content;
 
   width: 400px;
   height: auto;
   
-  color: $text-secondary-color;
+  padding: 15px 10px;
+  background-color: $background-primary-color;
+  color: $text-secondary-color; 
   
   @media (max-width: $small) {
     width: 100vw;

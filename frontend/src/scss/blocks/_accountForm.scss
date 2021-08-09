@@ -12,12 +12,10 @@
 }
 
 .account-form-field {
-  margin-bottom: 1em;
+  @include form-field;
 
   label {
-    display: inline-block;
     font-weight: bold;
-    margin-bottom: 0.5em;
   }
 
   input {

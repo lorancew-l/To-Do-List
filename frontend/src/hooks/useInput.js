@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 export default function useInput(initialValue, {maxLength=100, clearValue=initialValue} = {}) {
   const [value, setValue] = useState(initialValue)
-  const [requiredEmpty, setRequiredEmpty] = useState(false)
+  const [requiredEmpty, setRequiredEmpty] = useState(true)
 
   return {value,
           requiredEmpty,

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-export default function useInput(initialValue, maxLength=100) {
+export default function useInput(initialValue, {maxLength=100, clearValue=initialValue} = {}) {
   const [value, setValue] = useState(initialValue)
   const [requiredEmpty, setRequiredEmpty] = useState(false)
 
   return {value,
           requiredEmpty,
           maxLength,
-          clear: () => setValue(''),
+          clear: () => setValue(clearValue),
           set: (value) => setValue(value),
           bind: {onChange: event => setValue(event.target.value),
                  onFocus: () => setRequiredEmpty(false),

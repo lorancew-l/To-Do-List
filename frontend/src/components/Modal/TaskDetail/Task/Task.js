@@ -10,7 +10,7 @@ export default function Task(props) {
   
   function cancelClickHandler() {
     setOnFocus(false)
-    taskNewTitle.set(props.title)
+    taskNewTitle.clear()
   }
 
   function submitHandler(event) {

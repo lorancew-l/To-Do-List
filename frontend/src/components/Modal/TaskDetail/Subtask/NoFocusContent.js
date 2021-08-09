@@ -8,7 +8,7 @@ export default function Subtask(props) {
   const [isHover, setIsHover] = useState(false)
 
   return (
-    <li className={props.completed ? "subtask completed" : "subtask"} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+    <li className={props.completed ? "subtask completed" : "subtask"} onMouseOver={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
       <div className="left-side">
         <button className="noselect" type="button" onClick={props.onComplete} 
                 onMouseEnter={() => {if (!props.completed) setCheckboxIcon(checkboxHover)}}

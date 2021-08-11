@@ -105,3 +105,15 @@ export async function getTaskFilterList() {
                                                                        'Authorization': 'Bearer ' + token}})
   return response
 }
+
+export async function addTaskFilter(data) {
+  const token = await tokenProvider.getToken()
+
+  const response =  await fetch(`${baseURL}task-filters/`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
+    body: JSON.stringify(data),
+  })
+  return response
+}

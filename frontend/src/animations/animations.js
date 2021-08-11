@@ -57,3 +57,14 @@ export const loadingScreenAnimation = {
   initial: {opacity: 1},
   exit: {opacity: 0, transition: {duration: 0.3}}
 }
+
+export const filterListAnimation = {
+  initial: 'initial',
+  animate: 'animate',
+  exit: 'exit',
+  variants: {
+    initial: {height: 0},
+    animate: {height: 'auto'},
+    exit: {height: 0}
+  }
+}

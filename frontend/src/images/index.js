@@ -20,3 +20,5 @@ export const calendarTomorrow = require('./icons/calendarTomorrow.svg').default
 export const calendarNextWeek = require('./icons/calendarNextWeek.svg').default
 export const calendarNoDeadline = require('./icons/calendarNoDeadline.svg').default
 export const logoutIcon = require('./icons/logout.svg').default
+export const arrowRight = require('./icons/arrowRight.svg').default
+export const pencil = require('./icons/pencil.svg').default

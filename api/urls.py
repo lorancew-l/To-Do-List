@@ -1,7 +1,8 @@
-from .views import TaskList, TaskDetail, SubtaskList, SubtaskDetail, TaskFilterList
+from .views import TaskList, TaskDetail, SubtaskList, SubtaskDetail, TaskFilterList, TaskFilterDetail
 from django.urls import path
 
 urlpatterns = [
+    path('task-filters/<str:task_filter_id>/', TaskFilterDetail.as_view()),
     path('task-filters/', TaskFilterList.as_view()),
     path('tasks/', TaskList.as_view()),
     path('tasks/<str:pk>/', TaskDetail.as_view()),

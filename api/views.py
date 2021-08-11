@@ -24,12 +24,12 @@ class TaskList(generics.ListCreateAPIView):
         if not task_filter:
             return []
 
-        task_filter_filter = {'today': {'deadline__date': datetime.now(timezone.utc)},
-                               'important': {'is_important': True},
-                               'all': {},
-                               'custom': {'task_filter__pk': task_filter_id}}
+        filter = {'today': {'deadline__date': datetime.now(timezone.utc)},
+                  'important': {'is_important': True},
+                  'all': {},
+                  'custom': {'task_filter__pk': task_filter_id}}
     
-        return TaskModel.objects.filter(completed=False, user=self.request.user, **task_filter_filter[task_filter.type])
+        return TaskModel.objects.filter(completed=False, user=self.request.user, **filter[task_filter.type])
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -41,12 +41,20 @@ class TaskList(generics.ListCreateAPIView):
     def create(self, request):
         data = request.data.copy()
         data['user'] = request.user.pk
+        
+        task_filter_id = data.get('task_filter')
+        task_filter = TaskFilterModel.objects.get(pk=task_filter_id)
+        
+        if task_filter.type == 'custom':
+            data['task_filter'] == task_filter
+
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
+
 class TaskDetail(generics.GenericAPIView,
                  mixins.UpdateModelMixin,
                  mixins.RetrieveModelMixin,
@@ -65,6 +73,7 @@ class TaskDetail(generics.GenericAPIView,
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
+
 class SubtaskList(generics.ListCreateAPIView):
     serializer_class = SubtaskSerializer
 
@@ -79,6 +88,7 @@ class SubtaskList(generics.ListCreateAPIView):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class SubtaskDetail(generics.GenericAPIView,
                     mixins.UpdateModelMixin,
@@ -98,6 +108,7 @@ class SubtaskDetail(generics.GenericAPIView,
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
+
 class TaskFilterList(generics.ListCreateAPIView):
     serializer_class = TaskFilterSerializer
     
@@ -115,7 +126,7 @@ class TaskFilterList(generics.ListCreateAPIView):
         data = request.data.copy()
         data.update({'user': request.user.pk})
         serializer = self.get_serializer(data=data)
-        serializer.is_valid()
+        serializer.is_valid(raise_exception=True)
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -123,9 +134,28 @@ class TaskFilterList(generics.ListCreateAPIView):
     def get_task_count(self, task_filter_id, user):
         task_filter = TaskFilterModel.objects.get(pk=task_filter_id)
 
-        task_filter_filter = {'today': {'deadline__date': datetime.now(timezone.utc)},
-                               'important': {'is_important': True},
-                               'all': {},
-                               'custom': {'task_filter__pk': task_filter_id}}
+        filter= {'today': {'deadline__date': datetime.now(timezone.utc)},
+                           'important': {'is_important': True},
+                           'all': {},
+                            'custom': {'task_filter__pk': task_filter_id}}
 
-        return len(TaskModel.objects.filter(completed=False, user=user, **task_filter_filter[task_filter.type]))
+        return len(TaskModel.objects.filter(completed=False, user=user, **filter[task_filter.type]))
+
+
+class TaskFilterDetail(generics.GenericAPIView,
+                       mixins.UpdateModelMixin,
+                       mixins.RetrieveModelMixin,
+                       mixins.DestroyModelMixin,
+                       mixins.CreateModelMixin):
+
+    queryset = TaskFilterModel.objects.all()
+    serializer_class = TaskFilterSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)

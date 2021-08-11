@@ -22,7 +22,7 @@ export default function AddTaskForm(props) {
 
   function submitHandler(event) {
     event.preventDefault()
-    addTask({'title': taskName.value, 'deadline': deadline}).then(response => {
+    addTask({'title': taskName.value, 'deadline': deadline, 'task_filter': props.taskFilterId}).then(response => {
       if (response.ok) {
         taskName.clear()
         props.updateTaskList()

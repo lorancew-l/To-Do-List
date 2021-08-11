@@ -22,7 +22,7 @@ export default function Main(props) {
               {props.taskList.map((task, i) => {
                 return <TaskListItem key={task.id} taskData={task} updateTaskList={props.updateTaskList} custom={i}></TaskListItem>})
               }
-              <AddTask updateTaskList={props.updateTaskList}></AddTask>
+              <AddTask updateTaskList={props.updateTaskList} taskFilterId={props.taskFilterId}></AddTask>
             </AnimatePresence>
           </AnimateSharedLayout>
         </ul>

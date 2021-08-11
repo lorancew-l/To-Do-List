@@ -1,14 +1,12 @@
 import React from 'react'
 
-export default function SidebarItem(props) {
-  const onClickHandler = () => {
-    props.onClick(Number(props.id))
-  }
-
+export default function DefaultFilter(props) {
   return (
-    <li className={props.className} onClick={onClickHandler}>
+    <li className={props.selected ? 'sidebar-item selected' : 'sidebar-item'} onClick={props.selectFilter}>
       <div className="left-side">
-        <img alt="" src={props.icon}/>
+        <div className="icon"> 
+          <img alt="" src={props.icon}/>
+        </div>
         <div>{props.title}</div>
       </div>
       {props.taskCount ?

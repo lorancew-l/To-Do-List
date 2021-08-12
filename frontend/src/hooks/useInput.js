@@ -7,6 +7,7 @@ export default function useInput(initialValue, {maxLength=100, clearValue=initia
   return {value,
           requiredEmpty,
           maxLength,
+          isUnchanged: () => value === initialValue,
           clear: () => setValue(clearValue),
           set: (value) => setValue(value),
           bind: {onChange: event => setValue(event.target.value),

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function AccountForm(props) {
   const [email, password] = [props.email, props.password]
-  const disabled = email.requiredEmpty || password.requiredEmpty
+  const disabled = email.empty || password.empty
 
   return (
     <div className="account-form">

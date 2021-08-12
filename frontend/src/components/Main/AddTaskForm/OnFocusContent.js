@@ -86,7 +86,7 @@ export default function OnFocusContent(props) {
               <img src={calendar} alt="date"></img>
               <div className="date-string">{props.deadlineStringRepresentation}</div>
             </button>
-            <button className={taskName.requiredEmpty ? "submit disabled" : "submit"} type="submit" disabled={taskName.requiredEmpty}>
+            <button className={taskName.empty ? "submit disabled" : "submit"} type="submit" disabled={taskName.empty}>
               Добавить
             </button>
             <button className="cancel" type="button" onClick={props.onCancelClick}>

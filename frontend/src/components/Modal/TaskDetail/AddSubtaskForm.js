@@ -27,7 +27,7 @@ export default function AddSubtaskForm(props) {
   return (
     <Fragment>
       {onFocus? <OnFocusContent className="add-subtask edit no-hover" onCancelClick={cancelClickHandler} onSubmit={onSubmitHandler}
-                                input={subtaskTitle} isSubmitDisabled={subtaskTitle.requiredEmpty} scrollIntoView={true}/>
+                                input={subtaskTitle} isSubmitDisabled={subtaskTitle.empty} scrollIntoView={true}/>
               : <NoFocusContent className="add-subtask" text="Добавить подзадачу" icon={quickTask} iconAlt={'add subtask'}
                                 onClick={() => setOnFocus(true)}/>
       }

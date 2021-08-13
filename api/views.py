@@ -137,7 +137,7 @@ class TaskFilterList(generics.ListCreateAPIView):
         filter= {'today': {'deadline__date': datetime.now(timezone.utc)},
                            'important': {'is_important': True},
                            'all': {},
-                            'custom': {'task_filter__pk': task_filter_id}}
+                           'custom': {'task_filter__pk': task_filter_id}}
 
         return len(TaskModel.objects.filter(completed=False, user=user, **filter[task_filter.type]))
 

@@ -1,0 +1,62 @@
+.popup-menu {
+  border-radius: 4px;
+  background-color: $background-secondary-color;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  padding: 5px 0;
+  min-width: 220px;
+
+  font-size: 14px;
+
+  border: 1px solid darken($background-secondary-color, 3%);
+
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  transition: 0.1s;
+
+  padding: 6px 8px;
+
+  &:hover {
+    background-color: $selection-color;
+  }
+
+  &.separator {
+    margin-bottom: 8px;
+    position: relative;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      transform: translateX(-50%);
+      
+      width: 97%;
+      height: 2px;
+      background-color: $background-tertiary-color;
+    }
+  }
+
+  .icon {
+    @include icon;
+
+    margin-right: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content {
+    flex-grow: 1;
+  }
+}

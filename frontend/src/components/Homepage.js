@@ -4,7 +4,8 @@ import Sidebar from './Sidebar/Sidebar'
 import Main from './Main/Main'
 import LoadingScreen from './LoadingScreen'
 import useFetch from '../hooks/useFetch'
-import { getTaskList, getTaskFilterList } from './../tools/api'
+import { getTaskList } from '../tools/api/rest/tasks'
+import { getTaskFilterList } from '../tools/api/rest/taskFilters'
 import { AnimatePresence, motion } from 'framer-motion'
 
 

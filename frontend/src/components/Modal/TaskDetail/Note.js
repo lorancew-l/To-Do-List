@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { updateTask } from '../../../tools/api'
+import { updateTask } from '../../../tools/api/rest/tasks'
 
 
 export default function Note(props) {

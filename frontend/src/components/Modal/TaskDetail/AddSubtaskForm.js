@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import NoFocusContent from '../../AddItemForm/NoFocusContent'
 import OnFocusContent from '../../AddItemForm/OnFocusContent'
-import { addSubtask } from '../../../tools/api'
+import { addSubtask } from '../../../tools/api/rest/subtasks'
 import { quickTask } from '../../../images/index'
 import useInput from '../../../hooks/useInput'
 

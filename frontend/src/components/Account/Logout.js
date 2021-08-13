@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { logoutIcon} from '../../images/index'
 import { useHistory } from 'react-router-dom'
-import { logout } from '../../tools/account'
+import { logout } from '../../tools/api/rest/authorization'
 
 export default function Logout(props) {
   const history = useHistory()

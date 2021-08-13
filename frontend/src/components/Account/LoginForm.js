@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import AccountForm from './AccountForm'
 import StandalonePage from '../StandalonePage/StandalonePage'
-import { login } from '../../tools/account'
+import { login } from '../../tools/api/rest/authorization'
 import { useHistory, Link } from 'react-router-dom' 
 import useInput from '../../hooks/useInput'
 

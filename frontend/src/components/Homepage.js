@@ -47,13 +47,13 @@ export default function Homepage(props) {
       {(showHomePage) ?
         <motion.div className="app" key="app" initial={{opacity: 0}} animate={{opacity: 1}}> 
           <Header isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} onSidebarChange={() => setSidebarOpen(!isSidebarOpen)}></Header>
-          <Sidebar showSidebar={isSidebarOpen} taskFilterList={taskFilterList.value}
-                  taskFilterId={taskFilterId}  setTaskFilterId={setTaskFilterId} ></Sidebar>
-          <Main showSidebar={isSidebarOpen} taskList={taskList.value} updateTaskList={updateTaskList}/>
+          <Sidebar showSidebar={isSidebarOpen} taskFilterList={taskFilterList.value} updateFilterList={taskFilterList.update}
+                   selectedFilter={taskFilterId}  selectFilter={setTaskFilterId} ></Sidebar>
+          <Main showSidebar={isSidebarOpen} taskList={taskList.value} updateTaskList={updateTaskList} taskFilterId={taskFilterId}/>
         </motion.div>
-        : <LoadingScreen key={'loading'}/>
+        : <LoadingScreen key="loading"/>
       }
-    </AnimatePresence>
+    </AnimatePresence>  
   )
 }
 

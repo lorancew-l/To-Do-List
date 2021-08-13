@@ -30,72 +30,45 @@
   }
 
   ul {
-    width: 98%;
     list-style-type: none;
-    padding: 0;
-    margin: 0;
+    padding-left: 0;
+  }
+}
+
+.sidebar-filters-list {
+  width: 98%;
+}
+
+.default-filters {
+  position: relative;
+  margin-bottom: 18px;
+
+  &::after {
+    content: "";
+    position: absolute;
+
+    bottom: -10px;
+    left: 0;
+  
+    width: 100%;
+    height: 2px;
+
+    background-color: $background-tertiary-color;
   }
 }
 
 .sidebar-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  cursor: pointer;
-  user-select: none;
-
-  border-radius: 6px;
-  padding: $sidebar-item-padding-top 10px $sidebar-item-padding-top 7px;
-
-  font-size: 15px;
-  white-space: nowrap;
-
-  height: auto;
-  min-height: $sidebar-item-height;
+  @include sidebar-item;
 
   &:hover {
     background-color: $selection-color;
-  }
-
-  &.selected {
-    .left-side {
-      font-weight: bold;
-    }
-    .right-side {
-      color: $accent-color;
-    }
-
-    background-color: $selection-color;
-  }
-  &:nth-last-child(2) {
-    position: relative;
-    margin-bottom: 17px;
-
-    &::after {
-      content: "";
-      position: absolute;
-  
-      top: 120%;
-      left: 0;
-      z-index: 1;
-    
-      width: 100%;
-      height: 2px;
-  
-      background-color: $background-tertiary-color;
-    }
   }
 
   .left-side {
     display: flex;
     align-items: center;
 
-    height: auto;
-    min-height: $sidebar-item-height;
-
     img {
-      margin-right: 5px;
       @include icon(18px, 18px);
     }
   }
@@ -104,13 +77,57 @@
     display: flex;
     align-items: center;
 
-    height: auto;
-    min-height: $sidebar-item-height;
-
     color: $text-secondary-color;
   }
 }
 
-.sidebar-add-item {
-  @include add-edit-item;
+.sidebar-expandable-item {
+  @include sidebar-item;
+
+  .collapse {
+    @include button-with-icon(18px, 18px);
+
+    margin-right: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      transition: 0.1s;
+
+      &.collapsed {
+        transform: rotate(90deg)
+      }
+    }
+  }
+
+  .add {
+    @include button-with-icon(16px, 16px);
+  }
+}
+
+.custom-filters {
+  overflow: hidden;
+}
+
+.sidebar-custom-filter {
+  @include sidebar-item;
+
+  &:hover {
+    background-color: $selection-color;
+  }
+
+  .color {
+    width: 14px;
+    height: 14px;
+    
+    border-radius: 50%;
+  }
+
+  .right-side {
+    button {
+      @include button-with-icon(16px, 16px);
+    }
+  }
 }

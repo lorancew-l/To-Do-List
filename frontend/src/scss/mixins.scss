@@ -175,9 +175,40 @@
   font-size: 15px;
   white-space: nowrap;
   user-select: none;
+  cursor: pointer;
 
   height: auto;
   min-height: $sidebar-item-height;
+
+  &.selected {
+    .left-side {
+      font-weight: bold;
+    }
+    .right-side {
+      color: $accent-color;
+    }
+
+    background-color: $selection-color;
+  }
+
+
+  .left-side {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      margin-right: 5px;
+    }
+  }
+  
+  .right-side {
+    display: flex;
+    align-items: center;
+  }
 }
 
 @mixin modal-content {

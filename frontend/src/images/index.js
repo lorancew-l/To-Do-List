@@ -22,3 +22,4 @@ export const calendarNoDeadline = require('./icons/calendarNoDeadline.svg').defa
 export const logoutIcon = require('./icons/logout.svg').default
 export const arrowRight = require('./icons/arrowRight.svg').default
 export const pencil = require('./icons/pencil.svg').default
+export const deleteIcon = require('./icons/delete.svg').default

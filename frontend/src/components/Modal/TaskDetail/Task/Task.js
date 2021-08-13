@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import NoFocusContent from './NoFocusContent'
 import OnFocusContent from '../../../AddItemForm/OnFocusContent'
-import { updateTask } from '../../../../tools/api'
+import { updateTask } from '../../../../tools/api/rest/tasks'
 import useInput from '../../../../hooks/useInput'
 
 export default function Task(props) {

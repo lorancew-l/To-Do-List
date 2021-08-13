@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, Fragment } from 'react'
 import { calendar } from '../../../images/index'
 import Calendar from '../Calendar/Calendar'
 import PopperOverlay from '../PopperOverlay'
-import { updateTask } from '../../../tools/api'
+import { updateTask } from '../../../tools/api/rest/tasks'
 
 
 export default function Deadline(props) {

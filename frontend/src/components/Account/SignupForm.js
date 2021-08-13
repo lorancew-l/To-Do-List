@@ -1,5 +1,5 @@
 import React from 'react'
-import { signup } from '../../tools/account'
+import { signup } from '../../tools/api/rest/authorization'
 import AccountForm from './AccountForm'
 import StandalonePage from '../StandalonePage/StandalonePage'
 import { useHistory } from 'react-router-dom' 

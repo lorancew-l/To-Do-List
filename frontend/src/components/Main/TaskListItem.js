@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from "framer-motion"
 import { checkboxUnchecked , checkboxHover, importantTaskInactive, importantTaskActive } from '../../images/index'
-import { updateTask } from '../../tools/api'
+import { updateTask } from '../../tools/api/rest/tasks'
 import TaskDetail from '../Modal/TaskDetail/TaskDetail'
 import ModalOverlay from '../Modal/ModalOverlay'
 import { taskItemAnimation } from '../../animations/animations'

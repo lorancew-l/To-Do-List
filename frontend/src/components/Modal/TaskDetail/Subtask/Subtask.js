@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import { updateSubtask, deleteSubtask } from '../../../../tools/api'
+import { updateSubtask, deleteSubtask } from '../../../../tools/api/rest/subtasks'
 import NoFocusContent from './NoFocusContent'
 import OnFocusContent from '../../../AddItemForm/OnFocusContent'
 import useInput from '../../../../hooks/useInput'

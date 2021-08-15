@@ -5,31 +5,12 @@ from .serializers import TaskSerializer, SubtaskSerializer, TaskFilterSerializer
 from rest_framework import generics
 from rest_framework.generics import mixins
 
-from datetime import datetime, timezone
-
 
 class TaskList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
 
     def get_queryset(self):
-        task_filter_id = self.request.query_params.get('task-filter')
-
-        try:
-            task_filter_id = int(task_filter_id)
-        except ValueError:
-            return []
-
-        task_filter = TaskFilterModel.objects.get(pk=task_filter_id)
-
-        if not task_filter:
-            return []
-
-        filter = {'today': {'deadline__date': datetime.now(timezone.utc)},
-                  'important': {'is_important': True},
-                  'all': {},
-                  'custom': {'task_filter__pk': task_filter_id}}
-    
-        return TaskModel.objects.filter(completed=False, user=self.request.user, **filter[task_filter.type])
+        return TaskModel.objects.filter(completed=False, user=self.request.user)
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -42,17 +23,14 @@ class TaskList(generics.ListCreateAPIView):
         data = request.data.copy()
         data['user'] = request.user.pk
         
-        task_filter_id = data.get('task_filter')
-        task_filter = TaskFilterModel.objects.get(pk=task_filter_id)
-        
-        if task_filter.type == 'custom':
-            data['task_filter'] == task_filter
-
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        response_data = serializer.data
+        response_data['subtask_list'] = []
+
+        return Response(response_data, status=status.HTTP_201_CREATED)
     
 
 class TaskDetail(generics.GenericAPIView,

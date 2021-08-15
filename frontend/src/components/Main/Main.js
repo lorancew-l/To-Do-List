@@ -2,9 +2,12 @@ import React from 'react'
 import TaskListItem from './TaskListItem'
 import AddTask from './AddTaskForm/AddTaskForm'
 import { AnimatePresence, AnimateSharedLayout } from 'framer-motion'
+import { useTaskContext } from '../../store/TaskStore/TaskContext'
+import { observer } from 'mobx-react'
 
-export default function Main(props) {
+function Main(props) {
   const currentDate = new Date()
+  const taskStore = useTaskContext()
 
   return (
     <main className={props.showSidebar? "main sidebar-on" : "main sidebar-off"}>
@@ -19,10 +22,10 @@ export default function Main(props) {
         <ul className="task-list">
           <AnimateSharedLayout>
             <AnimatePresence initial={false}>
-              {props.taskList.map((task, i) => {
-                return <TaskListItem key={task.id} taskData={task} updateTaskList={props.updateTaskList} custom={i}></TaskListItem>})
+              {taskStore.filteredTasks.map((task, i) => {
+                return <TaskListItem key={task.id} taskData={task} custom={i}></TaskListItem>})
               }
-              <AddTask updateTaskList={props.updateTaskList} taskFilterId={props.taskFilterId}></AddTask>
+              <AddTask></AddTask>
             </AnimatePresence>
           </AnimateSharedLayout>
         </ul>
@@ -30,3 +33,5 @@ export default function Main(props) {
     </main>
   )
 }
+
+export default observer(Main)

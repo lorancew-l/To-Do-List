@@ -5,6 +5,7 @@ import { quickTask } from '../../../images/index'
 import { addTask } from '../../../tools/api/rest/tasks'
 import useInput from '../../../hooks/useInput'
 import { taskItemAnimation } from '../../../animations/animations'
+import { useTaskContext } from '../../../store/TaskStore/TaskContext'
 
 
 export default function AddTaskForm(props) {
@@ -12,6 +13,7 @@ export default function AddTaskForm(props) {
   const taskName = useInput('', 64)
   const [deadline, setDeadline] = useState(null)
   const [deadlineStringRepresentation, setDeadlineStringRepresentation] = useState('Срок')
+  const taskStore = useTaskContext()
 
   function cancelClickHandler() {
     setOnFocus(false)
@@ -22,12 +24,14 @@ export default function AddTaskForm(props) {
 
   function submitHandler(event) {
     event.preventDefault()
-    addTask({'title': taskName.value, 'deadline': deadline, 'task_filter': props.taskFilterId}).then(response => {
+    addTask({'title': taskName.value, 'deadline': deadline, 'task_filter': props.taskFilterId})
+    .then(response => {
       if (response.ok) {
         taskName.clear()
-        props.updateTaskList()
+        return response.json()
       }
     })
+    .then(task => {console.log('handler', task);taskStore.addTask(task)})
   }
 
   function deadlineChangeHandler(newDate, stringRepresentation) {

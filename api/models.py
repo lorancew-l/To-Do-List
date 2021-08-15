@@ -5,7 +5,6 @@ import account.models
 class TaskFilterModel(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=30, default='')
-    type = models.CharField(max_length=30, default='custom')
     favorite = models.BooleanField(default=False)
     color = models.CharField(max_length=7, default='#ffffff')
     user = models.ForeignKey(account.models.User, on_delete=models.CASCADE)

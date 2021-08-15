@@ -1,8 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-import api.models
 
 
 class Manager(BaseUserManager):
@@ -30,12 +27,3 @@ class User(AbstractBaseUser, PermissionsMixin):
   USERNAME_FIELD = 'email'
 
   objects = Manager()
-
-  
-@receiver(post_save, sender=User)
-def create_default_task_filters(instance, created, **kwargs):
-
-  if created:
-      api.models.TaskFilterModel.objects.bulk_create([api.models.TaskFilterModel(title='Сегодня', user=instance, type='today'),
-                                                      api.models.TaskFilterModel(title='Важно', user=instance, type='important'),
-                                                      api.models.TaskFilterModel(title='Все задачи', user=instance, type='all')])

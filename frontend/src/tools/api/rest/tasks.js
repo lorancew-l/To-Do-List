@@ -11,9 +11,9 @@ export function addTask(data) {
   })
 }
 
-export function getTaskList(taskFilterId) {
+export function getTaskList() {
   return makeRequest({
-    url: `${baseURL}?task-filter=${taskFilterId}`,
+    url: `${baseURL}`,
     headers: {'Content-Type': 'application/json', authorization: true},
   })
 }

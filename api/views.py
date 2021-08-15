@@ -95,8 +95,6 @@ class TaskFilterList(generics.ListCreateAPIView):
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
-        for item in response.data:
-            item['count'] = self.get_task_count(item['id'], request.user)
 
         return response
 
@@ -108,16 +106,6 @@ class TaskFilterList(generics.ListCreateAPIView):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def get_task_count(self, task_filter_id, user):
-        task_filter = TaskFilterModel.objects.get(pk=task_filter_id)
-
-        filter= {'today': {'deadline__date': datetime.now(timezone.utc)},
-                           'important': {'is_important': True},
-                           'all': {},
-                           'custom': {'task_filter__pk': task_filter_id}}
-
-        return len(TaskModel.objects.filter(completed=False, user=user, **filter[task_filter.type]))
 
 
 class TaskFilterDetail(generics.GenericAPIView,

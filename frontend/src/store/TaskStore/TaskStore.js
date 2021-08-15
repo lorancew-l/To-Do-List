@@ -54,6 +54,14 @@ export default class TaskStore {
     this.tasks.push(task)
   }
 
+  taskToImportant(taskId, important) {
+    this.tasks.find(task => task.id === taskId).is_important = important
+  }
+
+  completeTask(taskId) {
+    this.tasks = this.tasks.filter(task => task.id !== taskId)
+  }
+
   setCurrentFilter({type='custom', id=null}) {
     this.currentFilter = {type, id}
   }

@@ -5,13 +5,14 @@ import { updateTask } from '../../tools/api/rest/tasks'
 import TaskDetail from '../Modal/TaskDetail/TaskDetail'
 import ModalOverlay from '../Modal/ModalOverlay'
 import { taskItemAnimation } from '../../animations/animations'
+import { useTaskContext } from '../../store/TaskStore/TaskContext'
 
 export default function TaskListItem(props) {
   const [checkboxIcon, setCheckboxIcon] = useState(checkboxUnchecked)
   const [importantIcon, setImportantIcon] = useState(props.taskData.is_important ? importantTaskActive : importantTaskInactive)
   const [style, setStyle] = useState('task-list-task')
   const [showModal, setShowModal] = useState(false)
-
+  const taskStore = useTaskContext()
 
   useEffect(() => {
     setImportantIcon(props.taskData.is_important ? importantTaskActive : importantTaskInactive)
@@ -27,7 +28,7 @@ export default function TaskListItem(props) {
     event.stopPropagation()
     updateTask(props.taskData.id, {completed: true}).then(response => {
       if (response.ok) {
-        props.updateTaskList()
+        taskStore.completeTask(props.taskData.id)
       }
     })
   }
@@ -35,7 +36,7 @@ export default function TaskListItem(props) {
     event.stopPropagation()
     updateTask(props.taskData.id, {is_important: !props.taskData.is_important}).then(response => {
       if (response.ok) {
-        props.updateTaskList()
+        taskStore.taskToImportant(props.taskData.id, !props.taskData.is_important)
       }
     })
   }

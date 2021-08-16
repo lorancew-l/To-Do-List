@@ -10,7 +10,7 @@ class TaskList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
 
     def get_queryset(self):
-        return TaskModel.objects.filter(completed=False, user=self.request.user)
+        return TaskModel.objects.filter(user=self.request.user)
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)

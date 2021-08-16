@@ -1,22 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { updateTaskRequest } from '../../../tools/api/rest/tasks'
-
+import { useTaskContext } from '../../../store/TaskStore/TaskContext'
 
 export default function Note(props) {
   const [noteText, setNoteText] = useState(props.note || '')
   const textareaRef = useRef(null)
   const submitDisabled = noteText === (props.note || '')
 
+  const taskStore = useTaskContext()
+
   function handleSubmit(event) {
     event.preventDefault()
     if (noteText !== props.note) {
-      updateTaskRequest(props.taskId, {'note': noteText}).then(response => {
-        if (response.ok) {
-          response.json().then(responseData => {
-            props.setNote(responseData.note)
-          })
-        }
-      })
+      taskStore.updateTaskItem(props.taskId, {'note': noteText})
     }
   }
 

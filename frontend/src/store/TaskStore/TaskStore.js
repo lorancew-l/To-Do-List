@@ -125,6 +125,8 @@ export default class TaskStore {
         if (response.ok) {
           runInAction(() => {
             this.filters = this.filters.filter(filter => filter.id !== filterId)
+            this.tasks = this.tasks.filter(task => task.task_filter !== filterId)
+            
             if (filterId === this.currentFilter.id) {
               this.setCurrentFilter({type: 'all', id: null})
             } 

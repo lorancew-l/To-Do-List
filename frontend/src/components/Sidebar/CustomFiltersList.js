@@ -5,20 +5,20 @@ import AddTaskFilterForm from '../Modal/AddTaskFilter/AddTaskFilterForm'
 import ModalOverlay from '../Modal/ModalOverlay'
 import CustomFilter from './CustomFilter/CustomFilter'
 import { modalAnimation, filterListAnimation } from '../../animations/animations'
-import { addTaskFilter } from '../../tools/api/rest/taskFilters'
+import { useTaskContext } from '../../store/TaskStore/TaskContext'
+import { observer } from 'mobx-react'
 
-export default function CustomFiltersList(props) {
+function CustomFiltersList(props) {
   const [collapse, setСollapsed] = useState(false)
   const [showPopup, setPopup] = useState(false)
+  const taskStore = useTaskContext()
 
   function addFilter(event, title, color, checked) {  
     event.preventDefault()
-    addTaskFilter({title, color, favorite: checked}).then(response => {
-      if (response.ok) {
-        props.updateFilterList()
-        setPopup(false)
-      }
-    })
+    
+    taskStore.addFilter({title, color, favorite: checked})
+      .then(() => setPopup(false))
+      .catch(error => console.log('CustomFiltersList: ',error))
   } 
  
   return (
@@ -38,10 +38,10 @@ export default function CustomFiltersList(props) {
         {collapse? (
           <motion.ul className="custom-filters" animate={collapse && 'animate'} {...filterListAnimation}>
             {
-              props.customFilters.map(filter => {
-                return <CustomFilter key={filter.id} id={filter.id} selected={filter.id === props.selectedFilter} color={filter.color} 
+              taskStore.customFilters.map(filter => {
+                return <CustomFilter key={filter.id} id={filter.id} selected={filter.id === taskStore.currentFilter.id} color={filter.color} 
                                      title={filter.title} count={props.count} taskCount={filter.count} checked={filter.favorite}
-                                     selectFilter={() => props.selectFilter(filter.id)} updateFilterList={props.updateFilterList}/>
+                                     selectFilter={() => taskStore.setCurrentFilter({type: "custom", id: filter.id})}/>
               })
             }
           </motion.ul>)
@@ -57,3 +57,5 @@ export default function CustomFiltersList(props) {
     </li>
   )
 }
+
+export default observer(CustomFiltersList)

@@ -1,18 +1,17 @@
 import React from 'react'
 import AddTaskFilterForm from '../../../Modal/AddTaskFilter/AddTaskFilterForm'
-import { updateTaskFilter } from '../../../../tools/api/rest/taskFilters'
 import PopupMenuItem from '../../../Modal/PopupMenu/PopupMenuItem'
 import { pencil } from '../../../../images/index'
+import { useTaskContext } from '../../../../store/TaskStore/TaskContext'
 
 export default function Edit(props) {
+  const taskStore = useTaskContext()
+
   function upateFilter(event, title, color, checked) {
     event.preventDefault()
-    updateTaskFilter(props.filterId, {title, color, favorite: checked}).then(response => {
-      if (response.ok) {
-        props.updateFilterList()
-        props.closePopup()
-      }
-    })
+    taskStore.updateFilter(props.filterId, {title, color, favorite: checked})
+      .then(() => props.closePopup())
+      .catch((error) => console.log('Edit', error))
   }
 
   const modal = (

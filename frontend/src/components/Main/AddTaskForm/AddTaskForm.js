@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react'
 import NoFocusContent from '../../AddItemForm/NoFocusContent'
 import OnFocusContent from './OnFocusContent'
 import { quickTask } from '../../../images/index'
-import { addTask } from '../../../tools/api/rest/tasks'
 import useInput from '../../../hooks/useInput'
 import { taskItemAnimation } from '../../../animations/animations'
 import { useTaskContext } from '../../../store/TaskStore/TaskContext'
@@ -24,14 +23,12 @@ export default function AddTaskForm(props) {
 
   function submitHandler(event) {
     event.preventDefault()
-    addTask({'title': taskName.value, 'deadline': deadline, 'task_filter': props.taskFilterId})
-    .then(response => {
-      if (response.ok) {
-        taskName.clear()
-        return response.json()
-      }
-    })
-    .then(task => {console.log('handler', task);taskStore.addTask(task)})
+    
+
+    const task = {'title': taskName.value, 'deadline': deadline, 'task_filter': props.taskFilterId}
+    taskStore.addNewTask(task)
+      .then(() => taskName.clear())
+      .catch(error => console.log('AddTaskForm: ',error))
   }
 
   function deadlineChangeHandler(newDate, stringRepresentation) {

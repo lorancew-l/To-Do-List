@@ -2,7 +2,7 @@ import { isToday } from 'date-fns'
 import { makeAutoObservable, runInAction } from 'mobx'
 import { addTaskRequest, getTaskListRequest, updateTaskRequest } from '../../tools/api/rest/tasks'
 import { deleteTaskFilterRequest, getTaskFilterListRequest, updateTaskFilterRequest, addTaskFilterRequest } from '../../tools/api/rest/taskFilters'
-import { addSubtaskRequest } from '../../tools/api/rest/subtasks'
+import { addSubtaskRequest, updateSubtaskRequest, deleteSubtaskRequest } from '../../tools/api/rest/subtasks'
 
 export default class TaskStore {
   tasks = []
@@ -105,6 +105,41 @@ export default class TaskStore {
           const targetTask = this.tasks.find(task => task.id === taskId)
           runInAction(() => Object.assign(targetTask, taskData))
           resolve(taskId)
+        }
+        else {
+          throw new Error(response.status)
+        }
+      })
+      .catch(error => reject(error))
+    })
+  }
+
+  updateSubtask(taskId, subtaskId, subtaskData) {
+    return new Promise((resolve, reject) => {
+      updateSubtaskRequest(taskId, subtaskId, subtaskData)
+      .then(response => {
+        if (response.ok) {
+          const targetTask = this.tasks.find(task => task.id === taskId)
+          const targetSubtask = targetTask.subtask_list.find(subtask => subtask.id === subtaskId)
+          runInAction(() => Object.assign(targetSubtask, subtaskData))
+          resolve(subtaskId)
+        }
+        else {
+          throw new Error(response.status)
+        }
+      })
+      .catch(error => reject(error))
+    })
+  }
+
+  deleteSubtask(taskId, subtaskId) {
+    return new Promise((resolve, reject) => {
+      deleteSubtaskRequest(taskId, subtaskId)
+      .then(response => {
+        if (response.ok) {
+          const targetTask = this.tasks.find(task => task.id === taskId)
+          runInAction(() => targetTask.subtask_list = targetTask.subtask_list.filter(subtask => subtask.id !== subtaskId))
+          resolve(subtaskId)
         }
         else {
           throw new Error(response.status)

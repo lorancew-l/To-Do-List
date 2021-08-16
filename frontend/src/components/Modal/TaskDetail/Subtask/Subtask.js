@@ -1,51 +1,41 @@
 import React, { useState, Fragment } from 'react'
-import { updateSubtaskRequest, deleteSubtaskRequest } from '../../../../tools/api/rest/subtasks'
 import NoFocusContent from './NoFocusContent'
 import OnFocusContent from '../../../AddItemForm/OnFocusContent'
 import useInput from '../../../../hooks/useInput'
+import { useTaskContext } from '../../../../store/TaskStore/TaskContext'
 
 export default function Subtask(props) {
   const [onFocus, setOnFocus] = useState(false)
   const subtaskNewTitle = useInput(props.title, 64)
+  const taskStore = useTaskContext()
   
-  function cancelClickHandler() {
+  function cancelSubtaskEdit() {
     setOnFocus(false)
     subtaskNewTitle.clear()
   }
 
-  function submitHandler(event) {
+  function updateSubtaskTitle(event) {
     event.preventDefault()
-    updateSubtaskRequest(props.taskId, props.id, {title: subtaskNewTitle.value}).then(response => {
-      if (response.ok) {
-        props.updateSubtaskList()
-        setOnFocus(false)
-      }
-    })  
+    taskStore.updateSubtask(props.taskId, props.id, {title: subtaskNewTitle.value})
+      .then(() => {setOnFocus(false)})
   }
 
-  function completeHandler(event) {
+  function completeSubtask(event) {
     event.stopPropagation()
-    updateSubtaskRequest(props.taskId, props.id, {completed: !props.completed}).then(response => {
-      if (response.ok) {
-        props.updateSubtaskList()
-      }
-    })
+    taskStore.updateSubtask(props.taskId, props.id, {completed: !props.completed})
+      .then(() => {setOnFocus(false)})
   }
 
-  function deleteHandler(event) {
+  function removeSubtask(event) {
     event.stopPropagation()
-    deleteSubtaskRequest(props.taskId, props.id).then(response => {
-      if (response.ok) {
-        props.updateSubtaskList()
-      }
-    })
+    taskStore.deleteSubtask(props.taskId, props.id)
   }
   
   return (
     <Fragment>
-      {onFocus? <OnFocusContent className="subtask edit no-hover" input={subtaskNewTitle} onCancelClick={cancelClickHandler}
-                                isSubmitDisabled={!subtaskNewTitle.value | subtaskNewTitle.value === props.title} onSubmit={submitHandler}/>
-              : <NoFocusContent onComplete={event => completeHandler(event)} onDelete={deleteHandler}
+      {onFocus? <OnFocusContent className="subtask edit no-hover" input={subtaskNewTitle} onCancelClick={cancelSubtaskEdit}
+                                isSubmitDisabled={!subtaskNewTitle.value | subtaskNewTitle.value === props.title} onSubmit={updateSubtaskTitle}/>
+              : <NoFocusContent onComplete={event => completeSubtask(event)} onDelete={removeSubtask}
                                 onClick={() => setOnFocus(true)} title={props.title} completed={props.completed}/>}
     </Fragment>
   )

@@ -79,6 +79,26 @@ export default class TaskStore {
     })
   }
 
+  addNewSubtask(taskId, subtaskData) {
+    return new Promise((resolve, reject) => {
+      addSubtask(taskId, subtaskData)
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        }
+        else {
+          throw new Error(response.status)
+        }
+      })
+      .then(subtask => {
+        const task = this.getTaskById(taskId)
+        runInAction(() => task.subtask_list.push(subtask))
+        resolve(subtask)
+      })
+      .catch(error => reject(error))
+    })
+  }
+
   updateTaskItem(taskId, taskData) {
     return new Promise((resolve, reject) => {
       updateTask(taskId, taskData)

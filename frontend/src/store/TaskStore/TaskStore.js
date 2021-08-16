@@ -90,15 +90,7 @@ export default class TaskStore {
       .catch(error => reject(error))
     })
   }
-
-  completeTask(taskId) {
-    updateTask(taskId).then(response => {
-      if (response.ok) {
-        runInAction(() => this.tasks = this.tasks.filter(task => task.id !== taskId))
-      }
-    })
-  }
-
+  
   addFilter(filterData) {
     return new Promise((resolve, reject) => {
       addTaskFilter(filterData)
@@ -126,7 +118,7 @@ export default class TaskStore {
           runInAction(() => {
             this.filters = this.filters.filter(filter => filter.id !== filterId)
             this.tasks = this.tasks.filter(task => task.task_filter !== filterId)
-            
+
             if (filterId === this.currentFilter.id) {
               this.setCurrentFilter({type: 'all', id: null})
             } 

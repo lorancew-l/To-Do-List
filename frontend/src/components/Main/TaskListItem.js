@@ -18,27 +18,27 @@ function TaskListItem(props) {
     setImportantIcon(props.taskData.is_important ? importantTaskActive : importantTaskInactive)
   }, [props.taskData.is_important])
 
-  function onClickHandler() {
+  function animateClick() {
     setStyle('task-list-task clicked')
     setTimeout(() => setStyle('task-list-task'), 400)
     setShowModal(true)
   }
   
-  function completeTaskClickHandler(event) {
+  function completeTask(event) {
     event.stopPropagation()
-    taskStore.completeTask(props.taskData.id)
+    taskStore.updateTaskItem(props.taskData.id, {completed: !props.taskData.completed})
   }
 
-  function toImportantTaskClickHandler(event) {
+  function taskToImportant(event) {
     event.stopPropagation()
     taskStore.updateTaskItem(props.taskData.id, {is_important: !props.taskData.is_important})
   }
   
   return (
     <Fragment>
-      <motion.li layout className={style} onClick={onClickHandler} custom={props.custom} {...taskItemAnimation}>
+      <motion.li layout className={style} onClick={animateClick} custom={props.custom} {...taskItemAnimation}>
         <div className="left-side">
-          <button onClick={completeTaskClickHandler}> 
+          <button onClick={completeTask}> 
             <img alt="checkbox" src={checkboxIcon}
               onMouseEnter={() => setCheckboxIcon(checkboxHover)}
               onMouseLeave={() => setCheckboxIcon(checkboxUnchecked)}/>
@@ -52,7 +52,7 @@ function TaskListItem(props) {
             </div>
           </div>
         </div>
-        <button onClick={event => toImportantTaskClickHandler(event)} 
+        <button onClick={event => taskToImportant(event)} 
                 onMouseEnter={() => {if (!props.taskData.is_important) setImportantIcon(importantTaskActive)}}
                 onMouseLeave={() => {if (!props.taskData.is_important) setImportantIcon(importantTaskInactive)}}>
           <img alt='to important' src={importantIcon}/>

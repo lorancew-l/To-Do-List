@@ -10,21 +10,21 @@ export default function AddSubtaskForm(props) {
   const subtaskTitle = useInput('', 64)
   const taskStore = useTaskContext()
 
-  function cancelClickHandler() {
+  function cancelInput() {
     setOnFocus(false)
     subtaskTitle.clear()
   }
 
-  function createSubtask(event) {
+  function addSubtask(event) {
     event.preventDefault()
-    taskStore.addNewSubtask(props.taskId, {'title': subtaskTitle.value})
+    taskStore.addSubtask(props.taskId, {'title': subtaskTitle.value})
       .then(() => subtaskTitle.clear())
       .catch(error => console.log('AddSubtaskForm', error))
   }
   
   return (
     <Fragment>
-      {onFocus? <OnFocusContent className="add-subtask edit no-hover" onCancelClick={cancelClickHandler} onSubmit={createSubtask}
+      {onFocus? <OnFocusContent className="add-subtask edit no-hover" onCancelClick={cancelInput} onSubmit={addSubtask}
                                 input={subtaskTitle} isSubmitDisabled={subtaskTitle.empty} scrollIntoView={true}/>
               : <NoFocusContent className="add-subtask" text="Добавить подзадачу" icon={quickTask} iconAlt={'add subtask'}
                                 onClick={() => setOnFocus(true)}/>

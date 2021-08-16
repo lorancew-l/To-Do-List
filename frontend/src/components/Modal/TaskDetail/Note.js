@@ -11,7 +11,7 @@ export default function Note(props) {
   function handleSubmit(event) {
     event.preventDefault()
     if (noteText !== props.note) {
-      taskStore.updateTaskItem(props.taskId, {'note': noteText})
+      taskStore.updateTask(props.taskId, {'note': noteText})
     }
   }
 

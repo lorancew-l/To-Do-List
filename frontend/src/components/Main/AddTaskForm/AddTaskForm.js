@@ -14,33 +14,32 @@ export default function AddTaskForm(props) {
   const [deadlineStringRepresentation, setDeadlineStringRepresentation] = useState('Срок')
   const taskStore = useTaskContext()
 
-  function cancelClickHandler() {
-    setOnFocus(false)
-    taskName.clear()
+  function cancelInput() {
     setDeadline(null)
     setDeadlineStringRepresentation('Срок')
+    setOnFocus(false)
+    taskName.clear()
   }
 
-  function submitHandler(event) {
+  function addTask(event) {
     event.preventDefault()
     
-
     const task = {'title': taskName.value, 'deadline': deadline, 'task_filter': props.taskFilterId}
-    taskStore.addNewTask(task)
+    taskStore.addTask(task)
       .then(() => taskName.clear())
       .catch(error => console.log('AddTaskForm: ',error))
   }
 
-  function deadlineChangeHandler(newDate, stringRepresentation) {
+  function chandgeDeadline(newDate, stringRepresentation) {
     setDeadline(newDate)
     setDeadlineStringRepresentation(stringRepresentation)
   }
 
   return (
     <Fragment>
-      {onFocus? <OnFocusContent onSubmit={submitHandler} onCancelClick={cancelClickHandler} taskName={taskName} deadline={deadline}
+      {onFocus? <OnFocusContent onSubmit={addTask} onCancelClick={cancelInput} taskName={taskName} deadline={deadline}
                                 deadlineStringRepresentation={deadlineStringRepresentation}
-                                onDateClick={deadlineChangeHandler}></OnFocusContent>
+                                onDateClick={chandgeDeadline}></OnFocusContent>
               : <NoFocusContent className="task-list-add-item" text="Добавить задачу" icon={quickTask} iconAlt="add task" 
                                 animation={{transition: taskItemAnimation.transition}}
                                 onClick={() => setOnFocus(true)}></NoFocusContent>}

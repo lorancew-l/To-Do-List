@@ -16,12 +16,12 @@ function TaskListItem(props) {
   
   function completeTask(event) {
     event.stopPropagation()
-    taskStore.updateTaskItem(props.taskData.id, {completed: !props.taskData.completed})
+    taskStore.updateTask(props.taskData.id, {completed: !props.taskData.completed})
   }
 
   function taskToImportant(event) {
     event.stopPropagation()
-    taskStore.updateTaskItem(props.taskData.id, {is_important: !props.taskData.is_important})
+    taskStore.updateTask(props.taskData.id, {is_important: !props.taskData.is_important})
   }
 
   return (

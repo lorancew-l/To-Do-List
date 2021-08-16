@@ -55,7 +55,7 @@ export default class TaskStore {
     return this.tasks.find(task => task.id === id)
   }
 
-  addNewTask(taskData) {
+  addTask(taskData) {
     if (this.currentFilter.type === 'custom' && this.currentFilter.id){
       taskData['task_filter'] = this.currentFilter.id
     }
@@ -65,14 +65,14 @@ export default class TaskStore {
     })
   }
 
-  addNewSubtask(taskId, subtaskData) {
+  addSubtask(taskId, subtaskData) {
     return asyncUpdateAction(addSubtaskRequest, [taskId, subtaskData], (subtask) => {
       const task = this.getTaskById(taskId)
       runInAction(() => task.subtask_list.push(subtask))
     })
   }
 
-  updateTaskItem(taskId, taskData) {
+  updateTask(taskId, taskData) {
     return asyncUpdateAction(updateTaskRequest, [taskId, taskData], (updatedTask) => {
       const targetTask = this.tasks.find(task => task.id === taskId)
       runInAction(() => Object.assign(targetTask, updatedTask))

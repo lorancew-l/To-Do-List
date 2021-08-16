@@ -43,7 +43,7 @@ export default function Deadline(props) {
   }
 
   function setDeadline(date) {
-    taskStore.updateTaskItem(props.taskId, {deadline: date})
+    taskStore.updateTask(props.taskId, {deadline: date})
   }
   
   useEffect (() => {

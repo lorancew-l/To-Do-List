@@ -16,20 +16,20 @@ export default function Task(props) {
 
   function updateTitle(event) {
     event.preventDefault()
-    taskStore.updateTaskItem(props.id, {title: taskNewTitle.value})
+    taskStore.updateTask(props.id, {title: taskNewTitle.value})
       .then(() => setOnFocus(false))
       .catch((error) => console.log('Task', error))
   }
 
   function completeTask(event) {
     event.stopPropagation()
-    taskStore.updateTaskItem(props.id, {completed: !props.completed})
+    taskStore.updateTask(props.id, {completed: !props.completed})
       .catch((error) => console.log('Task', error))
   }
 
   function taskToImportant(event) {
     event.stopPropagation()
-    taskStore.updateTaskItem(props.id, {is_important: !props.isImportant})
+    taskStore.updateTask(props.id, {is_important: !props.isImportant})
       .catch((error) => console.log('Task', error))
   }
   

@@ -1,7 +1,7 @@
 import { isToday } from 'date-fns'
 import { makeAutoObservable, runInAction } from 'mobx'
 import { getTaskList } from '../../tools/api/rest/tasks'
-import { getTaskFilterList, updateTaskFilter } from '../../tools/api/rest/taskFilters'
+import { deleteTaskFilter, getTaskFilterList, updateTaskFilter } from '../../tools/api/rest/taskFilters'
 
 export default class TaskStore {
   tasks = []
@@ -59,6 +59,27 @@ export default class TaskStore {
 
   completeTask(taskId) {
     this.tasks = this.tasks.filter(task => task.id !== taskId)
+  }
+
+  deleteFilter(filterId) {
+    return new Promise((resolve, reject) => {
+      deleteTaskFilter(filterId)
+      .then(response => {
+        if (response.ok) {
+          runInAction(() => {
+            this.filters = this.filters.filter(filter => filter.id !== filterId)
+            if (filterId === this.currentFilter.id) {
+              this.setCurrentFilter({type: 'all', id: null})
+            } 
+          })
+          resolve(filterId)
+        }
+        else {
+          throw new Error(response.status)
+        }
+      })
+      .catch(error => reject(error))
+    })
   }
 
   updateFilter(filterId, filterData) {

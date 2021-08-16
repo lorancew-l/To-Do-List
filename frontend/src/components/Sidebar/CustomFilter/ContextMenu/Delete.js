@@ -1,15 +1,14 @@
 import React from 'react'
 import PopupMenuItem from '../../../Modal/PopupMenu/PopupMenuItem'
 import { deleteIcon } from '../../../../images/index'
-import { deleteTaskFilter } from '../../../../tools/api/rest/taskFilters'
+import { useTaskContext } from '../../../../store/TaskStore/TaskContext'
 
 export default function Delete(props) {
+  const taskStore = useTaskContext()
+
   function deleteFilter() {
-    deleteTaskFilter(props.filterId).then(response => {
-      if (response.ok) {
-        props.updateFilterList()
-      }
-    })
+    taskStore.deleteFilter(props.filterId)
+      .catch(error => console.log('Delete ', error))
   }
 
   return (

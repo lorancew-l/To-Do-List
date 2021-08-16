@@ -3,6 +3,7 @@ import { makeAutoObservable, runInAction } from 'mobx'
 import { addTaskRequest, getTaskListRequest, updateTaskRequest } from '../../tools/api/rest/tasks'
 import { deleteTaskFilterRequest, getTaskFilterListRequest, updateTaskFilterRequest, addTaskFilterRequest } from '../../tools/api/rest/taskFilters'
 import { addSubtaskRequest, updateSubtaskRequest, deleteSubtaskRequest } from '../../tools/api/rest/subtasks'
+import asyncUpdateAction from '../asyncUpdateAction'
 
 export default class TaskStore {
   tasks = []
@@ -58,153 +59,64 @@ export default class TaskStore {
     if (this.currentFilter.type === 'custom' && this.currentFilter.id){
       taskData['task_filter'] = this.currentFilter.id
     }
-
-    return new Promise((resolve, reject) => {
-      addTaskRequest(taskData)
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        }
-        else {
-          throw new Error(response.status)
-        }
-      })
-      .then(task => {
-        runInAction(() => this.tasks.push(task))
-        resolve(task)
-      })
-      .catch(error => reject(error))
+    
+    return asyncUpdateAction(addTaskRequest, [taskData], (task) => {
+      runInAction(() => this.tasks.push(task))
     })
   }
 
   addNewSubtask(taskId, subtaskData) {
-    return new Promise((resolve, reject) => {
-      addSubtaskRequest(taskId, subtaskData)
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        }
-        else {
-          throw new Error(response.status)
-        }
-      })
-      .then(subtask => {
-        const task = this.getTaskById(taskId)
-        runInAction(() => task.subtask_list.push(subtask))
-        resolve(subtask)
-      })
-      .catch(error => reject(error))
+    return asyncUpdateAction(addSubtaskRequest, [taskId, subtaskData], (subtask) => {
+      const task = this.getTaskById(taskId)
+      runInAction(() => task.subtask_list.push(subtask))
     })
   }
 
   updateTaskItem(taskId, taskData) {
-    return new Promise((resolve, reject) => {
-      updateTaskRequest(taskId, taskData)
-      .then(response => {
-        if (response.ok) {
-          const targetTask = this.tasks.find(task => task.id === taskId)
-          runInAction(() => Object.assign(targetTask, taskData))
-          resolve(taskId)
-        }
-        else {
-          throw new Error(response.status)
-        }
-      })
-      .catch(error => reject(error))
+    return asyncUpdateAction(updateTaskRequest, [taskId, taskData], (updatedTask) => {
+      const targetTask = this.tasks.find(task => task.id === taskId)
+      runInAction(() => Object.assign(targetTask, updatedTask))
     })
   }
 
   updateSubtask(taskId, subtaskId, subtaskData) {
-    return new Promise((resolve, reject) => {
-      updateSubtaskRequest(taskId, subtaskId, subtaskData)
-      .then(response => {
-        if (response.ok) {
-          const targetTask = this.tasks.find(task => task.id === taskId)
-          const targetSubtask = targetTask.subtask_list.find(subtask => subtask.id === subtaskId)
-          runInAction(() => Object.assign(targetSubtask, subtaskData))
-          resolve(subtaskId)
-        }
-        else {
-          throw new Error(response.status)
-        }
-      })
-      .catch(error => reject(error))
+    return asyncUpdateAction(updateSubtaskRequest, [taskId, subtaskId, subtaskData], (updatedSubtask) => {
+      const targetTask = this.tasks.find(task => task.id === taskId)
+      const targetSubtask = targetTask.subtask_list.find(subtask => subtask.id === subtaskId)
+      runInAction(() => Object.assign(targetSubtask, updatedSubtask))
     })
   }
 
   deleteSubtask(taskId, subtaskId) {
-    return new Promise((resolve, reject) => {
-      deleteSubtaskRequest(taskId, subtaskId)
-      .then(response => {
-        if (response.ok) {
-          const targetTask = this.tasks.find(task => task.id === taskId)
-          runInAction(() => targetTask.subtask_list = targetTask.subtask_list.filter(subtask => subtask.id !== subtaskId))
-          resolve(subtaskId)
-        }
-        else {
-          throw new Error(response.status)
-        }
-      })
-      .catch(error => reject(error))
+    return asyncUpdateAction(deleteSubtaskRequest, [taskId, subtaskId], () => {
+      const targetTask = this.tasks.find(task => task.id === taskId)
+      runInAction(() => targetTask.subtask_list = targetTask.subtask_list.filter(subtask => subtask.id !== subtaskId))
     })
   }
   
   addFilter(filterData) {
-    return new Promise((resolve, reject) => {
-      addTaskFilterRequest(filterData)
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        }
-        else {
-          throw new Error(response.status)
-        }
-      })
-      .then(filter => {
-        runInAction(() => this.filters.push(filter))
-        resolve(filter)
-      })
-      .catch(error => reject(error))
+    return asyncUpdateAction(addTaskFilterRequest, [filterData], (filter) => {
+      runInAction(() => this.filters.push(filter))
     })
   }
 
   deleteFilter(filterId) {
-    return new Promise((resolve, reject) => {
-      deleteTaskFilterRequest(filterId)
-      .then(response => {
-        if (response.ok) {
-          runInAction(() => {
-            this.filters = this.filters.filter(filter => filter.id !== filterId)
-            this.tasks = this.tasks.filter(task => task.task_filter !== filterId)
+    return asyncUpdateAction(deleteTaskFilterRequest, [filterId], () => {
+      runInAction(() => {
+        this.filters = this.filters.filter(filter => filter.id !== filterId)
+        this.tasks = this.tasks.filter(task => task.task_filter !== filterId)
 
-            if (filterId === this.currentFilter.id) {
-              this.setCurrentFilter({type: 'all', id: null})
-            } 
-          })
-          resolve(filterId)
-        }
-        else {
-          throw new Error(response.status)
-        }
+        if (filterId === this.currentFilter.id) {
+          this.setCurrentFilter({type: 'all', id: null})
+        } 
       })
-      .catch(error => reject(error))
     })
   }
 
   updateFilter(filterId, filterData) {
-    return new Promise((resolve, reject) => {
-      updateTaskFilterRequest(filterId, filterData)
-      .then(response => {
-        if (response.ok) {
-          const targetFilter = this.filters.find(filter => filter.id === filterId)
-          runInAction(() => Object.assign(targetFilter, filterData))
-          resolve(filterId)
-        }
-        else {
-          throw new Error(response.status)
-        }
-      })
-      .catch(error => reject(error))
+    return asyncUpdateAction(updateTaskFilterRequest, [filterId, filterData], (updatedFilter) => {
+      const targetFilter = this.filters.find(filter => filter.id === filterId)
+      runInAction(() => Object.assign(targetFilter, updatedFilter))
     })
   }
 

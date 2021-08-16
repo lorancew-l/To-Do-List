@@ -2,7 +2,7 @@ import { isToday } from 'date-fns'
 import { makeAutoObservable, runInAction } from 'mobx'
 import { getTaskList } from '../../tools/api/rest/tasks'
 import { deleteTaskFilter, getTaskFilterList, updateTaskFilter } from '../../tools/api/rest/taskFilters'
-import { addTask } from '../../tools/api/rest/tasks'
+import { addTask, updateTask } from '../../tools/api/rest/tasks'
 import { addTaskFilter } from '../../tools/api/rest/taskFilters'
 
 export default class TaskStore {
@@ -74,12 +74,29 @@ export default class TaskStore {
     })
   }
 
-  taskToImportant(taskId, important) {
-    this.tasks.find(task => task.id === taskId).is_important = important
+  updateTaskItem(taskId, taskData) {
+    return new Promise((resolve, reject) => {
+      updateTask(taskId, taskData)
+      .then(response => {
+        if (response.ok) {
+          const targetTask = this.tasks.find(task => task.id === taskId)
+          runInAction(() => Object.assign(targetTask, taskData))
+          resolve(taskId)
+        }
+        else {
+          throw new Error(response.status)
+        }
+      })
+      .catch(error => reject(error))
+    })
   }
 
   completeTask(taskId) {
-    this.tasks = this.tasks.filter(task => task.id !== taskId)
+    updateTask(taskId).then(response => {
+      if (response.ok) {
+        runInAction(() => this.tasks = this.tasks.filter(task => task.id !== taskId))
+      }
+    })
   }
 
   addFilter(filterData) {

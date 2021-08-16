@@ -1,13 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from "framer-motion"
 import { checkboxUnchecked , checkboxHover, importantTaskInactive, importantTaskActive } from '../../images/index'
-import { updateTask } from '../../tools/api/rest/tasks'
 import TaskDetail from '../Modal/TaskDetail/TaskDetail'
 import ModalOverlay from '../Modal/ModalOverlay'
 import { taskItemAnimation } from '../../animations/animations'
 import { useTaskContext } from '../../store/TaskStore/TaskContext'
+import { observer } from 'mobx-react'
 
-export default function TaskListItem(props) {
+function TaskListItem(props) {
   const [checkboxIcon, setCheckboxIcon] = useState(checkboxUnchecked)
   const [importantIcon, setImportantIcon] = useState(props.taskData.is_important ? importantTaskActive : importantTaskInactive)
   const [style, setStyle] = useState('task-list-task')
@@ -26,19 +26,12 @@ export default function TaskListItem(props) {
   
   function completeTaskClickHandler(event) {
     event.stopPropagation()
-    updateTask(props.taskData.id, {completed: true}).then(response => {
-      if (response.ok) {
-        taskStore.completeTask(props.taskData.id)
-      }
-    })
+    taskStore.completeTask(props.taskData.id)
   }
+
   function toImportantTaskClickHandler(event) {
     event.stopPropagation()
-    updateTask(props.taskData.id, {is_important: !props.taskData.is_important}).then(response => {
-      if (response.ok) {
-        taskStore.taskToImportant(props.taskData.id, !props.taskData.is_important)
-      }
-    })
+    taskStore.updateTaskItem(props.taskData.id, {is_important: !props.taskData.is_important})
   }
   
   return (
@@ -77,3 +70,5 @@ export default function TaskListItem(props) {
     </Fragment>
   )
 }
+
+export default observer(TaskListItem)

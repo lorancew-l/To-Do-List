@@ -29,8 +29,7 @@ function TaskDetail(props) {
           <AddSubtaskForm taskId={task.id}/>
         </ul>
       </div>
-      <Deadline deadline={task.deadline} taskId={task.id} showPopper={props.showPopper} updatePopperPos={props.updatePopperPos}
-                popperPos={props.popperPos}/>
+      <Deadline deadline={task.deadline} taskId={task.id}/>
       <Note note={task.note} taskId={task.id}/>
     </motion.div>
   )

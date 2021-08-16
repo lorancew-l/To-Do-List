@@ -1,13 +1,14 @@
 import React, { useRef, useState, useEffect, Fragment } from 'react'
 import { calendar } from '../../../images/index'
+import { useTaskContext } from '../../../store/TaskStore/TaskContext'
 import Calendar from '../Calendar/Calendar'
 import PopperOverlay from '../PopperOverlay'
-import { updateTask } from '../../../tools/api/rest/tasks'
 
 
 export default function Deadline(props) {
-  const ref = useRef(null)
+  const taskStore = useTaskContext()
 
+  const ref = useRef(null)
   const isFirstRun = useRef(true);
 
   const calendarHeight = 478 
@@ -41,14 +42,8 @@ export default function Deadline(props) {
     setCalendarPos({x: x, y: y})
   }
 
-  function dateClickHandler(date, dateStringRepresentation) {
-    updateTask(props.taskId, {'deadline': date}).then(response => {
-      if (response.ok) {
-        response.json().then(responseData => {
-          props.setDeadline(responseData.deadline)
-        })
-      }
-    })
+  function setDeadline(date) {
+    taskStore.updateTaskItem(props.taskId, {deadline: date})
   }
   
   useEffect (() => {
@@ -75,7 +70,7 @@ export default function Deadline(props) {
       {isCalendarOpen ? 
         <PopperOverlay closePopper={() => setCalendarOpen(false)}>
           <Calendar selectedDate={props.deadline ? new Date(props.deadline) : null} pos={calendarPos} onWindowResize={() => calculateCalendarPos()}
-                    onDateClick={dateClickHandler} closePopper={() => setCalendarOpen(false)}/>
+                    onDateClick={setDeadline} closePopper={() => setCalendarOpen(false)}/>
         </PopperOverlay>
         : null}
     </Fragment>

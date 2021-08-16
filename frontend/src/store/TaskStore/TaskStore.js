@@ -164,12 +164,16 @@ export default class TaskStore {
     return this.tasksLoaded && this.filtersLoaded
   }
 
+  get uncompletedTasks() {
+    return this.tasks.filter(task => !task.completed)
+  }
+
   get todayTasks() {
-    return this.tasks.filter((task) => isToday(new Date(task.deadline)))
+    return this.uncompletedTasks.filter(task => isToday(new Date(task.deadline)))
   }
 
   get importantTasks() {
-    return this.tasks.filter((task) => task.is_important)
+    return this.uncompletedTasks.filter(task => task.is_important)
   }
 
   get filteredTasks() {
@@ -179,15 +183,15 @@ export default class TaskStore {
     
     switch (this.currentFilter.type) {
       case 'custom':
-        return this.tasks.filter((task) => task.task_filter === this.currentFilter.id)
+        return this.uncompletedTasks.filter(task => task.task_filter === this.currentFilter.id)
       case 'all':
-        return this.tasks
+        return this.uncompletedTasks
       case 'today':
         return this.todayTasks
       case 'important':
         return this.importantTasks
       default:
-        return this.tasks
+        return this.uncompletedTasks
     }
   }
 

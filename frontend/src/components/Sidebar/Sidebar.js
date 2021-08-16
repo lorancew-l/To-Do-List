@@ -19,7 +19,7 @@ function Sidebar(props) {
           <DefaultFilter selected={taskStore.currentFilter.type === "important"} taskCount={taskStore.importantTasks.length}
                          icon={importantTaskActive} title={"Важно"}
                          selectFilter={() => taskStore.setCurrentFilter({type: "important", id: null})}/>
-          <DefaultFilter selected={taskStore.currentFilter.type === "all"} taskCount={taskStore.tasks.length}
+          <DefaultFilter selected={taskStore.currentFilter.type === "all"} taskCount={taskStore.uncompletedTasks.length}
                          icon={clipboard} title={"Все задачи"}
                          selectFilter={() => taskStore.setCurrentFilter({type: "all", id: null})}/>
         </ul>

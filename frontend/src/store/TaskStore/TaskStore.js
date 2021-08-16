@@ -4,6 +4,7 @@ import { getTaskList } from '../../tools/api/rest/tasks'
 import { deleteTaskFilter, getTaskFilterList, updateTaskFilter } from '../../tools/api/rest/taskFilters'
 import { addTask, updateTask } from '../../tools/api/rest/tasks'
 import { addTaskFilter } from '../../tools/api/rest/taskFilters'
+import { addSubtask } from '../../tools/api/rest/subtasks'
 
 export default class TaskStore {
   tasks = []
@@ -49,6 +50,10 @@ export default class TaskStore {
   load() {
     this.fetchTasks()
     this.fetchFilters()
+  }
+  
+  getTaskById(id) {
+    return this.tasks.find(task => task.id === id)
   }
 
   addNewTask(taskData) {

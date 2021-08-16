@@ -1,51 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Heading from './Heading'
 import Task from './Task/Task'
 import Subtask from './Subtask/Subtask'
 import AddSubtaskForm from './AddSubtaskForm'
 import Deadline from './Deadline'
 import Note from './Note'
-import { getSubtaskList } from '../../../tools/api/rest/subtasks'
-import useFetch from '../../../hooks/useFetch'
 import { getTaskDetailAnimation } from '../../../animations/animations'
 import { motion } from 'framer-motion'
+import { useTaskContext } from '../../../store/TaskStore/TaskContext'
+import { observer } from 'mobx-react'
 
 
-export default function TaskDetail(props) {
-  const [deadline, setDeadline] = useState(props.taskData.deadline)
-  const [title, setTitle] = useState(props.taskData.title)
-  const [note, setNote] = useState(props.taskData.note)
-  const [completed, setCompleted] = useState(props.taskData.completed)
-  const [isImportant, setImportant] = useState(props.taskData.is_important)
-
-  const subtaskList = useFetch(getSubtaskList, [props.taskData.id])
-
-  useEffect(() => {
-    return () => props.updateTaskList()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  if (!subtaskList.isLoaded) {
-    return null
-  }
+function TaskDetail(props) {
+  const taskStore = useTaskContext()
+  const task = taskStore.getTaskById(props.taskId)
 
   return (
     <motion.div className="task-detail" onClick={event => event.stopPropagation()} {...getTaskDetailAnimation(window.innerWidth)}>
-      <Heading onClose={props.closeModal} creationDate={props.taskData.creation_date}/>
+      <Heading onClose={props.closeModal} creationDate={task.creation_date}/>
       <div className="detail-holder">
         <ul className="subtask-list">
-          <Task title={title} setTitle={setTitle} id={props.taskData.id} completed={completed} setCompleted={setCompleted}
-                isImportant={isImportant} setImportant={setImportant}/>
-          {subtaskList.value.map(subtask => {
-              return <Subtask key={subtask.id} id={subtask.id} taskId={props.taskData.id} title={subtask.title}
-                              completed={subtask.completed} updateSubtaskList={subtaskList.update}/>})
+          <Task title={task.title} id={task.id} completed={task.completed}
+                isImportant={task.is_important}/>
+          {task.subtask_list.map(subtask => {
+              return <Subtask key={subtask.id} id={subtask.id} taskId={task.id} title={subtask.title}
+                              completed={subtask.completed}/>})
           }
-          <AddSubtaskForm taskId={props.taskData.id} updateSubtaskList={subtaskList.update}/>
+          <AddSubtaskForm taskId={task.id}/>
         </ul>
       </div>
-      <Deadline deadline={deadline} taskId={props.taskData.id} showPopper={props.showPopper} updatePopperPos={props.updatePopperPos}
-                popperPos={props.popperPos} setDeadline={setDeadline}/>
-      <Note note={note} setNote={setNote} taskId={props.taskData.id}/>
+      <Deadline deadline={task.deadline} taskId={task.id} showPopper={props.showPopper} updatePopperPos={props.updatePopperPos}
+                popperPos={props.popperPos}/>
+      <Note note={task.note} taskId={task.id}/>
     </motion.div>
   )
 }
+
+export default observer(TaskDetail)

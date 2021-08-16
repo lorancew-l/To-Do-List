@@ -1,5 +1,5 @@
 import React from 'react'
-import { signup } from '../../tools/api/rest/authorization'
+import { signupRequest } from '../../tools/api/rest/authorization'
 import AccountForm from './AccountForm'
 import StandalonePage from '../StandalonePage/StandalonePage'
 import { useHistory } from 'react-router-dom' 
@@ -13,7 +13,7 @@ export default function SignupForm() {
 
   function handleSubmit(event) {
     event.preventDefault()
-    signup(email.value, password.value).then(() => {
+    signupRequest(email.value, password.value).then(() => {
       history.push('/login/')
     })
   }

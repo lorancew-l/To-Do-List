@@ -2,7 +2,7 @@ import makeRequest from "../makeRequest"
 
 const baseURL = 'http://localhost:8000/api/tasks/'
 
-export function addTask(data) {
+export function addTaskRequest(data) {
   return makeRequest({
     url: baseURL,
     method: 'POST',
@@ -11,14 +11,14 @@ export function addTask(data) {
   })
 }
 
-export function getTaskList() {
+export function getTaskListRequest() {
   return makeRequest({
     url: `${baseURL}`,
     headers: {'Content-Type': 'application/json', authorization: true},
   })
 }
 
-export function updateTask(taskId, data) {
+export function updateTaskRequest(taskId, data) {
   return makeRequest({
     url: `${baseURL}${taskId}/`,
     method: 'PATCH',

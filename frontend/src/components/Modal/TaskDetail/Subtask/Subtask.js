@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import { updateSubtask, deleteSubtask } from '../../../../tools/api/rest/subtasks'
+import { updateSubtaskRequest, deleteSubtaskRequest } from '../../../../tools/api/rest/subtasks'
 import NoFocusContent from './NoFocusContent'
 import OnFocusContent from '../../../AddItemForm/OnFocusContent'
 import useInput from '../../../../hooks/useInput'
@@ -15,7 +15,7 @@ export default function Subtask(props) {
 
   function submitHandler(event) {
     event.preventDefault()
-    updateSubtask(props.taskId, props.id, {title: subtaskNewTitle.value}).then(response => {
+    updateSubtaskRequest(props.taskId, props.id, {title: subtaskNewTitle.value}).then(response => {
       if (response.ok) {
         props.updateSubtaskList()
         setOnFocus(false)
@@ -25,7 +25,7 @@ export default function Subtask(props) {
 
   function completeHandler(event) {
     event.stopPropagation()
-    updateSubtask(props.taskId, props.id, {completed: !props.completed}).then(response => {
+    updateSubtaskRequest(props.taskId, props.id, {completed: !props.completed}).then(response => {
       if (response.ok) {
         props.updateSubtaskList()
       }
@@ -34,7 +34,7 @@ export default function Subtask(props) {
 
   function deleteHandler(event) {
     event.stopPropagation()
-    deleteSubtask(props.taskId, props.id).then(response => {
+    deleteSubtaskRequest(props.taskId, props.id).then(response => {
       if (response.ok) {
         props.updateSubtaskList()
       }

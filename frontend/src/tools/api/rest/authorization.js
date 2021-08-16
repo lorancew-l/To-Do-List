@@ -2,7 +2,7 @@ import makeRequest from "../makeRequest"
 
 const baseURL = 'http://localhost:8000/account/'
 
-export async function signup(email, password) {
+export async function signupRequest(email, password) {
   return makeRequest({
     url: `${baseURL}signup/`,
     method: 'POST',

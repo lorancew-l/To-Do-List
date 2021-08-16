@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { updateTask } from '../../../tools/api/rest/tasks'
+import { updateTaskRequest } from '../../../tools/api/rest/tasks'
 
 
 export default function Note(props) {
@@ -10,7 +10,7 @@ export default function Note(props) {
   function handleSubmit(event) {
     event.preventDefault()
     if (noteText !== props.note) {
-      updateTask(props.taskId, {'note': noteText}).then(response => {
+      updateTaskRequest(props.taskId, {'note': noteText}).then(response => {
         if (response.ok) {
           response.json().then(responseData => {
             props.setNote(responseData.note)

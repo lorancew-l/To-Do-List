@@ -3,14 +3,14 @@ import makeRequest from "../makeRequest"
 const baseURL = 'http://localhost:8000/api/task-filters/'
 
 
-export function getTaskFilterList() {
+export function getTaskFilterListRequest() {
   return makeRequest({
     url: baseURL,
     headers: {'Content-Type': 'application/json', authorization: true},
   })
 }
 
-export function addTaskFilter(data) {
+export function addTaskFilterRequest(data) {
   return makeRequest({
     url: baseURL,
     method: 'POST',
@@ -19,7 +19,7 @@ export function addTaskFilter(data) {
   })
 }
 
-export function deleteTaskFilter(filterId) {
+export function deleteTaskFilterRequest(filterId) {
   return makeRequest({
     url: `${baseURL}${filterId}/`,
     method: 'DELETE',
@@ -27,7 +27,7 @@ export function deleteTaskFilter(filterId) {
   })
 }
 
-export function updateTaskFilter(filterId, data) {
+export function updateTaskFilterRequest(filterId, data) {
   return makeRequest({
     url: `${baseURL}${filterId}/`,
     method: 'PATCH',

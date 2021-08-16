@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import NoFocusContent from './NoFocusContent'
 import OnFocusContent from '../../../AddItemForm/OnFocusContent'
-import { updateTask } from '../../../../tools/api/rest/tasks'
+import { updateTaskRequest } from '../../../../tools/api/rest/tasks'
 import useInput from '../../../../hooks/useInput'
 
 export default function Task(props) {
@@ -15,7 +15,7 @@ export default function Task(props) {
 
   function submitHandler(event) {
     event.preventDefault()
-    updateTask(props.id, {title: taskNewTitle.value}).then(response => {
+    updateTaskRequest(props.id, {title: taskNewTitle.value}).then(response => {
       if (response.ok) {
         response.json().then(responseData => {
           props.setTitle(responseData.title)
@@ -27,7 +27,7 @@ export default function Task(props) {
 
   function completeHandler(event) {
     event.stopPropagation()
-    updateTask(props.id, {completed: !props.completed}).then(response => {
+    updateTaskRequest(props.id, {completed: !props.completed}).then(response => {
       if (response.ok) {
         response.json().then(responseData => {
           props.setCompleted(responseData.completed)
@@ -38,7 +38,7 @@ export default function Task(props) {
 
   function toImportantTaskClickHandler(event) {
     event.stopPropagation()
-    updateTask(props.id, {is_important: !props.isImportant}).then(response => {
+    updateTaskRequest(props.id, {is_important: !props.isImportant}).then(response => {
       if (response.ok) {
         props.setImportant(!props.isImportant)
       }

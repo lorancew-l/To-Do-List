@@ -2,14 +2,14 @@ import makeRequest from "../makeRequest"
 
 const baseURL = 'http://localhost:8000/api/tasks/'
 
-export function getSubtaskList(taskId) {
+export function getSubtaskListRequest(taskId) {
   return makeRequest({
     url: `${baseURL}${taskId}/subtasks/`,
     headers: {'Content-Type': 'application/json', authorization: true},
   })
 }
 
-export function addSubtask(taskId, data) {
+export function addSubtaskRequest(taskId, data) {
   return makeRequest({
     url: `${baseURL}${taskId}/subtasks/`,
     method: 'POST',
@@ -18,7 +18,7 @@ export function addSubtask(taskId, data) {
   })
 }
 
-export function updateSubtask(taskId, subtaskId, data) {
+export function updateSubtaskRequest(taskId, subtaskId, data) {
   return makeRequest({
     url: `${baseURL}${taskId}/subtasks/${subtaskId}/`,
     method: 'PATCH',
@@ -27,7 +27,7 @@ export function updateSubtask(taskId, subtaskId, data) {
   })
 }
 
-export async function deleteSubtask(taskId, subtaskId) {
+export async function deleteSubtaskRequest(taskId, subtaskId) {
   return makeRequest({
     url: `${baseURL}${taskId}/subtasks/${subtaskId}/`,
     method: 'DELETE',

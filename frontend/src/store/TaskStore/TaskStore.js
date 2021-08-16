@@ -1,10 +1,8 @@
 import { isToday } from 'date-fns'
 import { makeAutoObservable, runInAction } from 'mobx'
-import { getTaskList } from '../../tools/api/rest/tasks'
-import { deleteTaskFilter, getTaskFilterList, updateTaskFilter } from '../../tools/api/rest/taskFilters'
-import { addTask, updateTask } from '../../tools/api/rest/tasks'
-import { addTaskFilter } from '../../tools/api/rest/taskFilters'
-import { addSubtask } from '../../tools/api/rest/subtasks'
+import { addTaskRequest, getTaskListRequest, updateTaskRequest } from '../../tools/api/rest/tasks'
+import { deleteTaskFilterRequest, getTaskFilterListRequest, updateTaskFilterRequest, addTaskFilterRequest } from '../../tools/api/rest/taskFilters'
+import { addSubtaskRequest } from '../../tools/api/rest/subtasks'
 
 export default class TaskStore {
   tasks = []
@@ -18,7 +16,7 @@ export default class TaskStore {
   }
 
   fetchTasks() {
-    getTaskList()
+    getTaskListRequest()
     .then(response => {
       if (response.ok) {
         return  response.json()
@@ -31,7 +29,7 @@ export default class TaskStore {
   }
 
   fetchFilters() {
-    getTaskFilterList()
+    getTaskFilterListRequest()
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -62,7 +60,7 @@ export default class TaskStore {
     }
 
     return new Promise((resolve, reject) => {
-      addTask(taskData)
+      addTaskRequest(taskData)
       .then(response => {
         if (response.ok) {
           return response.json()
@@ -81,7 +79,7 @@ export default class TaskStore {
 
   addNewSubtask(taskId, subtaskData) {
     return new Promise((resolve, reject) => {
-      addSubtask(taskId, subtaskData)
+      addSubtaskRequest(taskId, subtaskData)
       .then(response => {
         if (response.ok) {
           return response.json()
@@ -101,7 +99,7 @@ export default class TaskStore {
 
   updateTaskItem(taskId, taskData) {
     return new Promise((resolve, reject) => {
-      updateTask(taskId, taskData)
+      updateTaskRequest(taskId, taskData)
       .then(response => {
         if (response.ok) {
           const targetTask = this.tasks.find(task => task.id === taskId)
@@ -118,7 +116,7 @@ export default class TaskStore {
   
   addFilter(filterData) {
     return new Promise((resolve, reject) => {
-      addTaskFilter(filterData)
+      addTaskFilterRequest(filterData)
       .then(response => {
         if (response.ok) {
           return response.json()
@@ -137,7 +135,7 @@ export default class TaskStore {
 
   deleteFilter(filterId) {
     return new Promise((resolve, reject) => {
-      deleteTaskFilter(filterId)
+      deleteTaskFilterRequest(filterId)
       .then(response => {
         if (response.ok) {
           runInAction(() => {
@@ -160,7 +158,7 @@ export default class TaskStore {
 
   updateFilter(filterId, filterData) {
     return new Promise((resolve, reject) => {
-      updateTaskFilter(filterId, filterData)
+      updateTaskFilterRequest(filterId, filterData)
       .then(response => {
         if (response.ok) {
           const targetFilter = this.filters.find(filter => filter.id === filterId)

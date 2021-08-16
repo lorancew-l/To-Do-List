@@ -1,56 +1,44 @@
 import React, { useState, Fragment } from 'react'
 import NoFocusContent from './NoFocusContent'
 import OnFocusContent from '../../../AddItemForm/OnFocusContent'
-import { updateTaskRequest } from '../../../../tools/api/rest/tasks'
 import useInput from '../../../../hooks/useInput'
+import { useTaskContext } from '../../../../store/TaskStore/TaskContext'
 
 export default function Task(props) {
   const [onFocus, setOnFocus] = useState(false)
   const taskNewTitle = useInput(props.title, 64)
+  const taskStore = useTaskContext()
   
-  function cancelClickHandler() {
+  function cancelTitleEdit() {
     setOnFocus(false)
     taskNewTitle.clear()
   }
 
-  function submitHandler(event) {
+  function updateTitle(event) {
     event.preventDefault()
-    updateTaskRequest(props.id, {title: taskNewTitle.value}).then(response => {
-      if (response.ok) {
-        response.json().then(responseData => {
-          props.setTitle(responseData.title)
-          setOnFocus(false)
-        })
-      }
-    })
+    taskStore.updateTaskItem(props.id, {title: taskNewTitle.value})
+      .then(() => setOnFocus(false))
+      .catch((error) => console.log('Task', error))
   }
 
-  function completeHandler(event) {
+  function completeTask(event) {
     event.stopPropagation()
-    updateTaskRequest(props.id, {completed: !props.completed}).then(response => {
-      if (response.ok) {
-        response.json().then(responseData => {
-          props.setCompleted(responseData.completed)
-        })
-      }
-    })
+    taskStore.updateTaskItem(props.id, {completed: !props.completed})
+      .catch((error) => console.log('Task', error))
   }
 
-  function toImportantTaskClickHandler(event) {
+  function taskToImportant(event) {
     event.stopPropagation()
-    updateTaskRequest(props.id, {is_important: !props.isImportant}).then(response => {
-      if (response.ok) {
-        props.setImportant(!props.isImportant)
-      }
-    })
+    taskStore.updateTaskItem(props.id, {is_important: !props.isImportant})
+      .catch((error) => console.log('Task', error))
   }
   
   return (
     <Fragment>
-      {onFocus? <OnFocusContent className="task edit no-hover" input={taskNewTitle} onCancelClick={cancelClickHandler}
-                                isSubmitDisabled={!taskNewTitle.value | taskNewTitle.value === props.title} onSubmit={submitHandler}/>
+      {onFocus? <OnFocusContent className="task edit no-hover" input={taskNewTitle} onCancelClick={cancelTitleEdit}
+                                isSubmitDisabled={!taskNewTitle.value | taskNewTitle.value === props.title} onSubmit={updateTitle}/>
               : <NoFocusContent completed={props.completed} title={props.title} onClick={() => setOnFocus(true)} isImportant={props.isImportant}
-                                onComplete={event => completeHandler(event)} onImportantClick={toImportantTaskClickHandler}/>}
+                                onComplete={event => completeTask(event)} onImportantClick={taskToImportant}/>}
     </Fragment>
   )
 }

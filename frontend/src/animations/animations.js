@@ -6,12 +6,14 @@ export const screen = {
   xlarge: 1200,
 }
 
-export const modalAnimation = {
-  initial: 'hidden',
-  animate: 'visible',
-  exit: 'hidden',
-  variants: {hidden: {opacity: 0}, visible: {opacity: 1}},
-  transition: {duration: 0.3}
+export const modalAnimation = (duration) => {
+  return {
+    initial: 'hidden',
+    animate: 'visible',
+    exit: 'hidden',
+    variants: {hidden: {opacity: 0}, visible: {opacity: 1}},
+    transition: {duration: duration}
+  }
 }
 
 export const taskItemAnimation = {

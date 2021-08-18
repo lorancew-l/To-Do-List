@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import AddTaskFilterForm from '../Modal/AddTaskFilter/AddTaskFilterForm'
 import ModalOverlay from '../Modal/ModalOverlay'
 import CustomFilter from './CustomFilter/CustomFilter'
-import { modalAnimation, filterListAnimation } from '../../animations/animations'
+import { filterListAnimation } from '../../animations/animations'
 import { useTaskContext } from '../../store/TaskStore/TaskContext'
 import { observer } from 'mobx-react'
 
@@ -49,7 +49,7 @@ function CustomFiltersList(props) {
       </AnimatePresence>
       <AnimatePresence>
         {showPopup && 
-          <ModalOverlay closeModal={() => setPopup(false)} {...modalAnimation}>
+          <ModalOverlay closeModal={() => setPopup(false)}>
             <AddTaskFilterForm heading="Добавить фильтр" submitButtonTitle="Добавить" cancelButtonTitle="Отменить"
                                onSubmit={addFilter} close={() => setPopup(false)}/>
           </ModalOverlay>

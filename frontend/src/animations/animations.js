@@ -70,3 +70,14 @@ export const filterListAnimation = {
     exit: {height: 0}
   }
 }
+
+export const alertAnimation = {
+  initial: 'initial',
+  animate: 'animate',
+  exit: 'exit',
+  variants: {
+    initial: {top: 0, translateX: '-50%', translateY: '0%'},
+    animate: {top: '25%', translateY: '-25%'},
+    exit: {top: ['25%','5%', '40%'], translateY: ['25%', '5%', '40%']}
+  }, transition: {duration: 0.6, ease: 'easeInOut'}
+} 

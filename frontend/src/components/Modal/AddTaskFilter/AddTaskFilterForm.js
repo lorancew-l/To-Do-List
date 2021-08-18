@@ -29,7 +29,7 @@ export default function AddTaskFilterForm(props) {
     <div className="dialog filter">
       <Heading title={props.heading}/>
       <form onSubmit={handleSubmit}> 
-        <div className="form-fields">
+        <div className="dialog-body form-fields">
           <div className="form-field">
             <label htmlFor="filter-title">Название фильтра</label>
             <input type="text" id="filter-title" value={title.value} {...title.bind}/>

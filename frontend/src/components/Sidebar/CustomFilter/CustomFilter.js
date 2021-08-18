@@ -11,16 +11,15 @@ import { AnimatePresence } from 'framer-motion'
 export default function CustomFilter(props) {
   const [hover, setHover] = useState(false)
   const [popupVisible, setPopupVisible] = useState(false)
-  const [popupHidden, setPopupHidden] = useState(false)
   const [clickPos, setClickPos] = useState({x: 0, y: 0})
   const [popupPlacement, setPopupPlacement] = useState('')
   const [modalContent, setModalContent] = useState(null)
 
-  const buttonRef = useRef()
+  const optionsButtonRef = useRef()
 
   function calculatePopupPos(popupRect) {
     if (popupPlacement === 'center') {
-      const buttonRect = buttonRef.current.getBoundingClientRect()
+      const buttonRect = optionsButtonRef.current.getBoundingClientRect()
       return {x: (buttonRect.left + buttonRect.right -  popupRect.width) / 2, y: (buttonRect.bottom + buttonRect.top) / 2}
     }
     else {
@@ -44,14 +43,13 @@ export default function CustomFilter(props) {
   }
 
   function showModal(modal) {
-    setPopupHidden(true)
+    setPopupVisible(false)
     setModalContent(modal)
   }
 
   function closePopup() {
     setModalContent(null)
     setPopupVisible(false)
-    setPopupHidden(false)
   }
 
   return (
@@ -66,7 +64,7 @@ export default function CustomFilter(props) {
         </div>
         <div className="right-side">
           {(hover || popupVisible) ? 
-            <button onClick={(event) => showPopup(event)} ref={buttonRef}>
+            <button onClick={(event) => showPopup(event)} ref={optionsButtonRef}>
               <img alt="edit filter" src={pencil}/>
             </button>
             : props.taskCount ? <small>{props.taskCount}</small> : null
@@ -74,7 +72,7 @@ export default function CustomFilter(props) {
         </div>
       </li>
       {popupVisible ?
-        <PopperOverlay closePopper={closePopup} hidden={popupHidden}>
+        <PopperOverlay closePopper={closePopup}>
           <PopupMenu calculatePos={calculatePopupPos}>
             <Edit filterId={props.id} title={props.title} color={props.color} inFavorites={props.inFavorites}
                   showModal={showModal} closePopup={closePopup}/>

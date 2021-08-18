@@ -40,7 +40,7 @@ function CustomFiltersList(props) {
             {
               taskStore.customFilters.map(filter => {
                 return <CustomFilter key={filter.id} id={filter.id} selected={filter.id === taskStore.currentFilter.id} color={filter.color} 
-                                     title={filter.title} count={props.count} taskCount={filter.count} checked={filter.favorite}
+                                     title={filter.title} count={props.count} taskCount={filter.count} inFavorites={filter.favorite}
                                      selectFilter={() => taskStore.setCurrentFilter({type: "custom", id: filter.id})}/>
               })
             }

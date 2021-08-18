@@ -1,11 +1,11 @@
 import React, { Fragment, useRef, useState } from 'react'
 import { pencil } from '../../../images/index'
 import PopupMenu from '../../Modal/PopupMenu/PopupMenu'
-import PopupMenuItem from '../../Modal/PopupMenu/PopupMenuItem'
 import PopperOverlay from '../../Modal/PopperOverlay'
 import ModalOverlay from '../../Modal/ModalOverlay'
 import Edit from './ContextMenu/Edit'
 import Delete from './ContextMenu/Delete'
+import ToFavorites from './ContextMenu/ToFavorites'
 import { AnimatePresence } from 'framer-motion'
 
 export default function CustomFilter(props) {
@@ -76,10 +76,10 @@ export default function CustomFilter(props) {
       {popupVisible ?
         <PopperOverlay closePopper={closePopup} hidden={popupHidden}>
           <PopupMenu calculatePos={calculatePopupPos}>
-            <Edit filterId={props.id} title={props.title} color={props.color} checked={props.checked}
-                  showModal={showModal} closePopup={closePopup} updateFilterList={props.updateFilterList}/>
-            <PopupMenuItem icon={pencil} alt="" title="Удалить фильтр" separator={true}/>
-            <Delete filterId={props.id} updateFilterList={props.updateFilterList}/>
+            <Edit filterId={props.id} title={props.title} color={props.color} inFavorites={props.inFavorites}
+                  showModal={showModal} closePopup={closePopup}/>
+            <ToFavorites filterId={props.id} inFavorites={props.inFavorites} separator={true} closePopup={closePopup}/>
+            <Delete filterId={props.id}/>
           </PopupMenu>
         </PopperOverlay>
         : null

@@ -1,5 +1,7 @@
 import useInput from '../../../hooks/useInput'
 import { useState } from 'react'
+import Heading from '../DialogBox/Heading'
+import Controls from '../DialogBox/Controls'
 
 export default function AddTaskFilterForm(props) {
   const title = useInput(props.title ?? '', 30)
@@ -24,8 +26,8 @@ export default function AddTaskFilterForm(props) {
   }
 
   return (
-    <div className="add-filter">
-      <div className="heading"><h1>{props.heading}</h1></div>
+    <div className="dialog filter">
+      <Heading title={props.heading}/>
       <form onSubmit={handleSubmit}> 
         <div className="form-fields">
           <div className="form-field">
@@ -50,10 +52,9 @@ export default function AddTaskFilterForm(props) {
             </label>
           </div>
         </div>
-        <div className="controls">
-          <button type="submit" disabled={isSubmitDisabled()} className={isSubmitDisabled() ? "disabled" : ""}>{props.submitButtonTitle}</button>
-          <button type="button" className="cancel" onClick={props.close}>Отменить</button>
-        </div>
+        <Controls submitDisabled={isSubmitDisabled()} cancel={props.close}
+                  submitButtonTitle={props.submitButtonTitle} cancelButtonTitle={props.cancelButtonTitle}/>
+
       </form>
     </div>
   )

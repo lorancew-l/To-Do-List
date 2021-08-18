@@ -15,7 +15,8 @@ export default function Edit(props) {
   }
 
   const modal = (
-    <AddTaskFilterForm heading="Изменить фильтр" onSubmit={upateFilter} title={props.title} submitButtonTitle="Сохранить"
+    <AddTaskFilterForm heading="Изменить фильтр" onSubmit={upateFilter} title={props.title}
+                       submitButtonTitle="Сохранить" cancelButtonTitle="Отменить"
                        color={props.color} checked={props.inFavorites} close={props.closePopup}/>
   )
 

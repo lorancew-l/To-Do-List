@@ -50,7 +50,8 @@ function CustomFiltersList(props) {
       <AnimatePresence>
         {showPopup && 
           <ModalOverlay closeModal={() => setPopup(false)} {...modalAnimation}>
-            <AddTaskFilterForm heading="Добавить фильтр" submitButtonTitle="Добавить" onSubmit={addFilter} close={() => setPopup(false)}/>
+            <AddTaskFilterForm heading="Добавить фильтр" submitButtonTitle="Добавить" cancelButtonTitle="Отменить"
+                               onSubmit={addFilter} close={() => setPopup(false)}/>
           </ModalOverlay>
         }
       </AnimatePresence>

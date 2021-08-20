@@ -118,11 +118,8 @@
     background-color: $selection-color;
   }
 
-  .color {
-    width: 14px;
-    height: 14px;
-    
-    border-radius: 50%;
+  .filter-icon {
+    @include icon
   }
 
   .right-side {

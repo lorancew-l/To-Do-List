@@ -1,5 +1,6 @@
 import React, { Fragment, useRef, useState } from 'react'
 import { pencil } from '../../../images/index'
+import { ReactComponent as FilterIcon } from '../../../images/icons/filter.svg'
 import PopupMenu from '../../Modal/PopupMenu/PopupMenu'
 import PopperOverlay from '../../Modal/PopperOverlay'
 import ModalOverlay from '../../Modal/ModalOverlay'
@@ -58,7 +59,7 @@ export default function CustomFilter(props) {
           onContextMenu={(event) => showPopup(event)} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}> 
         <div className="left-side">
           <div className="icon">
-            <div className="color" style={{backgroundColor: props.color}}></div>
+            <FilterIcon style={{fill: props.color}} className="filter-icon"></FilterIcon>
           </div>
           <span>{props.title}</span>
         </div>

@@ -166,9 +166,6 @@
 
   .left-side {
     @media (max-width: $small) {
-      flex-basis: 100%;
-      max-width: 100%;
-      
       &:not(:only-child) {
         margin-bottom: 10px;
       }

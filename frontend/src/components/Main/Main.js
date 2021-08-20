@@ -17,7 +17,7 @@ function Main(props) {
     <Fragment>
       <main className={props.showSidebar? "main sidebar-on" : "main sidebar-off"}>
         <div className={props.showSidebar? "sidebar-overlay on" : "sidebar-overlay off"}></div>
-        <div className="container">
+        <div className={props.showSidebar? "container sidebar-on" : "container sidebar-off"}>
           <div className="task-list-header">
             <div className="task-list-header-content">
               <span>Сегодня</span>

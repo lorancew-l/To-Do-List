@@ -53,22 +53,32 @@
 
   & > .container {
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 0 40px;
 
     @media (max-width: $small) {
       max-width: 100%;
     }
 
     @media (min-width: $medium) {
-      max-width: 80%;
+      max-width: 90%;
     }
 
     @media (min-width: $large) {
-      max-width: 70%;
+      max-width: 85%;
     }
 
     @media (min-width: $extra-large) {
-      max-width: 45%;
+      max-width: 70%;
+    }
+
+    @media (min-width: $extra-extra-large) {
+      max-width: 60%;
+    }
+
+    &.sidebar-on {
+      @media (min-width: $medium) and (orientation: portrait){
+        max-width: 100%;
+      }
     }
   }
 
@@ -196,7 +206,7 @@
   position: relative;
   flex-wrap: nowrap;
 
-  @media (max-width: $small) {
+  @media (max-width: $medium) {
     flex-wrap: wrap;
   }
 
@@ -218,15 +228,15 @@
   }
   
   .left-side {    
-    @media (max-width: $small) {
+    @media (max-width: $medium) {
       max-width: 100%;
       flex-basis: 100%;
       
       &:not(:only-child) {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
       }
     }
-
+    
     button {
       @include button-with-icon($add-task-icon-size, $add-task-icon-size);
 
@@ -240,21 +250,15 @@
     flex-wrap: nowrap;
     align-items: center;
 
-    @media (max-width: $small) {
-      flex-basis: 100%;
-    }
-
     & > *:not(:last-child) {
       margin-right: 10px;
-    }
-
-    .show-calendar {
-      color: $text-primary-color;
     }
 
     button {
       @include button-with-icon(auto, auto);
       text-transform: capitalize;
+
+      color: $text-primary-color;
 
       display: flex;
       align-items: center;

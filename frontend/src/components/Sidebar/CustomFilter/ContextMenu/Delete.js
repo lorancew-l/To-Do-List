@@ -11,8 +11,11 @@ export default function Delete(props) {
                                onSubmit={deleteFilter} cancel={props.closePopup}/>
 
   function deleteFilter() {
-    taskStore.deleteFilter(props.filterId)
+    props.closePopup()
+    setTimeout(() => {
+      taskStore.deleteFilter(props.filterId)
       .catch(error => console.log('Delete ', error))
+    }, 300)
   }
 
   return (

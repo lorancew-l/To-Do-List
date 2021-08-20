@@ -13,18 +13,16 @@ export default function OnFocusContent(props) {
   const addTaskRef = useRef(null)
   const inputRef = useRef(null)
 
-  const isFirstRun = useRef(true);
-
-  const calendarHeight = 472
-  const calendarWidth = 265
-
   const [isCalendarOpen, setCalendarOpen] = useState(false)
-  const [calendarPos, setCalendarPos] = useState({x: 0, y: 0})
 
-  function calculateCalendarPos() {
+  //refactor
+  function calculateCalendarPos(calendarRect) {
     const windowHeight = window.innerHeight
     const windowWidth = window.innerWidth
 
+    const calendarHeight = calendarRect.height
+    const calendarWidth = calendarRect.width
+    
     const calendarButtonRect = calendarButtonRef.current.getBoundingClientRect()
     const addTaskRect = addTaskRef.current.getBoundingClientRect()
 
@@ -40,7 +38,7 @@ export default function OnFocusContent(props) {
       y = addTaskRect.bottom
     }
     else if (((calendarHeight + addTaskRect.top + addTaskRect.bottom) / 2 + bottomOffset < windowHeight) &
-             ((addTaskRect.top + addTaskRect.bottom - calendarHeight) / 2) > topOffset) {
+              ((addTaskRect.top + addTaskRect.bottom - calendarHeight) / 2) > topOffset) {
       x = isScreenSmall ? (windowWidth - calendarWidth) / 2 : calendarButtonRect.left - calendarWidth
       y = (addTaskRect.top + addTaskRect.bottom - calendarHeight) / 2
     }
@@ -58,19 +56,6 @@ export default function OnFocusContent(props) {
   }
 
   useEffect(() => {
-    if (!isFirstRun.current) {
-      if (!isCalendarOpen) {
-        setCalendarOpen(true)
-      }
-    }
-    else {
-      isFirstRun.current = false
-    }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calendarPos])
-
-  useEffect(() => {
     inputRef.current.focus()
   }, [taskName.value])
 
@@ -82,7 +67,7 @@ export default function OnFocusContent(props) {
             <input ref={inputRef} type="text" autoFocus value={taskName.value} maxLength={taskName.maxLength} {...taskName.bind}></input>
           </div>
           <div className="right-side">
-            <button className="show-calendar" type="button" onClick={() => setCalendarPos(calculateCalendarPos())} ref={calendarButtonRef}>
+            <button className="show-calendar" type="button" onClick={() => setCalendarOpen(true)} ref={calendarButtonRef}>
               <img src={calendar} alt="date"></img>
               <div className="date-string">{props.deadlineStringRepresentation}</div>
             </button>
@@ -97,7 +82,7 @@ export default function OnFocusContent(props) {
       </motion.form>
       {isCalendarOpen ? 
       <PopperOverlay closePopper={() => setCalendarOpen(false)}>
-        <Calendar onDateClick={props.onDateClick} pos={calendarPos} onWindowResize={() => setCalendarPos(calculateCalendarPos())}
+        <Calendar onDateClick={props.onDateClick} calculatePos={calculateCalendarPos}
                   selectedDate={props.deadline} closePopper={() => setCalendarOpen(false)}/>
         </PopperOverlay>
       : null}

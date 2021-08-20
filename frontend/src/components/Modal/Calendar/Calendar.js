@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import { calendarToday, calendarTomorrow, calendarNextWeek, calendarNoDeadline } from '../../../images/index'
 import { compareCalendarDates, getMonthNames, getWeekdayNames } from '../../../tools/dateTools'
 import DateOption from './DateOption'
@@ -14,16 +14,20 @@ export default function Calendar(props) {
 
   const monthNamesList = getMonthNames()
   const weekdayNamesList = getWeekdayNames()
-  
   const [currentDate, setCurrentDate] = useState(props.selectedDate || new Date(todayDate))
 
-  useEffect(() => {
-    window.addEventListener('resize', props.onWindowResize)
+  const calendarRef = useRef()
+  const [pos, setPos] = useState({x: 0, y: 0})
+
+  useLayoutEffect(() => {
+    const rect = calendarRef.current.getBoundingClientRect()
+    const calculatePos = () => setPos(props.calculatePos(rect))
+
+    window.addEventListener('resize', calculatePos)
+    calculatePos()
  
-    return () => {
-      window.removeEventListener('resize', props.onWindowResize)
-    }
-  }, [props.onWindowResize])
+    return () => window.removeEventListener('resize', calculatePos)
+  }, [props])
 
   function submitDate(date, dateStringRepresentation) {
     props.onDateClick(date, dateStringRepresentation)
@@ -76,8 +80,9 @@ export default function Calendar(props) {
     setCurrentDate(todayDate)
   }
 
-  return (
-    <div className="calendar-popup" style={{transform: `translate(${props.pos.x}px, ${props.pos.y}px)`}} onClick={(event) => event.stopPropagation()}>
+  return ( 
+    <div className="calendar-popup" style={{transform: `translate(${pos.x}px, ${pos.y}px)`}} ref={calendarRef}
+         onClick={(event) => event.stopPropagation()}>
       <div className="current-date">
         {todayDate.toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' })}
       </div>

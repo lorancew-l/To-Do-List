@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PopupMenuItem from '../../../Modal/PopupMenu/PopupMenuItem'
-import { deleteIcon } from '../../../../images/index'
+import { ReactComponent as DeleteIcon } from '../../../../images/icons/delete.svg'
 import { useTaskContext } from '../../../../store/TaskStore/TaskContext'
 import ConfirmDelete from '../../../Modal/Alerts/ConfirmDelete'
 import { alertAnimation } from '../../../../animations/animations'
@@ -20,7 +20,7 @@ export default function Delete(props) {
 
   return (
     <Fragment>
-      <PopupMenuItem icon={deleteIcon} alt="" title="Удалить фильтр" onClick={() => props.showModal(modal)}/>
+      <PopupMenuItem icon={<DeleteIcon/>} alt="" title="Удалить фильтр" onClick={() => props.showModal(modal)}/>
     </Fragment>
   )   
 }

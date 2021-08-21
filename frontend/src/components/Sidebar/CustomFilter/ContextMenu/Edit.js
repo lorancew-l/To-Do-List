@@ -1,7 +1,7 @@
 import React from 'react'
 import AddTaskFilterForm from '../../../Modal/AddTaskFilter/AddTaskFilterForm'
 import PopupMenuItem from '../../../Modal/PopupMenu/PopupMenuItem'
-import { pencil } from '../../../../images/index'
+import { ReactComponent as PencilIcon } from '../../../../images/icons/pencil.svg'
 import { useTaskContext } from '../../../../store/TaskStore/TaskContext'
 
 export default function Edit(props) {
@@ -21,6 +21,6 @@ export default function Edit(props) {
   )
 
   return (
-    <PopupMenuItem icon={pencil} alt="" title="Изменить фильтр" onClick={() => props.showModal(modal)}/>
+    <PopupMenuItem icon={<PencilIcon />} alt="" title="Изменить фильтр" onClick={() => props.showModal(modal)}/>
   )
 }

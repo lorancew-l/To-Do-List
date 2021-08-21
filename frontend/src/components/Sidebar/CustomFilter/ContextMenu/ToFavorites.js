@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTaskContext } from '../../../../store/TaskStore/TaskContext'
 import PopupMenuItem from '../../../Modal/PopupMenu/PopupMenuItem'
-import { importantTaskInactive } from '../../../../images/index'
+import { ReactComponent as StarIcon } from '../../../../images/icons/star_grey.svg'
 
 export default function ToFavorites(props) {
   const taskStore = useTaskContext()
@@ -12,7 +12,7 @@ export default function ToFavorites(props) {
   }
 
   return (
-    <PopupMenuItem icon={importantTaskInactive} alt="" title={props.inFavorites ? "Удалить из избранных" : "В избранное" }
+    <PopupMenuItem icon={<StarIcon />} alt="" title={props.inFavorites ? "Удалить из избранных" : "В избранное" }
                    onClick={toFavorites} separator={props.separator}/>
   )
 }

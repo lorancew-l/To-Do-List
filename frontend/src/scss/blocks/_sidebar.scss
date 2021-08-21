@@ -9,6 +9,7 @@
   height: 100vh;
 
   padding-top: $sidebar-padding-top + $header-height;
+  padding-bottom: 60px;
 
   background-color: $background-secondary-color;
   transition: 0.3s;
@@ -27,6 +28,25 @@
     visibility: hidden;
     width: 0;
     padding-left: 0px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 7px; 
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: lighten($color:  $selection-color, $amount: 20%);
+    border-radius: 8px;
+    
+    &:hover {
+      background-color: lighten($color:  $selection-color, $amount: 100%);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-top: $header-height;
+    border-radius: 8px;
+    background-color: $background-secondary-color;
   }
 
   ul {

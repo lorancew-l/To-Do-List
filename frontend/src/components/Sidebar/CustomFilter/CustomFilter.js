@@ -21,7 +21,7 @@ export default function CustomFilter(props) {
   function calculatePopupPos(popupRect) {
     if (popupPlacement === 'center') {
       const buttonRect = optionsButtonRef.current.getBoundingClientRect()
-      return {x: (buttonRect.left + buttonRect.right -  popupRect.width) / 2, y: (buttonRect.bottom + buttonRect.top) / 2}
+      return {x: (buttonRect.left + buttonRect.right - popupRect.width) / 2, y: buttonRect.bottom}
     }
     else {
       return clickPos

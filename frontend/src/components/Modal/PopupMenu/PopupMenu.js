@@ -11,7 +11,7 @@ export default function PopupMenu(props) {
   }, [calculatePos])
 
   return (
-    <ul className="popup-menu" style={{transform: `translate(${popupPos.x}px, ${popupPos.y}px)`}} ref={menuRef}>
+    <ul className="popup-menu" style={{transform: `translate(${popupPos.x}px, ${popupPos.y}px)`, margin: 0}} ref={menuRef}>
       {props.children}
     </ul>
   )

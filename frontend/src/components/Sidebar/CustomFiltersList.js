@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { quickTask, arrowRight } from '../../images/index'
 import { AnimatePresence, motion } from 'framer-motion'
-import AddTaskFilterForm from '../Modal/AddTaskFilter/AddTaskFilterForm'
+import AddTaskFilter from '../Modal/TaskFilterForm/AddTaskFilter'
 import ModalOverlay from '../Modal/ModalOverlay'
 import CustomFilter from './CustomFilter/CustomFilter'
 import { filterListAnimation } from '../../animations/animations'
@@ -13,14 +13,6 @@ function CustomFiltersList(props) {
   const [showPopup, setPopup] = useState(false)
   const taskStore = useTaskContext()
 
-  function addFilter(event, title, color, checked) {  
-    event.preventDefault()
-    
-    taskStore.addFilter({title, color, favorite: checked})
-      .then(() => setPopup(false))
-      .catch(error => console.log('CustomFiltersList: ',error))
-  } 
- 
   return (
     <li>
       <div className="sidebar-expandable-item">
@@ -50,8 +42,7 @@ function CustomFiltersList(props) {
       <AnimatePresence>
         {showPopup && 
           <ModalOverlay closeModal={() => setPopup(false)}>
-            <AddTaskFilterForm heading="Добавить фильтр" submitButtonTitle="Добавить" cancelButtonTitle="Отменить"
-                               onSubmit={addFilter} close={() => setPopup(false)}/>
+            <AddTaskFilter close={() => setPopup(false)}/>
           </ModalOverlay>
         }
       </AnimatePresence>

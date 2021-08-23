@@ -75,8 +75,7 @@ export default function CustomFilter(props) {
       {popupVisible ?
         <PopperOverlay closePopper={closePopup}>
           <PopupMenu calculatePos={calculatePopupPos}>
-            <Edit filterId={props.id} title={props.title} color={props.color} inFavorites={props.inFavorites}
-                  showModal={showModal} closePopup={closePopup}/>
+            <Edit filterId={props.id} closePopup={closePopup} showModal={showModal}/>
             <ToFavorites filterId={props.id} inFavorites={props.inFavorites} separator={true} closePopup={closePopup}/>
             <Delete filterId={props.id} title={props.title} showModal={showModal} closePopup={closePopup}/>
           </PopupMenu>

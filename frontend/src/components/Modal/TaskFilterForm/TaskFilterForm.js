@@ -21,7 +21,8 @@ export default function AddTaskFilterForm(props) {
   }
 
   function handleSubmit(event) {
-    props.onSubmit(event, title.value, color.value, checked)
+    event.preventDefault()
+    props.onSubmit(title.value, color.value, checked)
     title.clear()
   }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Header from './Header'
+import Header from './Header/Header'
 import Sidebar from './Sidebar/Sidebar'
 import Main from './Main/Main'
 import LoadingScreen from './LoadingScreen'

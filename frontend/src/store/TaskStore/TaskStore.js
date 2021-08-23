@@ -93,6 +93,10 @@ export default class TaskStore {
       runInAction(() => targetTask.subtask_list = targetTask.subtask_list.filter(subtask => subtask.id !== subtaskId))
     })
   }
+
+  getFilterById(id) {
+    return this.customFilters.find(filter => filter.id === id)
+  }
   
   addFilter(filterData) {
     return asyncUpdateAction(addTaskFilterRequest, [filterData], (filter) => {
@@ -122,6 +126,13 @@ export default class TaskStore {
 
   setCurrentFilter({type='custom', id=null}) {
     this.currentFilter = {type, id}
+  }
+
+  search(searchRequest) {
+    const tasks = this.uncompletedTasks.filter(task => task.title.toLowerCase().includes(searchRequest.toLowerCase()))
+    const filters = this.filters.filter(filter => filter.title.toLowerCase().includes(searchRequest.toLowerCase()))
+
+    return {tasks, filters}
   }
 
   get initialLoadingComplete() {

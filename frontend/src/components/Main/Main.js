@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from 'react'
 import TaskListItem from './TaskListItem'
-import AddTask from './AddTaskForm/AddTaskForm'
 import ModalOverlay from '../Modal/ModalOverlay'
 import TaskDetail from '../Modal/TaskDetail/TaskDetail'
-import { AnimatePresence, AnimateSharedLayout } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { useTaskContext } from '../../store/TaskStore/TaskContext'
 import { observer } from 'mobx-react'
+import AddTaskForm from './AddTaskForm/AddTaskForm'
 
 function Main(props) {
   const [editedTaskId, setEditedTaskId] = useState(null)
@@ -25,14 +25,12 @@ function Main(props) {
             </div>
           </div>
           <ul className="task-list">
-            <AnimateSharedLayout>
-              <AnimatePresence initial={false}>
-                {taskStore.filteredTasks.map((task, i) => {
-                  return <TaskListItem key={task.id} taskData={task} custom={i} setEditedTaskId={setEditedTaskId}/>})
-                }
-                <AddTask></AddTask>
-              </AnimatePresence>
-            </AnimateSharedLayout>
+            <AnimatePresence initial={false}>
+              {taskStore.filteredTasks.map((task, i) => {
+                return <TaskListItem key={task.id} taskData={task} custom={i} setEditedTaskId={setEditedTaskId}/>})
+              }
+              <AddTaskForm></AddTaskForm>
+            </AnimatePresence>
           </ul>
         </div>
       </main>

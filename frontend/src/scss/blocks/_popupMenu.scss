@@ -1,18 +1,38 @@
 .popup-menu {
-  border-radius: 4px;
   background-color: $background-secondary-color;
   position: absolute;
   top: 0;
   left: 0;
 
-  padding: 5px 0;
+  padding: 0;
   min-width: 220px;
+  max-height: 200px;
+  overflow-y: auto;
 
   font-size: 14px;
 
   border: 1px solid darken($background-secondary-color, 3%);
+  border-radius: 4px;
 
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+
+  &::-webkit-scrollbar {
+    width: 6px; 
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: lighten($color:  $selection-color, $amount: 20%);
+    border-radius: 8px;
+    
+    &:hover {
+      background-color: lighten($color:  $selection-color, $amount: 100%);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: $background-secondary-color;
+  }
 }
 
 .menu-item {
@@ -22,7 +42,7 @@
   cursor: pointer;
   transition: 0.1s;
 
-  padding: 6px 8px;
+  padding: 7px 8px;
   margin: 0;
 
   &:hover {

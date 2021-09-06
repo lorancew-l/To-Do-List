@@ -1,19 +1,28 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react'
 import { calendar } from '../../../images/index'
+import { ReactComponent as FilterIcon } from '../../../images/icons/filter.svg'
 import Calendar from '../../Modal/Calendar/Calendar'
 import PopperOverlay from '../../Modal/PopperOverlay'
+import PopupMenu from '../../Modal/PopupMenu/PopupMenu'
+import PopupMenuItem from '../../Modal/PopupMenu/PopupMenuItem'
 import { motion } from 'framer-motion'
 import { taskItemAnimation } from '../../../animations/animations'
+import { useTaskContext } from '../../../store/TaskStore/TaskContext'
+import { observer } from 'mobx-react'
 
-
-export default function OnFocusContent(props) {
+function OnFocusContent(props) {
   const taskName = props.taskName
 
-  const calendarButtonRef = useRef(null)
-  const addTaskRef = useRef(null)
-  const inputRef = useRef(null)
+  const calendarButtonRef = useRef()
+  const addTaskRef = useRef()
+  const inputRef = useRef()
+  const showFiltersMenuButtonRef = useRef()
 
   const [isCalendarOpen, setCalendarOpen] = useState(false)
+
+  const [showFiltersMenu, setShowFiltersMenu] = useState(false)
+
+  const taskStore = useTaskContext()
 
   //refactor
   function calculateCalendarPos(calendarRect) {
@@ -55,6 +64,22 @@ export default function OnFocusContent(props) {
     return {x: x, y: y}
   }
 
+  function calculateFiltersMenuPos(menuRect) {
+    const buttonRect = showFiltersMenuButtonRef.current.getBoundingClientRect()
+    const bottomOffset = 20
+    
+    let y
+
+    if (buttonRect.bottom + menuRect.height + bottomOffset < window.innerHeight ) {
+      y = buttonRect.bottom
+    }
+    else {
+      y = buttonRect.top - menuRect.height
+    }
+    
+    return {x: (buttonRect.right + buttonRect.left - menuRect.width) / 2, y}
+  }
+
   useEffect(() => {
     inputRef.current.focus()
   }, [taskName.value])
@@ -67,6 +92,12 @@ export default function OnFocusContent(props) {
             <input ref={inputRef} type="text" autoFocus value={taskName.value} maxLength={taskName.maxLength} {...taskName.bind}></input>
           </div>
           <div className="right-side">
+            <button type="button" onClick={() => setShowFiltersMenu(true)} ref={showFiltersMenuButtonRef}>
+              <FilterIcon className="filter"
+               style={props.taskFilterId
+                ? {fill: taskStore.getFilterById(props.taskFilterId).color} 
+                : {fill: "transparent", stroke: "#888888", strokeWidth: "80px"}} />
+            </button>
             <button className="show-calendar" type="button" onClick={() => setCalendarOpen(true)} ref={calendarButtonRef}>
               <img src={calendar} alt="date"></img>
               <div className="date-string">{props.deadlineStringRepresentation}</div>
@@ -80,12 +111,27 @@ export default function OnFocusContent(props) {
           </div>
         </li>
       </motion.form>
-      {isCalendarOpen ? 
-      <PopperOverlay closePopper={() => setCalendarOpen(false)}>
-        <Calendar onDateClick={props.onDateClick} calculatePos={calculateCalendarPos}
-                  selectedDate={props.deadline} closePopper={() => setCalendarOpen(false)}/>
-        </PopperOverlay>
-      : null}
+      {isCalendarOpen && (
+        <PopperOverlay closePopper={() => setCalendarOpen(false)}>
+          <Calendar onDateClick={props.onDateClick} calculatePos={calculateCalendarPos}
+                    selectedDate={props.deadline} closePopper={() => setCalendarOpen(false)}/>
+        </PopperOverlay>)
+      }
+      {showFiltersMenu && (
+        <PopperOverlay closePopper={() => setShowFiltersMenu(false)}>
+          <PopupMenu calculatePos={calculateFiltersMenuPos}>
+            {taskStore.favoriteFilters.map(filter => {
+              return <PopupMenuItem key={filter.id} icon={<FilterIcon style={{fill: filter.color}}/>} title={filter.title}
+                                    onClick={() => {props.setTaskFilterId(filter.id); setShowFiltersMenu(false)}}/>
+            })
+            }
+            <PopupMenuItem icon={<FilterIcon className="filter" style={{fill: "transparent", stroke: "#888888", strokeWidth: "80px"}}/>} title="Нет фильтра"
+                                  onClick={() => {props.setTaskFilterId(null); setShowFiltersMenu(false)}}/>
+          </PopupMenu>
+        </PopperOverlay>)
+      }
     </Fragment>
   ) 
 }
+
+export default observer(OnFocusContent)

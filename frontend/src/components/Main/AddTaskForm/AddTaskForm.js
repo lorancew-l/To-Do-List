@@ -12,6 +12,7 @@ export default function AddTaskForm(props) {
   const taskName = useInput('', 64)
   const [deadline, setDeadline] = useState(null)
   const [deadlineStringRepresentation, setDeadlineStringRepresentation] = useState('Срок')
+  const [taskFilterId, setTaskFilterId] = useState(null)
   const taskStore = useTaskContext()
 
   function cancelInput() {
@@ -24,7 +25,7 @@ export default function AddTaskForm(props) {
   function addTask(event) {
     event.preventDefault()
     
-    const task = {'title': taskName.value, 'deadline': deadline, 'task_filter': props.taskFilterId}
+    const task = {'title': taskName.value, 'deadline': deadline, 'task_filter': taskFilterId}
     taskStore.addTask(task)
       .then(() => taskName.clear())
       .catch(error => console.log('AddTaskForm: ',error))
@@ -38,7 +39,8 @@ export default function AddTaskForm(props) {
   return (
     <Fragment>
       {onFocus? <OnFocusContent onSubmit={addTask} onCancelClick={cancelInput} taskName={taskName} deadline={deadline}
-                                deadlineStringRepresentation={deadlineStringRepresentation}
+                                deadlineStringRepresentation={deadlineStringRepresentation} taskFilterId={taskFilterId}
+                                setTaskFilterId={setTaskFilterId}
                                 onDateClick={chandgeDeadline}></OnFocusContent>
               : <NoFocusContent className="task-list-add-item" text="Добавить задачу" icon={quickTask} iconAlt="add task" 
                                 animation={{transition: taskItemAnimation.transition}}

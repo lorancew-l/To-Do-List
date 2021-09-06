@@ -177,4 +177,8 @@ export default class TaskStore {
       return filter
     })
   }
+
+  get favoriteFilters() {
+    return this.filters.filter(filter => filter.favorite)
+  }
 }

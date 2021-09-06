@@ -254,6 +254,10 @@
       margin-right: 10px;
     }
 
+    .filter {
+      @include icon;
+    }
+
     button {
       @include button-with-icon(auto, auto);
       text-transform: capitalize;

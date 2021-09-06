@@ -8,15 +8,12 @@
     "@testing-library/user-event": "^12.8.3",
     "date-fns": "^2.22.1",
     "framer-motion": "^4.1.17",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^8.0.0",
     "mobx": "^6.3.2",
     "mobx-react": "^7.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "require-dir": "^1.2.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -44,9 +41,12 @@
     ]
   },
   "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^4.1.1",
-    "gulp-sass-bulk-importer": "^3.0.1"
+    "gulp-sass-bulk-importer": "^3.0.1",
+    "require-dir": "^1.2.0"
   }
 }

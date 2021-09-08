@@ -192,6 +192,18 @@
   }
 }
 
+.select-filter {
+  display: flex;
+  align-items: center;
+
+  padding: 7px;
+
+  .filter-icon {
+    margin-right: 10px;
+    @include icon(20px, 20px);
+  }
+}
+
 .add-note {
   height: 100%;
   

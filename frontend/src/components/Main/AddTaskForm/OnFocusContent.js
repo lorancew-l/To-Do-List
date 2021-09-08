@@ -24,6 +24,12 @@ function OnFocusContent(props) {
 
   const taskStore = useTaskContext()
 
+  const NoFilterIcon = (
+    <FilterIcon className="filter"
+                style={{fill: "transparent", stroke: "#888888", strokeWidth: "80px"}}
+    />
+  )
+
   //refactor
   function calculateCalendarPos(calendarRect) {
     const windowHeight = window.innerHeight
@@ -125,8 +131,11 @@ function OnFocusContent(props) {
                                     onClick={() => {props.setTaskFilterId(filter.id); setShowFiltersMenu(false)}}/>
             })
             }
-            <PopupMenuItem icon={<FilterIcon className="filter" style={{fill: "transparent", stroke: "#888888", strokeWidth: "80px"}}/>} title="Нет фильтра"
-                                  onClick={() => {props.setTaskFilterId(null); setShowFiltersMenu(false)}}/>
+            <PopupMenuItem title="Нет фильтра"
+                           onClick={() => {props.setTaskFilterId(null); setShowFiltersMenu(false)}}
+                           icon={NoFilterIcon}
+            />
+                          
           </PopupMenu>
         </PopperOverlay>)
       }

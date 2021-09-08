@@ -1,9 +1,8 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 
-export default function PopupMenu(props) {
+export default function PopupMenu({ calculatePos, children }) {
   const [popupPos, setPopupPos] = useState({x: 0, y: 0})
   const menuRef = useRef()
-  const calculatePos = props.calculatePos
 
   useLayoutEffect(() => {
     const menuRect = menuRef.current.getBoundingClientRect()
@@ -11,8 +10,11 @@ export default function PopupMenu(props) {
   }, [calculatePos])
 
   return (
-    <ul className="popup-menu" style={{transform: `translate(${popupPos.x}px, ${popupPos.y}px)`, margin: 0}} ref={menuRef}>
-      {props.children}
+    <ul className="popup-menu"
+        style={{transform: `translate(${popupPos.x}px, ${popupPos.y}px)`, margin: 0}}
+        ref={menuRef}
+    >
+      {children}
     </ul>
   )
 }

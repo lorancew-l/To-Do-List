@@ -4,6 +4,7 @@ import Task from './Task/Task'
 import Subtask from './Subtask/Subtask'
 import AddSubtaskForm from './AddSubtaskForm'
 import Deadline from './Deadline'
+import Filters from './FiltersList/FiltersList'
 import Note from './Note'
 import { getTaskDetailAnimation } from '../../../animations/animations'
 import { motion } from 'framer-motion'
@@ -30,6 +31,7 @@ function TaskDetail(props) {
         </ul>
       </div>
       <Deadline deadline={task.deadline} taskId={task.id}/>
+      <Filters task={task}/>
       <Note note={task.note} taskId={task.id}/>
     </motion.div>
   )

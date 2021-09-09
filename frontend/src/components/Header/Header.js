@@ -1,5 +1,5 @@
 import React, { useState, Fragment} from 'react'
-import { openSideBar, lensIcon, settings } from '../../images/index'
+import { openSideBar, lensIcon } from '../../images/index'
 import { useTaskContext } from '../../store/TaskStore/TaskContext'
 import Logout from '../Account/Logout'
 import ModalOverlay from '../Modal/ModalOverlay'
@@ -71,9 +71,6 @@ export default function Header(props) {
           </div>
           <div className="header-right">
             <Logout isLoggedIn={props.isLoggedIn} setLoggedIn={props.setLoggedIn} />
-            <button>
-              <img alt="settings" src={settings}/>
-            </button>
           </div>
         </div>
       </header>
